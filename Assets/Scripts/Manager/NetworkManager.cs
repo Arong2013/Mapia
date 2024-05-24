@@ -4,9 +4,9 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-
-public class NetworkManager : MonoBehaviourPunCallbacks
+public class NetworkManager : Singleton<MonoBehaviourPunCallbacks>
 {
     [Header("DisconnectPanel")]
     public InputField NickNameInput;
@@ -82,7 +82,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
 
     #region 서버연결
-    void Awake() => Screen.SetResolution(960, 540, false);
+    protected override void Awake()
+    {
+        base.Awake();
+        Screen.SetResolution(960, 540, false);
+    } 
 
     void Update()
     {
@@ -128,7 +132,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < ChatText.Length; i++) ChatText[i].text = "";
     }
 
-    public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); } 
+    public override void OnCreateRoomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
 
     public override void OnJoinRandomFailed(short returnCode, string message) { RoomInput.text = ""; CreateRoom(); }
 
@@ -179,4 +183,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
     #endregion
+
+    public void JoinInGame()
+    {
+        if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount > 0)
+            PV.RPC("CheckAndChangeScene", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void CheckAndChangeScene()
+    {
+        PhotonNetwork.LoadLevel("Play");
+    }
 }
