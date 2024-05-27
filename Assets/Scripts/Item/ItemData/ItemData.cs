@@ -29,7 +29,6 @@ public abstract class ItemData : ScriptableObject
     /// <summary> Ÿ�Կ� �´� ���ο� ������ ���� </summary>
     public abstract Item CreateItem();
 }
-
 public abstract class Item
 {
     public ItemData Data { get; private set; }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [CreateAssetMenu(fileName = "Item_ETC_", menuName = "Inventory System/Item Data/ETC", order = 4)]
 public class EtcItemData : CountableItemData
 {
