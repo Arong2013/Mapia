@@ -15,6 +15,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     public Text NickNameText;
     public Image HealthImage;
 
+
     bool isGround;
     Vector3 curPos;
 
@@ -65,10 +66,25 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                     .GetComponent<PhotonView>().RPC("DirRPC", RpcTarget.All, SR.flipX ? -1 : 1);
                 AN.SetTrigger("shot");
             }
+
+            //인벤토리 열기 및 닫기
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                
+            }
+
+
+
+
         }
         // IsMine이 아닌 것들은 부드럽게 위치 동기화
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
         else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
+    }
+
+    void OntriggerEnter2D()
+    {
+
     }
 
 
@@ -109,4 +125,5 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             HealthImage.fillAmount = (float)stream.ReceiveNext();
         }
     }
+
 }
