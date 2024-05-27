@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     public PhotonView PV;
     public Text NickNameText;
     public Image HealthImage;
-
+    
 
     bool isGround;
     Vector3 curPos;
@@ -70,6 +70,14 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             //인벤토리 열기 및 닫기
             if (Input.GetKeyDown(KeyCode.I))
             {
+                if(UIManager.Instance.Inventory.activeSelf == false)
+                {
+                    UIManager.Instance.Inventory.SetActive(true);
+                }
+                else
+                {
+                    UIManager.Instance.Inventory.SetActive(false);
+                }
                 
             }
 
@@ -82,9 +90,12 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
     }
 
-    void OntriggerEnter2D()
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-
+        if(collision.CompareTag("Item"))
+        {   
+            UIManager.Instance.Inventory.GetComponent<Inventory>().SetData(collision.GetComponent<ItemData>());
+        }
     }
 
 

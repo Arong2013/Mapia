@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -1966468529437411850}
   - component: {fileID: 3774062663246561850}
   - component: {fileID: -5281670651950903022}
+  - component: {fileID: -194086827325379089}
   m_Layer: 0
   m_Name: PotionItemTest
   m_TagString: Item
@@ -41,7 +42,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4294547717679325491}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b79f882bb6413df4898f41383723180a, type: 3}
   m_Name: 
@@ -148,3 +149,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.1, y: 1.1}
   m_EdgeRadius: 0
+--- !u!114 &-194086827325379089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4294547717679325491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e84301ad0b37eb1478ebea2043a105b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemData: {fileID: 11400000, guid: 19e3c3cca081a0a46956e3a74cacfee2, type: 2}
