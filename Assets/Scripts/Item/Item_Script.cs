@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Item_Script : MonoBehaviour
 {
+    public Item item;
+
     public ItemData ItemData;
     int id;
     string name;
