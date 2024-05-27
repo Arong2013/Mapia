@@ -6,30 +6,13 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public ItemData data;
-    public Image ItemImage;
+    List<Item> itemList = new List<Item>();
 
-    // Start is called before the first frame update
-    void Start()
+    int MaxItemCount =  6;
+    public bool GetItem()
     {
+        return false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void SetData(ItemData item)
-    {
-        data = item;
-        ItemImage.sprite = data.IconSprite;
-    }
-
-    public void ResetData()
-    {
-        data = null;
-        ItemImage.sprite = null;
-    }
-
+  
 }

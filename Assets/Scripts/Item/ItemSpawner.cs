@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
+    
+        public GameObject DropItem;
     public GameObject[] ItemList;
 
     float spawnTime =0;
