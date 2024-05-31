@@ -38,5 +38,8 @@ MonoBehaviour:
   - FlipXRPC
   - JumpRPC
   - CheckAndChangeScene
+  - ConcludeVote
+  - RegisterVote
+  - StartVote
   DisableAutoOpenWizard: 1
   ShowSettings: 1

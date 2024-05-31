@@ -409,6 +409,7 @@ MonoBehaviour:
   ChatInput: {fileID: 1115473765}
   StatusText: {fileID: 1029676632}
   PV: {fileID: 194483780}
+  voteManager: {fileID: 0}
 --- !u!4 &194483779
 Transform:
   m_ObjectHideFlags: 0

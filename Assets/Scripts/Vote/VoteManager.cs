@@ -2,77 +2,128 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using System.Collections.Generic;
+using System.Linq;
 
-public class VoteManager : MonoBehaviourPun
+public class VoteManager : MonoBehaviourPunCallbacks
 {
-    public Text voteResultText;
-    public Button[] voteButtons;
-    public Text[] voteCounts;
-    public GameObject voteUIPanel;
+    public Dictionary<string, int> voteCounts = new Dictionary<string, int>();
+    public Dictionary<string, string> playerVotes = new Dictionary<string, string>();
+    private bool isVotingActive = false;
+    public VoteUI voteUI;
 
-    private Dictionary<string, int> voteDict = new Dictionary<string, int>();
-    private PhotonView PV;
-
-    void Start()
+    string myVoteName;
+    
+    private void Start()
     {
-        PV = GetComponent<PhotonView>();
-
-        foreach (Button btn in voteButtons)
-        {
-            btn.onClick.AddListener(() => OnVoteButtonClicked(btn));
-        }
-
-        foreach (Text voteCount in voteCounts)
-        {
-            voteCount.text = "0";
-            voteDict.Add(voteCount.name, 0);
-        }
+        voteUI = UiUtils.GetUI<VoteUI>();
     }
-
-    void OnVoteButtonClicked(Button btn)
+    
+    public void InitiateVote()
     {
-        string playerName = btn.name;
-        PV.RPC("RPC_HandleVote", RpcTarget.All, playerName);
+        if (!isVotingActive)
+        {
+            photonView.RPC("StartVote", RpcTarget.All);
+        }
     }
 
     [PunRPC]
-    void RPC_HandleVote(string playerName)
+    void StartVote()
     {
-        if (voteDict.ContainsKey(playerName))
+        isVotingActive = true;
+        voteCounts.Clear();
+        playerVotes.Clear();
+        foreach (var player in PhotonNetwork.PlayerList)
         {
-            voteDict[playerName]++;
-            UpdateVoteCounts();
+            voteCounts.Add(player.NickName, 0);
         }
+        voteUI.OpenUI();
+        voteUI.UpdateVoteUI();
     }
 
-    void UpdateVoteCounts()
+    public void CastVote(int playerIndex)
     {
-        foreach (Text voteCount in voteCounts)
+        if (isVotingActive && playerIndex < PhotonNetwork.PlayerList.Length)
         {
-            voteCount.text = voteDict[voteCount.name].ToString();
-        }
-    }
+            string votedPlayer = PhotonNetwork.PlayerList[playerIndex].NickName;
+            string localPlayerName = PhotonNetwork.LocalPlayer.NickName;
 
-    public void ShowVoteResults()
-    {
-        PV.RPC("RPC_ShowVoteResults", RpcTarget.All);
-    }
-
-    [PunRPC]
-    void RPC_ShowVoteResults()
-    {
-        int maxVotes = 0;
-        string votedPlayer = "";
-
-        foreach (var vote in voteDict)
-        {
-            if (vote.Value > maxVotes)
+            if (playerVotes.ContainsKey(localPlayerName) && playerVotes[localPlayerName] == votedPlayer)
             {
-                maxVotes = vote.Value;
-                votedPlayer = vote.Key;
+                photonView.RPC("UnregisterVote", RpcTarget.All, localPlayerName);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(myVoteName))
+                {
+                    photonView.RPC("UnregisterVote", RpcTarget.All, localPlayerName);
+                }
+
+                photonView.RPC("RegisterVote", RpcTarget.All, localPlayerName, votedPlayer);
+            }
+        }
+    }
+
+    [PunRPC]
+    void RegisterVote(string voter, string votedPlayer)
+    {
+        if (voteCounts.ContainsKey(votedPlayer))
+        {
+            playerVotes[voter] = votedPlayer;
+            voteCounts[votedPlayer]++;
+            voteUI.UpdateVoteUI();
+        }
+    }
+
+    [PunRPC]
+    void UnregisterVote(string voter)
+    {
+        if (playerVotes.ContainsKey(voter))
+        {
+            string previousVote = playerVotes[voter];
+            voteCounts[previousVote]--;
+            playerVotes.Remove(voter);
+            voteUI.UpdateVoteUI();
+        }
+    }
+
+    public void EndVote()
+    {
+        int resultVoteCount = 0;
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            resultVoteCount += voteCounts[PhotonNetwork.PlayerList[i].NickName];
+            if (resultVoteCount == PhotonNetwork.PlayerList.Length)
+            {
+                photonView.RPC("ConcludeVote", RpcTarget.All);
+            }
+        }
+    }
+
+    [PunRPC]
+    void ConcludeVote()
+    {
+        isVotingActive = false;
+        voteUI.gameObject.SetActive(false);
+        UiUtils.GetUI<ResultUI>().gameObject.SetActive(true);
+        string result = DetermineVoteResult();
+        voteUI.VotingResultText.text = result;
+        voteUI.VotingResultText.gameObject.SetActive(true);
+    }
+
+    string DetermineVoteResult()
+    {
+        string highestVotedPlayer = "";
+        int highestVotes = 0;
+
+        foreach (var vote in voteCounts)
+        {
+            if (vote.Value > highestVotes)
+            {
+                highestVotes = vote.Value;
+                highestVotedPlayer = vote.Key;
             }
         }
 
-        voteResultText.text = votedPlayer + " has been voted out!";
+        return highestVotedPlayer != "" ? $"{highestVotedPlayer}가 추방되었습니다." : "추방된 사람이 없습니다.";
     }
 }

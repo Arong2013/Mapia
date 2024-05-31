@@ -6,8 +6,10 @@ using Photon.Realtime;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class NetworkManager : Singleton<MonoBehaviourPunCallbacks>
+public class NetworkManager : Singleton<NetworkManager>
 {
+
+
     [Header("DisconnectPanel")]
     public InputField NickNameInput;
 
@@ -33,7 +35,6 @@ public class NetworkManager : Singleton<MonoBehaviourPunCallbacks>
 
     List<RoomInfo> myList = new List<RoomInfo>();
     int currentPage = 1, maxPage, multiple;
-
 
     #region 방리스트 갱신
     // ◀버튼 -2 , ▶버튼 -1 , 셀 숫자
@@ -86,7 +87,8 @@ public class NetworkManager : Singleton<MonoBehaviourPunCallbacks>
     {
         base.Awake();
         Screen.SetResolution(960, 540, false);
-    } 
+
+    }
 
     void Update()
     {
