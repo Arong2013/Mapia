@@ -71,6 +71,7 @@ public class VoteManager : MonoBehaviourPunCallbacks
             playerVotes[voter] = votedPlayer;
             voteCounts[votedPlayer]++;
             voteUI.UpdateVoteUI();
+            EndVote();
         }
     }
 
