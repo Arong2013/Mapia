@@ -94,7 +94,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     {
         if(collision.CompareTag("Item"))
         {   
-            UIManager.Instance.Inventory.GetComponent<Inventory>().SetData(collision.GetComponent<ItemData>());
+            //UIManager.Instance.Inventory.GetComponent<Inventory>().setitem(collision.GetComponent<ItemData>());
         }
     }
 

@@ -4,15 +4,17 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
-public class GameManager : MonoBehaviourPunCallbacks
+using System.Linq;
+public class GameManager : Singleton<GameManager>
 {
     public GameObject RespawnPanel;
 
+    public VoteManager voteManager;
 
-    void Awake()
+    private void Start()
     {
-        PhotonNetwork.SendRate = 60;
-        PhotonNetwork.SerializationRate = 30;
+    
+        voteManager = GetComponent<VoteManager>();
     }
 
     public override void OnEnable()
