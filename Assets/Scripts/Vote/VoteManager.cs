@@ -105,10 +105,16 @@ public class VoteManager : MonoBehaviourPunCallbacks
     {
         isVotingActive = false;
         voteUI.gameObject.SetActive(false);
-        UiUtils.GetUI<ResultUI>().gameObject.SetActive(true);
-        string result = DetermineVoteResult();
-        voteUI.VotingResultText.text = result;
-        voteUI.VotingResultText.gameObject.SetActive(true);
+        //UiUtils.GetUI<ResultUI>().gameObject.SetActive(true);
+       // string result = DetermineVoteResult();
+     ////   voteUI.VotingResultText.text = result;
+      //  voteUI.VotingResultText.gameObject.SetActive(true);
+
+          List<string> highestVotedPlayers = GetHighestVotedPlayers();
+        if (highestVotedPlayers.Contains(PhotonNetwork.LocalPlayer.NickName) || highestVotedPlayers.Count > 1)
+        {
+            UiUtils.GetUI<ResultUI>().gameObject.SetActive(true);
+        }
     }
 
     string DetermineVoteResult()
@@ -126,5 +132,27 @@ public class VoteManager : MonoBehaviourPunCallbacks
         }
 
         return highestVotedPlayer != "" ? $"{highestVotedPlayer}가 추방되었습니다." : "추방된 사람이 없습니다.";
+    }
+
+      List<string> GetHighestVotedPlayers()
+    {
+        List<string> highestVotedPlayers = new List<string>();
+        int highestVotes = 0;
+
+        foreach (var vote in voteCounts)
+        {
+            if (vote.Value > highestVotes)
+            {
+                highestVotedPlayers.Clear();
+                highestVotedPlayers.Add(vote.Key);
+                highestVotes = vote.Value;
+            }
+            else if (vote.Value == highestVotes)
+            {
+                highestVotedPlayers.Add(vote.Key);
+            }
+        }
+
+        return highestVotedPlayers;
     }
 }
