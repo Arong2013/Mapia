@@ -8,7 +8,7 @@ public class Item_Script : MonoBehaviour
 
     public ItemData ItemData;
 
-    Item item;
+    //Item item;
     SpriteRenderer spriteRenderer;
 
 
@@ -17,6 +17,7 @@ public class Item_Script : MonoBehaviour
     {
         item = ItemData.CreateItem();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = item.Data.IconSprite;
     }
 
     // Update is called once per frame

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UIManager : Singleton<UIManager>
 {
-    public GameObject Inventory;
+    public GameObject inventory;
 
      public T GetUI<T>(string _name)
        where T : MonoBehaviour
@@ -20,4 +20,11 @@ public class UIManager : Singleton<UIManager>
        }    
        return null;
     }
+
+    public void SetNowItem(int num)
+    {
+        inventory.GetComponent<Inventory>().NowItemImage(num);
+    }
+
+
 }

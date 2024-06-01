@@ -14,7 +14,8 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     public PhotonView PV;
     public Text NickNameText;
     public Image HealthImage;
-    
+
+    public int itemChoice = 0; //아이템 고를때 사용
 
     bool isGround;
     Vector3 curPos;
@@ -70,17 +71,37 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             //인벤토리 열기 및 닫기
             if (Input.GetKeyDown(KeyCode.I))
             {
-                if(UIManager.Instance.Inventory.activeSelf == false)
+                if(UIManager.Instance.inventory.activeSelf == false)
                 {
-                    UIManager.Instance.Inventory.SetActive(true);
+                    UIManager.Instance.inventory.SetActive(true);
                 }
                 else
                 {
-                    UIManager.Instance.Inventory.SetActive(false);
+                    UIManager.Instance.inventory.SetActive(false);
                 }
                 
             }
 
+            //아이템 고르기
+            if(Input.GetKeyDown(KeyCode.Q))
+            {
+                if (itemChoice > 0) itemChoice--;
+                else itemChoice = 2;
+
+                UIManager.Instance.SetNowItem(itemChoice);
+            }
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                if (itemChoice < 2) itemChoice++;
+                else itemChoice = 0;
+
+                UIManager.Instance.SetNowItem(itemChoice);
+            }
+
+            if(Input.GetKeyDown(KeyCode.Tab))
+            {
+                UIManager.Instance.inventory.GetComponent<Inventory>().UseItem(itemChoice);
+            }
 
 
 
@@ -93,8 +114,21 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Item"))
-        {   
+        {
+            if(collision.GetComponent<Item_Script>().item != null)
+            {
+                //Debug.Log(collision.GetComponent<Item_Script>().item.Data.Name);
+                
+                UIManager.Instance.inventory.GetComponent<Inventory>().GetItem(collision.GetComponent<Item_Script>().item);
+                UIManager.Instance.SetNowItem(itemChoice);
+            }
+            else
+            {
+                Debug.Log("nullnull");
+            }
+            
             //UIManager.Instance.Inventory.GetComponent<Inventory>().setitem(collision.GetComponent<ItemData>());
+            Destroy(collision.gameObject);
         }
     }
 

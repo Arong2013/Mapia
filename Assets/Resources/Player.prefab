@@ -627,6 +627,7 @@ MonoBehaviour:
   PV: {fileID: 4356139642182378598}
   NickNameText: {fileID: 8375901364521192189}
   HealthImage: {fileID: 8375901364045505310}
+  itemChoice: 0
 --- !u!114 &3001286469435100973
 MonoBehaviour:
   m_ObjectHideFlags: 0

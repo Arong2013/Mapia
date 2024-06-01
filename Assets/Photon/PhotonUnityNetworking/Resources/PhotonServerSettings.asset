@@ -42,5 +42,7 @@ MonoBehaviour:
   - RegisterVote
   - StartVote
   - UnregisterVote
+  - SpawnItem
+  - ChooseRandomnum
   DisableAutoOpenWizard: 1
   ShowSettings: 1
