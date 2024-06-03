@@ -115,7 +115,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     {
         if(collision.CompareTag("Item"))
         {
-            if(collision.GetComponent<Item_Script>().item != null)
+            if(collision.GetComponent<Item_Script>().item != null && PV.IsMine)
             {
                 //Debug.Log(collision.GetComponent<Item_Script>().item.Data.Name);
                 
