@@ -1,17 +1,18 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using Cinemachine;
+using System;
 
-public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
+public class Ai : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public Rigidbody2D RB;
-    public Animator AN;
-    public SpriteRenderer SR;
-    public PhotonView PV;
+    [HideInInspector] public Rigidbody2D RB;
+    [HideInInspector] public Animator AN;
+    [HideInInspector] public SpriteRenderer SR;
+    [HideInInspector] public PhotonView PV;
     public Text NickNameText;
     public Image HealthImage;
 
@@ -20,11 +21,17 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     bool isGround;
     Vector3 curPos;
 
+    Dictionary<Type, Node> actionNodes = new Dictionary<Type, Node>();
 
+    [HideInInspector] public float moveHorizontal;
+    [HideInInspector] public float moveVertical;
 
-    
     void Awake()
     {
+        RB = GetComponent<Rigidbody2D>();
+        AN = GetComponent<Animator>();
+        SR = GetComponent<SpriteRenderer>();
+        PV = GetComponent<PhotonView>();
         // 닉네임
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
@@ -35,6 +42,9 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             var CM = GameObject.Find("CMCamera").GetComponent<CinemachineVirtualCamera>();
             CM.Follow = transform;
             CM.LookAt = transform;
+
+            actionNodes.Add(typeof(AIUtils.MoveNode), new Sequence(this));
+            GetNode<AIUtils.MoveNode>()._Attach(new AIUtils.MoveNode());
         }
     }
 
@@ -43,59 +53,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         if (PV.IsMine)
         {
             // 이동
-            float moveHorizontal = Input.GetAxisRaw("Horizontal");
-            float moveVertical = Input.GetAxisRaw("Vertical");
+            moveHorizontal = Input.GetAxisRaw("Horizontal");
+            moveVertical = Input.GetAxisRaw("Vertical");
             Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
-            RB.velocity = movement * 4;
-
-            if (movement != Vector2.zero)
-            {
-                AN.SetBool("walk", true);
-                PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal); // 재접속시 filpX를 동기화해주기 위해서 AllBuffered
-            }
-            else AN.SetBool("walk", false);
-
-            // 스페이스 총알 발사
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                PhotonNetwork.Instantiate("Bullet", transform.position + new Vector3(SR.flipX ? -0.4f : 0.4f, -0.11f, 0), Quaternion.identity)
-                    .GetComponent<PhotonView>().RPC("DirRPC", RpcTarget.All, SR.flipX ? -1 : 1);
-                AN.SetTrigger("shot");
-            }
-
-            // 인벤토리 열기 및 닫기
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                if (UIManager.Instance.inventory.activeSelf == false)
-                {
-                    UIManager.Instance.inventory.SetActive(true);
-                }
-                else
-                {
-                    UIManager.Instance.inventory.SetActive(false);
-                }
-            }
-
-            // 아이템 고르기
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                if (itemChoice > 0) itemChoice--;
-                else itemChoice = 2;
-
-                UIManager.Instance.SetNowItem(itemChoice);
-            }
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (itemChoice < 2) itemChoice++;
-                else itemChoice = 0;
-
-                UIManager.Instance.SetNowItem(itemChoice);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                UIManager.Instance.inventory.GetComponent<Inventory>().UseItem(itemChoice);
-            }
+            CallActionNode<AIUtils.MoveNode>(movement);
         }
         // IsMine이 아닌 것들은 부드럽게 위치 동기화
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
@@ -121,7 +82,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
-    void FlipXRPC(float axis) => SR.flipX = axis == -1;
+    public void FlipXRPC(float axis) => SR.flipX = axis == -1;
 
     public void Hit()
     {
@@ -129,12 +90,12 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         if (HealthImage.fillAmount <= 0)
         {
             GameObject.Find("Canvas").transform.Find("RespawnPanel").gameObject.SetActive(true);
-            PV.RPC("DestroyRPC", RpcTarget.AllBuffered); // AllBuffered로 해야 제대로 사라져 복제버그가 안 생긴다
+            PV.RPC(nameof(DestroyRPC), RpcTarget.AllBuffered); // AllBuffered로 해야 제대로 사라져 복제버그가 안 생긴다
         }
     }
 
     [PunRPC]
-    void DestroyRPC() => Destroy(gameObject);
+    public void DestroyRPC() => Destroy(gameObject);
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -150,4 +111,33 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    public Node GetNode<T>() where T : Node, new()
+    {
+        var type = typeof(T);
+        if (!actionNodes.TryGetValue(type, out var node))
+        {
+            node = new T();
+            actionNodes.Add(type, new Sequence(this));
+            actionNodes[type]._Attach(node);
+        }
+        return actionNodes[type];
+    }
+
+    public NodeState CallActionNode<T>(params object[] objects) where T : Node, new()
+    {
+        var node = GetNode<T>();
+        if (objects.Length > 0)
+        {
+            foreach (object obj in objects)
+            {
+                node.SetDeta(obj);
+            }
+        }
+        return node.Evaluate();
+    }
+
+    public void AddNode<T>(Node node) where T : Node
+    {
+        actionNodes[typeof(T)]._Attach(node);
+    }
 }
