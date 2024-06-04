@@ -381,8 +381,7 @@ GameObject:
   - component: {fileID: 4356139642182378598}
   - component: {fileID: 564668160908384226}
   - component: {fileID: 5074776327640072849}
-  - component: {fileID: 8410713998984566627}
-  - component: {fileID: 3001286469435100973}
+  - component: {fileID: -2806158089842065068}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -562,7 +561,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 564668160908384226}
   - {fileID: 5074776327640072849}
-  - {fileID: 8410713998984566627}
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -609,7 +608,7 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &8410713998984566627
+--- !u!114 &-2806158089842065068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -618,25 +617,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 8375901364799043233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fd6989dce81fd498e36225d0303a26, type: 3}
+  m_Script: {fileID: 11500000, guid: 88b5595146911da48a75dd3d7d256426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RB: {fileID: 8375901364799043234}
-  AN: {fileID: 8375901364799043232}
-  SR: {fileID: 8375901364799043245}
-  PV: {fileID: 4356139642182378598}
+  RB: {fileID: 0}
+  AN: {fileID: 0}
+  SR: {fileID: 0}
+  PV: {fileID: 0}
   NickNameText: {fileID: 8375901364521192189}
   HealthImage: {fileID: 8375901364045505310}
   itemChoice: 0
---- !u!114 &3001286469435100973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8375901364799043233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf653fc177421ef46815234b7e14683f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  moveHorizontal: 0
+  moveVertical: 0
