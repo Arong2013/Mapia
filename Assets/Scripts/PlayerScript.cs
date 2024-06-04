@@ -22,6 +22,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
 
 
+    
     void Awake()
     {
         // 닉네임
@@ -37,28 +38,22 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-
     void Update()
     {
         if (PV.IsMine)
         {
-            // ← → 이동
-            float axis = Input.GetAxisRaw("Horizontal");
-            RB.velocity = new Vector2(4 * axis, RB.velocity.y);
+            // 이동
+            float moveHorizontal = Input.GetAxisRaw("Horizontal");
+            float moveVertical = Input.GetAxisRaw("Vertical");
+            Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
+            RB.velocity = movement * 4;
 
-            if (axis != 0)
+            if (movement != Vector2.zero)
             {
                 AN.SetBool("walk", true);
-                PV.RPC("FlipXRPC", RpcTarget.AllBuffered, axis); // 재접속시 filpX를 동기화해주기 위해서 AllBuffered
+                PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal); // 재접속시 filpX를 동기화해주기 위해서 AllBuffered
             }
             else AN.SetBool("walk", false);
-
-
-            // ↑ 점프, 바닥체크
-            isGround = Physics2D.OverlapCircle((Vector2)transform.position + new Vector2(0, -0.5f), 0.07f, 1 << LayerMask.NameToLayer("Ground"));
-            AN.SetBool("jump", !isGround);
-            if (Input.GetKeyDown(KeyCode.UpArrow) && isGround) PV.RPC("JumpRPC", RpcTarget.All);
-
 
             // 스페이스 총알 발사
             if (Input.GetKeyDown(KeyCode.Space))
@@ -68,10 +63,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                 AN.SetTrigger("shot");
             }
 
-            //인벤토리 열기 및 닫기
+            // 인벤토리 열기 및 닫기
             if (Input.GetKeyDown(KeyCode.I))
             {
-                if(UIManager.Instance.inventory.activeSelf == false)
+                if (UIManager.Instance.inventory.activeSelf == false)
                 {
                     UIManager.Instance.inventory.SetActive(true);
                 }
@@ -79,18 +74,17 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                 {
                     UIManager.Instance.inventory.SetActive(false);
                 }
-                
             }
 
-            //아이템 고르기
-            if(Input.GetKeyDown(KeyCode.Q))
+            // 아이템 고르기
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 if (itemChoice > 0) itemChoice--;
                 else itemChoice = 2;
 
                 UIManager.Instance.SetNowItem(itemChoice);
             }
-            if(Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 if (itemChoice < 2) itemChoice++;
                 else itemChoice = 0;
@@ -98,13 +92,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                 UIManager.Instance.SetNowItem(itemChoice);
             }
 
-            if(Input.GetKeyDown(KeyCode.Tab))
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
                 UIManager.Instance.inventory.GetComponent<Inventory>().UseItem(itemChoice);
             }
-
-
-
         }
         // IsMine이 아닌 것들은 부드럽게 위치 동기화
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
@@ -113,12 +104,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Item"))
+        if (collision.CompareTag("Item"))
         {
-            if(collision.GetComponent<Item_Script>().item != null && PV.IsMine)
+            if (collision.GetComponent<Item_Script>().item != null && PV.IsMine)
             {
-                //Debug.Log(collision.GetComponent<Item_Script>().item.Data.Name);
-                
                 UIManager.Instance.inventory.GetComponent<Inventory>().GetItem(collision.GetComponent<Item_Script>().item);
                 UIManager.Instance.SetNowItem(itemChoice);
             }
@@ -126,22 +115,13 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             {
                 Debug.Log("nullnull");
             }
-            
-            //UIManager.Instance.Inventory.GetComponent<Inventory>().setitem(collision.GetComponent<ItemData>());
+
             Destroy(collision.gameObject);
         }
     }
 
-
     [PunRPC]
     void FlipXRPC(float axis) => SR.flipX = axis == -1;
-
-    [PunRPC]
-    void JumpRPC()
-    {
-        RB.velocity = Vector2.zero;
-        RB.AddForce(Vector2.up * 700);
-    }
 
     public void Hit()
     {
@@ -155,7 +135,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     [PunRPC]
     void DestroyRPC() => Destroy(gameObject);
-
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
