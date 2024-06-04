@@ -2,40 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 
 public class Inventory : MonoBehaviour
 {
-    public ItemSlot[] itemSlots;
+    public List<ItemSlot> itemSlots = new List<ItemSlot>();
     public Image NowItem_img;
+    PhotonView PV;
 
     private void Start()
     {
-        itemSlots = GetComponentsInChildren<ItemSlot>();
+        PV = GetComponent<PhotonView>();
+        Transform inventory = UiUtils.GetUI<InventoryUI>().gameObject.transform;
+        //UIUtils에서 컴포넌트 가져와서 그걸 컬렉션에 넣어줘야함
+        foreach (Transform child in inventory)
+        {
+            //Debug.Log(child.childCount);
+            ItemSlot slot = child.GetComponentInChildren<ItemSlot>();
+
+            if(slot != null)
+            {
+                itemSlots.Add(slot);
+            }
+
+        }
     }
-    
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.I) && PV.IsMine)
+        {
+            if(UiUtils.GetUI<InventoryUI>().gameObject.activeSelf == false)
+            {
+                UiUtils.GetUI<InventoryUI>().gameObject.SetActive(true);
+            }
+            else
+            {
+                UiUtils.GetUI<InventoryUI>().gameObject.SetActive(false);
+            }
+            
+        }
+    }
+
 
     //아이템 획득
     public void GetItem(Item item)
     {
-        for(int i=0; i<itemSlots.Length; i++)
+        for(int i=0; i<itemSlots.Count; i++)
         {
-            if(itemSlots[i].item == null)
+            if (itemSlots[i].item == null)
             {
-                Debug.Log(item.Data.Name);
                 itemSlots[i].SetItem(item);
                 return;
             }
             else
             {
-
                 //no storage
             }
 
 
         }
-        
-        Debug.Log("Error");
+        Debug.Log("NoStorage");
     }
 
     public void UseItem(int num)
@@ -70,89 +98,5 @@ public class Inventory : MonoBehaviour
     }
 
 
-    //List<Item> itemList = new List<Item>();
-    //public Image NowItem_img;
-
-    //int MaxItemCount =  3;
-    //public bool GetItem()
-    //{
-    //    return false;
-    //}
-    //public int ItemLeft()
-    //{
-    //    int num = 0;
-    //    int lastItem = 0;
-
-    //    for (int i = 0; i < itemList.Count; i++)
-    //    {
-    //        if (itemList[i].Data != null)
-    //        {
-    //            num++;
-    //            lastItem = i;
-    //        }
-
-    //    }
-    //    return num;
-    //}
-
-    //public void NumCheck()
-    //{
-    //    for (int i = 0; i < itemList.Count; i++)
-    //    {
-    //        if (itemList[i].Data != null)
-    //        {
-
-    //            return;
-    //        }
-    //    }
-
-
-
-    //    return;
-    //}
-
-
-    //public void NowItemImage(int num)
-    //{
-    //    NowItem_img.sprite = itemList[num].Data.IconSprite;
-    //}
-
-
-    //public void GetItem(ItemData data)
-    //{
-    //    for (int i = 0; i < itemList.Count; i++)
-    //    {
-    //        if (itemList[i] == null)
-    //        {
-    //            itemList[i] = data;
-    //            itemList[i].image.sprite = data.IconSprite;
-    //            return;
-    //        }
-    //        else
-    //        {
-
-    //        }
-
-    //    }
-    //}
-
-    //public void UseItem(int num)
-    //{
-
-    //    if (itemList[num].data != null)
-    //    {
-    //        itemList[num].Data = null;
-    //        //itemList[num].Data.IconSprite = null;
-    //        NowItemImage(num);
-
-    //        return;
-    //    }
-    //    else
-    //    {
-
-    //        Debug.Log("asdf");
-    //    }
-
-    //}
-
+   
 }

@@ -17,7 +17,7 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
     public Image HealthImage;
 
     public int itemChoice = 0; //아이템 고를때 사용
-
+    public Inventory inventory;
     bool isGround;
     Vector3 curPos;
 
@@ -32,6 +32,7 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
         AN = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
         PV = GetComponent<PhotonView>();
+        inventory = GameManager.Instance.gameObject.GetComponent<Inventory>();
         // 닉네임
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
@@ -69,8 +70,8 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (collision.GetComponent<Item_Script>().item != null && PV.IsMine)
             {
-                UIManager.Instance.inventory.GetComponent<Inventory>().GetItem(collision.GetComponent<Item_Script>().item);
-                UIManager.Instance.SetNowItem(itemChoice);
+                inventory.GetItem(collision.GetComponent<Item_Script>().item);
+                //UIManager.Instance.SetNowItem(itemChoice);
             }
             else
             {
