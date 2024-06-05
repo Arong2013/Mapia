@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f0f906594f1b2440b3b5d60abb139e1, type: 3}
   m_Name: HP_Potion
   m_EditorClassIdentifier: 
+  _type: 1
   _id: 1
   _name: HpPotion
   _tooltip: "\uD50C\uB808\uC774\uC5B4\uC758 \uCCB4\uB825\uC744 10 \uC99D\uAC00\uC2DC\uD0B4"

@@ -225,7 +225,6 @@ GameObject:
   - component: {fileID: 53882189}
   - component: {fileID: 53882192}
   - component: {fileID: 53882191}
-  - component: {fileID: 53882193}
   m_Layer: 5
   m_Name: Inventroy_Box1
   m_TagString: Untagged
@@ -267,7 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -291,19 +290,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53882188}
   m_CullTransparentMesh: 1
---- !u!114 &53882193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 53882188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc7fd11f3a7f67f498a128b4faccc131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myImage: {fileID: 500779178}
 --- !u!1 &64358372
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,7 +755,6 @@ GameObject:
   - component: {fileID: 195334217}
   - component: {fileID: 195334220}
   - component: {fileID: 195334219}
-  - component: {fileID: 195334218}
   m_Layer: 5
   m_Name: Inventroy_Box2
   m_TagString: Untagged
@@ -797,19 +782,6 @@ RectTransform:
   m_AnchoredPosition: {x: 400, y: -250}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &195334218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 195334216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc7fd11f3a7f67f498a128b4faccc131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myImage: {fileID: 1208807219}
 --- !u!114 &195334219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -824,7 +796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -954,6 +926,7 @@ GameObject:
   - component: {fileID: 500779177}
   - component: {fileID: 500779179}
   - component: {fileID: 500779178}
+  - component: {fileID: 500779180}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -975,10 +948,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 53882189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &500779178
 MonoBehaviour:
@@ -1018,6 +991,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500779176}
   m_CullTransparentMesh: 1
+--- !u!114 &500779180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500779176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7fd11f3a7f67f498a128b4faccc131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myImage: {fileID: 500779178}
+  inventory: {fileID: 0}
+  type: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,7 +1311,6 @@ GameObject:
   - component: {fileID: 786009053}
   - component: {fileID: 786009056}
   - component: {fileID: 786009055}
-  - component: {fileID: 786009054}
   m_Layer: 5
   m_Name: Inventroy_Box3
   m_TagString: Untagged
@@ -1351,19 +1338,6 @@ RectTransform:
   m_AnchoredPosition: {x: 630, y: -250}
   m_SizeDelta: {x: 180, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &786009054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786009052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc7fd11f3a7f67f498a128b4faccc131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myImage: {fileID: 2030371801}
 --- !u!114 &786009055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,7 +1352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1783,6 +1757,7 @@ GameObject:
   - component: {fileID: 1208807218}
   - component: {fileID: 1208807220}
   - component: {fileID: 1208807219}
+  - component: {fileID: 1208807221}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -1804,10 +1779,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 195334217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1208807219
 MonoBehaviour:
@@ -1847,6 +1822,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208807217}
   m_CullTransparentMesh: 1
+--- !u!114 &1208807221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208807217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7fd11f3a7f67f498a128b4faccc131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myImage: {fileID: 1208807219}
+  inventory: {fileID: 0}
+  type: 0
 --- !u!1 &1234144150
 GameObject:
   m_ObjectHideFlags: 0
@@ -3457,6 +3447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RespawnPanel: {fileID: 2019413704}
   voteManager: {fileID: 0}
+  invenTory: {fileID: 0}
 --- !u!114 &1678499915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3534,6 +3525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSlots: []
   NowItem_img: {fileID: 275442512}
+  DragSlot: {fileID: 0}
 --- !u!1 &1721913876
 GameObject:
   m_ObjectHideFlags: 0
@@ -3851,6 +3843,7 @@ GameObject:
   - component: {fileID: 2030371800}
   - component: {fileID: 2030371802}
   - component: {fileID: 2030371801}
+  - component: {fileID: 2030371803}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -3872,10 +3865,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 786009053}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2030371801
 MonoBehaviour:
@@ -3915,6 +3908,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2030371799}
   m_CullTransparentMesh: 1
+--- !u!114 &2030371803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030371799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7fd11f3a7f67f498a128b4faccc131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myImage: {fileID: 2030371801}
+  inventory: {fileID: 0}
+  type: 1
 --- !u!1 &2045369289
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,7 +4250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4288,7 +4296,7 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 180, y: 180}
   m_Spacing: {x: 50, y: 50}
-  m_Constraint: 1
+  m_Constraint: 0
   m_ConstraintCount: 3
 --- !u!114 &2086555874
 MonoBehaviour:

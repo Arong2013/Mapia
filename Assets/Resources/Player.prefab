@@ -627,5 +627,6 @@ MonoBehaviour:
   NickNameText: {fileID: 8375901364521192189}
   HealthImage: {fileID: 8375901364045505310}
   itemChoice: 0
+  inventory: {fileID: 0}
   moveHorizontal: 0
   moveVertical: 0

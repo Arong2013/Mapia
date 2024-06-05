@@ -9,12 +9,13 @@ public class Inventory : MonoBehaviour
 {
     public List<ItemSlot> itemSlots = new List<ItemSlot>();
     public Image NowItem_img;
+    public ItemSlot DragSlot;
     PhotonView PV;
 
     private void Start()
     {
         PV = GetComponent<PhotonView>();
-        Transform inventory = UiUtils.GetUI<InventoryUI>().gameObject.transform;
+        var inventory = UiUtils.GetUI<InventoryUI>().gameObject.transform;
         //UIUtils에서 컴포넌트 가져와서 그걸 컬렉션에 넣어줘야함
         foreach (Transform child in inventory)
         {
@@ -51,7 +52,7 @@ public class Inventory : MonoBehaviour
     {
         for(int i=0; i<itemSlots.Count; i++)
         {
-            if (itemSlots[i].item == null)
+            if (itemSlots[i].item == null && itemSlots[i].type == item.Data.Itemtype)
             {
                 itemSlots[i].SetItem(item);
                 return;

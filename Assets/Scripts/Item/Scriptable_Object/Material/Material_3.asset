@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0298d62f5d16b64c98e172f6adcb7e0, type: 3}
   m_Name: Material_3
   m_EditorClassIdentifier: 
+  _type: 3
   _id: 7
   _name: Material_3
   _tooltip: "\uC7AC\uB8CC3"

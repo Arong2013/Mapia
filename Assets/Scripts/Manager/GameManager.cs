@@ -11,10 +11,13 @@ public class GameManager : Singleton<GameManager>
 
     public VoteManager voteManager;
 
+    public Inventory invenTory;
+
     private void Start()
     {
     
         voteManager = GetComponent<VoteManager>();
+        invenTory = GetComponent<Inventory>();
     }
 
     public override void OnEnable()
