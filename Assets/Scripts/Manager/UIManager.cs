@@ -23,7 +23,7 @@ public class UIManager : Singleton<UIManager>
 
     public void SetNowItem(int num)
     {
-        inventory.GetComponent<Inventory>().NowItemImage(num);
+        //inventory.GetComponent<Inventory>().NowItemImage(num);
     }
 
 

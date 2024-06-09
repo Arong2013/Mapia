@@ -68,9 +68,10 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (collision.CompareTag("Item"))
         {
-            if (collision.GetComponent<Item_Script>().item != null && PV.IsMine)
+            Item collisionItem = collision.GetComponent<Item_Script>().item;
+            if (collisionItem != null && PV.IsMine)
             {
-                inventory.GetItem(collision.GetComponent<Item_Script>().item);
+                inventory.GetItem(collisionItem, collisionItem.Data.Itemtype);
                 //UIManager.Instance.SetNowItem(itemChoice);
             }
             else

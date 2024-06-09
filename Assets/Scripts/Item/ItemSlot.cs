@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEditor;
@@ -13,7 +13,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private int count; 
     public Item item;
     public Image myImage;
-    public Inventory inventory;
+    public InventoryUI inventoryUI;
     Vector2 defaultPosition;
     Transform ParentTransform;
     public ItemType type;
@@ -21,21 +21,21 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void Start()
     {
         //myImage = GetComponent<Image>();
-        inventory = GameManager.Instance.invenTory;
+        inventoryUI = UiUtils.GetUI<InventoryUI>();
         ParentTransform = transform.parent;
         Debug.Log(ParentTransform.name);
     }
 
-    public void OnBeginDrag(PointerEventData eventData) //µå·¡±× ½ÃÀÛ
+    public void OnBeginDrag(PointerEventData eventData) //ë“œë˜ê·¸ ì‹œì‘
     {
         transform.SetParent(UiUtils.GetUI<InventoryUI>().transform);
         defaultPosition = GetComponent<RectTransform>().localPosition;
         myImage.raycastTarget = false;
-        inventory.DragSlot = GetComponent <ItemSlot>();
-        //°¡Àå ¸ÕÀú µå·¡±×¸¦ ½ÃÀÛÇÒ ¶§ Ã³À½À§Ä¡ÀÇ ÁÂÇ¥¸¦ ÀúÀåÇØ³õÀ½
+        inventoryUI.DragSlot = GetComponent <ItemSlot>();
+        //ê°€ì¥ ë¨¼ì € ë“œë˜ê·¸ë¥¼ ì‹œì‘í•  ë•Œ ì²˜ìŒìœ„ì¹˜ì˜ ì¢Œí‘œë¥¼ ì €ì¥í•´ë†“ìŒ
     }
 
-    public void OnDrag(PointerEventData eventData) //µå·¡±×ÁßÀÏ ¶§
+    public void OnDrag(PointerEventData eventData) //ë“œë˜ê·¸ì¤‘ì¼ ë•Œ
     {
         //Debug.Log(gameObject.name);
         Vector2 CurrentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -43,7 +43,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     }
 
-    public void OnEndDrag(PointerEventData eventData) //µå·¡±× ³¡³µÀ» ¶§
+    public void OnEndDrag(PointerEventData eventData) //ë“œë˜ê·¸ ëë‚¬ì„ ë•Œ
     {
         transform.localPosition = defaultPosition;
         transform.SetParent(ParentTransform);
@@ -53,26 +53,26 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnDrop(PointerEventData eventData)
     {
-        //ÇöÀç ¾ÆÀÌÅÛÀÌ ÀÖ´Â À§Ä¡¿¡ ¾ÆÀÌÅÛ ½½·ÔÀÌ Á¸ÀçÇÏ´ÂÁö Ã¼Å©ÇØ¼­ ÀÖ´Ù¸é º¯°æÀ» ÇØÁà¾ßÇÔ
-        //Áö±İ »óÅÂ´Â ¾ÆÀÌÅÛÀ» º¹Á¦½ÃÅ°´Â °ÅÀÓ
-        if(inventory.DragSlot.type == type)
+        //í˜„ì¬ ì•„ì´í…œì´ ìˆëŠ” ìœ„ì¹˜ì— ì•„ì´í…œ ìŠ¬ë¡¯ì´ ì¡´ì¬í•˜ëŠ”ì§€ ì²´í¬í•´ì„œ ìˆë‹¤ë©´ ë³€ê²½ì„ í•´ì¤˜ì•¼í•¨
+        //ì§€ê¸ˆ ìƒíƒœëŠ” ì•„ì´í…œì„ ë³µì œì‹œí‚¤ëŠ” ê±°ì„
+        if(inventoryUI.DragSlot.type == type)
         {
-            if (inventory.DragSlot != null)
+            if (inventoryUI.DragSlot != null)
             {
                 if (item != null)
                 {
-                    Debug.Log("¹¹°¡ ÀÖ¾î¿ä" + item.Data.name);
+                    Debug.Log("ë­ê°€ ìˆì–´ìš”" + item.Data.name);
                     var Temp_Data = item;
-                    item = inventory.DragSlot.item;
-                    inventory.DragSlot.item = Temp_Data;
+                    item = inventoryUI.DragSlot.item;
+                    inventoryUI.DragSlot.item = Temp_Data;
                     Insert_Data();
 
                 }
                 else
                 {
-                    Debug.Log("ÀÛµ¿ÀÌ µÇ¿ä");
-                    item = inventory.DragSlot.item;
-                    inventory.DragSlot.item = null;
+                    Debug.Log("ì‘ë™ì´ ë˜ìš”");
+                    item = inventoryUI.DragSlot.item;
+                    inventoryUI.DragSlot.item = null;
                     Insert_Data();
 
                 }
@@ -81,7 +81,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             }
             else
             {
-                Debug.Log("nullÀÌ¿¡¿ä");
+                Debug.Log("nullì´ì—ìš”");
             }
         }
         

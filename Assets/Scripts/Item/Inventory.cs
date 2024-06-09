@@ -1,80 +1,72 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-
 public class Inventory : MonoBehaviour
 {
-    public List<ItemSlot> itemSlots = new List<ItemSlot>();
+    public List <Item> items = new List <Item> ();
+    //public List<ItemSlot> itemSlots = new List<ItemSlot>();
     public Image NowItem_img;
-    public ItemSlot DragSlot;
+    InventoryUI inventoryUI;
+
+
     PhotonView PV;
 
     private void Start()
     {
         PV = GetComponent<PhotonView>();
-        var inventory = UiUtils.GetUI<InventoryUI>().gameObject.transform;
-        //UIUtils¿¡¼­ ÄÄÆ÷³ÍÆ® °¡Á®¿Í¼­ ±×°É ÄÃ·º¼Ç¿¡ ³Ö¾îÁà¾ßÇÔ
-        foreach (Transform child in inventory)
-        {
-            //Debug.Log(child.childCount);
-            ItemSlot slot = child.GetComponentInChildren<ItemSlot>();
+        inventoryUI = UiUtils.GetUI<InventoryUI>();
+        //UIUtilsì—ì„œ ì»´í¬ë„ŒíŠ¸ ê°€ì ¸ì™€ì„œ ê·¸ê±¸ ì»¬ë ‰ì…˜ì— ë„£ì–´ì¤˜ì•¼í•¨
+        
+        //foreach (Transform child in inventory)
+        //{
+        //    //Debug.Log(child.childCount);
+        //    ItemSlot slot = child.GetComponentInChildren<ItemSlot>();
 
-            if(slot != null)
-            {
-                itemSlots.Add(slot);
-            }
+        //    if(slot != null)
+        //    {
+        //        itemSlots.Add(slot);
+        //    }
 
-        }
+        //}
     }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.I) && PV.IsMine)
         {
-            if(UiUtils.GetUI<InventoryUI>().gameObject.activeSelf == false)
+            if(inventoryUI.gameObject.activeSelf == false)
             {
-                UiUtils.GetUI<InventoryUI>().gameObject.SetActive(true);
+                inventoryUI.gameObject.SetActive(true);
             }
             else
             {
-                UiUtils.GetUI<InventoryUI>().gameObject.SetActive(false);
+                inventoryUI.gameObject.SetActive(false);
             }
             
         }
     }
 
 
-    //¾ÆÀÌÅÛ È¹µæ
-    public void GetItem(Item item)
+    //ì•„ì´í…œ íšë“
+    public void GetItem(Item item, ItemType type)
     {
-        for(int i=0; i<itemSlots.Count; i++)
+        if (inventoryUI.ItemSlotCheck(item, type))
         {
-            if (itemSlots[i].item == null && itemSlots[i].type == item.Data.Itemtype)
-            {
-                itemSlots[i].SetItem(item);
-                return;
-            }
-            else
-            {
-                //no storage
-            }
-
-
+            items.Add(item);
         }
-        Debug.Log("NoStorage");
     }
 
     public void UseItem(int num)
     {
 
-        if (itemSlots[num].item != null)
+        if (items[num] != null)
         {
-            //¾ÆÀÌÅÛ È¿°ú ¹ßµ¿À» ¿©±â¼­ ÇÏ°Å³ª ¾Æ´Ï¸é ´Ù¸¥ °÷¿¡¼­
-            itemSlots[num].SetItem(null);
-            NowItemImage(num);
+            //ì•„ì´í…œ íš¨ê³¼ ë°œë™ì„ ì—¬ê¸°ì„œ í•˜ê±°ë‚˜ ì•„ë‹ˆë©´ ë‹¤ë¥¸ ê³³ì—ì„œ
+            //items[num].SetItem(null);
+            //NowItemImage(num);
             return;
         }
         else
@@ -84,19 +76,19 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void NowItemImage(int num)
-    {
-        if (itemSlots[num].item != null)
-        {
-            NowItem_img.sprite = itemSlots[num].item.Data.IconSprite;
-        }
-        else
-        {
-            Debug.Log("nothing");
-            NowItem_img.sprite = null;
-        }
+    //public void NowItemImage(int num)
+    //{
+    //    if (itemSlots[num].item != null)
+    //    {
+    //        NowItem_img.sprite = itemSlots[num].item.Data.IconSprite;
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("nothing");
+    //        NowItem_img.sprite = null;
+    //    }
         
-    }
+    //}
 
 
    

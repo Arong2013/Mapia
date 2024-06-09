@@ -106,10 +106,11 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (collision.CompareTag("Item"))
         {
-            if (collision.GetComponent<Item_Script>().item != null && PV.IsMine)
+            Item collisionItem = collision.GetComponent<Item_Script>().item;
+            if (collisionItem != null && PV.IsMine)
             {
-                UIManager.Instance.inventory.GetComponent<Inventory>().GetItem(collision.GetComponent<Item_Script>().item);
-                UIManager.Instance.SetNowItem(itemChoice);
+                //inventory.GetItem(collisionItem, collisionItem.Data.Itemtype);
+                //UIManager.Instance.SetNowItem(itemChoice);
             }
             else
             {
