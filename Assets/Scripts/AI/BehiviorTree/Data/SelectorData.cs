@@ -18,7 +18,7 @@ public class SelectorData : NodeData
     
 public class Selector : Node
     {
-        public Selector(Ai ai): base(ai) { }
+        public Selector(): base() { }
         public Selector(List<Node> childern) : base(childern) { }   
         public override NodeState Evaluate()
         {

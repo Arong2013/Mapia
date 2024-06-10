@@ -10,22 +10,6 @@ public abstract class NodeData : ScriptableObject
 [System.Serializable]
 public abstract class Node
 {
-    Ai nodeAI;
-
-    public Ai NodeAI
-    {
-        get
-        {
-            if (parent != null)
-            {
-                return parent.NodeAI;
-            }
-            else
-            {
-                return nodeAI;
-            }
-        }
-    }
     protected NodeState state;
 
     public Node parent;
@@ -47,12 +31,6 @@ public abstract class Node
         }
 
     }
-
-    public Node(Ai ai)
-    {
-        parent = null;
-        nodeAI = ai;
-    }
     public void _Attach(Node node)
     {
         node.parent = this;
@@ -61,16 +39,16 @@ public abstract class Node
 
     public virtual NodeState Evaluate() => NodeState.FAILURE;
 
-    public void SetDeta(object value)
+    public void SetData(object value)
     {
         if (parent != null)
         {
-            parent.SetDeta(value);
+            parent.SetData(value);
         }
         else
         {
             if (datadic.ContainsKey(value.GetType()))
-                datadic[value.GetType()] = value; 
+                datadic[value.GetType()] = value;
 
 
             else
@@ -80,20 +58,20 @@ public abstract class Node
         }
     }
 
-    public object GetDeta<T>()
+     public T GetDeta<T>()
     {
         object value = null;
         if (datadic.TryGetValue(typeof(T), out value))
-            return value;
+            return (T)value;
         Node node = parent;
         while (node != null)
         {
             value = node.GetDeta<T>();
             if (value != null)
-                return value;
+                return (T)value;
             node = node.parent;
         }
-        return null;
+        return default(T);
     }
 
     public bool ClearData<T>()
@@ -132,8 +110,4 @@ public abstract class Node
         }
 
     }
-
-    public void SetAI(Ai ai) { nodeAI = ai; }
-
-
 }
