@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -8,10 +8,10 @@ using Cinemachine;
 
 public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public Rigidbody2D RB;
-    public Animator AN;
-    public SpriteRenderer SR;
-    public PhotonView PV;
+    Rigidbody2D RB;
+    Animator AN;
+    SpriteRenderer SR;
+    PhotonView PV;
     public Text NickNameText;
     public Image HealthImage;
 
@@ -19,9 +19,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
 
     bool isGround;
     Vector3 curPos;
-
-
-
     
     void Awake()
     {
@@ -48,6 +45,8 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
             Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
             RB.velocity = movement * 4;
 
+            
+
             if (movement != Vector2.zero)
             {
                 AN.SetBool("walk", true);
@@ -63,39 +62,39 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
                 AN.SetTrigger("shot");
             }
 
-            // 인벤토리 열기 및 닫기
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                if (UIManager.Instance.inventory.activeSelf == false)
-                {
-                    UIManager.Instance.inventory.SetActive(true);
-                }
-                else
-                {
-                    UIManager.Instance.inventory.SetActive(false);
-                }
-            }
+            // // 인벤토리 열기 및 닫기
+            // if (Input.GetKeyDown(KeyCode.I))
+            // {
+            //     if (UIManager.Instance.inventory.activeSelf == false)
+            //     {
+            //         UIManager.Instance.inventory.SetActive(true);
+            //     }
+            //     else
+            //     {
+            //         UIManager.Instance.inventory.SetActive(false);
+            //     }
+            // }
 
-            // 아이템 고르기
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                if (itemChoice > 0) itemChoice--;
-                else itemChoice = 2;
+            // // 아이템 고르기
+            // if (Input.GetKeyDown(KeyCode.Q))
+            // {
+            //     if (itemChoice > 0) itemChoice--;
+            //     else itemChoice = 2;
 
-                UIManager.Instance.SetNowItem(itemChoice);
-            }
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (itemChoice < 2) itemChoice++;
-                else itemChoice = 0;
+            //     UIManager.Instance.SetNowItem(itemChoice);
+            // }
+            // if (Input.GetKeyDown(KeyCode.E))
+            // {
+            //     if (itemChoice < 2) itemChoice++;
+            //     else itemChoice = 0;
 
-                UIManager.Instance.SetNowItem(itemChoice);
-            }
+            //     UIManager.Instance.SetNowItem(itemChoice);
+            // }
 
-            if (Input.GetKeyDown(KeyCode.Tab))
-            {
-                UIManager.Instance.inventory.GetComponent<Inventory>().UseItem(itemChoice);
-            }
+            // if (Input.GetKeyDown(KeyCode.Tab))
+            // {
+            //     UIManager.Instance.inventory.GetComponent<Inventory>().UseItem(itemChoice);
+            // }
         }
         // IsMine이 아닌 것들은 부드럽게 위치 동기화
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
@@ -108,8 +107,8 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (collision.GetComponent<Item_Script>().item != null && PV.IsMine)
             {
-                UIManager.Instance.inventory.GetComponent<Inventory>().GetItem(collision.GetComponent<Item_Script>().item);
-                UIManager.Instance.SetNowItem(itemChoice);
+                // UIManager.Instance.inventory.GetComponent<Inventory>().GetItem(collision.GetComponent<Item_Script>().item);
+                // UIManager.Instance.SetNowItem(itemChoice);
             }
             else
             {

@@ -21,21 +21,21 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void Start()
     {
         //myImage = GetComponent<Image>();
-        inventory = GameManager.Instance.invenTory;
+        inventory = Manager.Instance.GetChild<GameManager>().invenTory;
         ParentTransform = transform.parent;
         Debug.Log(ParentTransform.name);
     }
 
-    public void OnBeginDrag(PointerEventData eventData) //µå·¡±× ½ÃÀÛ
+    public void OnBeginDrag(PointerEventData eventData) //ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         transform.SetParent(UiUtils.GetUI<InventoryUI>().transform);
         defaultPosition = GetComponent<RectTransform>().localPosition;
         myImage.raycastTarget = false;
         inventory.DragSlot = GetComponent <ItemSlot>();
-        //°¡Àå ¸ÕÀú µå·¡±×¸¦ ½ÃÀÛÇÒ ¶§ Ã³À½À§Ä¡ÀÇ ÁÂÇ¥¸¦ ÀúÀåÇØ³õÀ½
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½×¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø³ï¿½ï¿½ï¿½
     }
 
-    public void OnDrag(PointerEventData eventData) //µå·¡±×ÁßÀÏ ¶§
+    public void OnDrag(PointerEventData eventData) //ï¿½å·¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     {
         //Debug.Log(gameObject.name);
         Vector2 CurrentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -43,7 +43,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     }
 
-    public void OnEndDrag(PointerEventData eventData) //µå·¡±× ³¡³µÀ» ¶§
+    public void OnEndDrag(PointerEventData eventData) //ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
     {
         transform.localPosition = defaultPosition;
         transform.SetParent(ParentTransform);
@@ -53,15 +53,15 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnDrop(PointerEventData eventData)
     {
-        //ÇöÀç ¾ÆÀÌÅÛÀÌ ÀÖ´Â À§Ä¡¿¡ ¾ÆÀÌÅÛ ½½·ÔÀÌ Á¸ÀçÇÏ´ÂÁö Ã¼Å©ÇØ¼­ ÀÖ´Ù¸é º¯°æÀ» ÇØÁà¾ßÇÔ
-        //Áö±Ý »óÅÂ´Â ¾ÆÀÌÅÛÀ» º¹Á¦½ÃÅ°´Â °ÅÀÓ
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ Ã¼Å©ï¿½Ø¼ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if(inventory.DragSlot.type == type)
         {
             if (inventory.DragSlot != null)
             {
                 if (item != null)
                 {
-                    Debug.Log("¹¹°¡ ÀÖ¾î¿ä" + item.Data.name);
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½" + item.Data.name);
                     var Temp_Data = item;
                     item = inventory.DragSlot.item;
                     inventory.DragSlot.item = Temp_Data;
@@ -70,7 +70,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 }
                 else
                 {
-                    Debug.Log("ÀÛµ¿ÀÌ µÇ¿ä");
+                    Debug.Log("ï¿½Ûµï¿½ï¿½ï¿½ ï¿½Ç¿ï¿½");
                     item = inventory.DragSlot.item;
                     inventory.DragSlot.item = null;
                     Insert_Data();
@@ -81,7 +81,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             }
             else
             {
-                Debug.Log("nullÀÌ¿¡¿ä");
+                Debug.Log("nullï¿½Ì¿ï¿½ï¿½ï¿½");
             }
         }
         

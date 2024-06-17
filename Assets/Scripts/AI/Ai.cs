@@ -7,11 +7,11 @@ using UnityEngine.UI;
 using Cinemachine;
 using System;
 
-public class Ai : MonoBehaviourPunCallbacks, IPunObservable
+public abstract class Ai : MonoBehaviourPunCallbacks, IPunObservable
 {
     [HideInInspector] public Rigidbody2D RB;
     [HideInInspector] public Animator AN;
-     public SpriteRenderer SR;
+   [HideInInspector]  public SpriteRenderer SR;
     [HideInInspector] public PhotonView PV;
     public Text NickNameText;
     public Image HealthImage;
@@ -32,19 +32,19 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
         AN = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
         PV = GetComponent<PhotonView>();
-        inventory = GameManager.Instance.gameObject.GetComponent<Inventory>();
+        inventory = Manager.Instance.GetChild<GameManager>().GetComponent<Inventory>();
         // 닉네임
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
-       
+
         if (PV.IsMine)
         {
             // 2D 카메라
             var CM = GameObject.Find("CMCamera").GetComponent<CinemachineVirtualCamera>();
             CM.Follow = transform;
             CM.LookAt = transform;
-            SetNode<MoveNode>(new MoveNode(RB, AN,this));
-            PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal); 
+            SetNode<MoveNode>(new MoveNode(RB, AN, this));
+            PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
         }
     }
 
@@ -128,13 +128,9 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
         if (parentNode == null)
         {
             var sequenceNode = new Sequence();
-            actionNodes.Add(type,sequenceNode); 
-            actionNodes[type]._Attach(node);
+            actionNodes.Add(type, sequenceNode);
         }
-        else
-        {
-            parentNode._Attach(node);
-        }
+        actionNodes[type]._Attach(node);
     }
     public NodeState CallActionNode<T>(params object[] objects) where T : Node
     {
@@ -149,8 +145,14 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
         return node.Evaluate();
     }
 
-    public void AddNode<T>(Node node) where T : Node
+    public bool RemoveNode<T>(object _source) where T : Node
     {
-        actionNodes[typeof(T)]._Attach(node);
+        var type = typeof(T);
+        if (actionNodes.TryGetValue(type, out var node))
+        {
+
+        }
+        Debug.Log(type + " 노드가 존재하지 않습니다.");
+        return false;
     }
 }

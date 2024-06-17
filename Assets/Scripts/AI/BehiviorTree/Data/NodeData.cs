@@ -10,14 +10,12 @@ public abstract class NodeData : ScriptableObject
 [System.Serializable]
 public abstract class Node
 {
-    protected NodeState state;
+   protected NodeState state;
 
-    public Node parent;
+    protected Node parent;
     protected List<Node> children = new List<Node>();
 
     Dictionary<Type, object> datadic = new Dictionary<Type, object>();
-    public NodeData Data { get; private set; }
-    public Node(NodeData data) => Data = data;
 
     public Node()
     {
@@ -31,12 +29,18 @@ public abstract class Node
         }
 
     }
-    public void _Attach(Node node)
+    public void _Attach(Node node, bool addToEnd = true)
     {
         node.parent = this;
-        children.Add(node);
+        if (addToEnd)
+        {
+            children.Add(node);
+        }
+        else
+        {
+            children.Insert(0, node);
+        }
     }
-
     public virtual NodeState Evaluate() => NodeState.FAILURE;
 
     public void SetData(object value)
@@ -49,8 +53,6 @@ public abstract class Node
         {
             if (datadic.ContainsKey(value.GetType()))
                 datadic[value.GetType()] = value;
-
-
             else
             {
                 datadic.Add(value.GetType(), value);
@@ -58,18 +60,19 @@ public abstract class Node
         }
     }
 
-     public T GetDeta<T>()
+    public T GetData<T>()
     {
-        object value = null;
-        if (datadic.TryGetValue(typeof(T), out value))
-            return (T)value;
-        Node node = parent;
-        while (node != null)
+    
+        if (parent != null)
         {
-            value = node.GetDeta<T>();
-            if (value != null)
-                return (T)value;
-            node = node.parent;
+            return parent.GetData<T>();
+        }
+        else
+        {
+            if (datadic.ContainsKey(typeof(T)))
+            {
+                return (T)datadic[typeof(T)];
+            }
         }
         return default(T);
     }
