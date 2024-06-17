@@ -86,7 +86,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &8375901363171296113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -381,7 +381,9 @@ GameObject:
   - component: {fileID: 4356139642182378598}
   - component: {fileID: 564668160908384226}
   - component: {fileID: 5074776327640072849}
-  - component: {fileID: -2806158089842065068}
+  - component: {fileID: 6731073287857355759}
+  - component: {fileID: 8337321730409143365}
+  - component: {fileID: 6754503916428016920}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -561,7 +563,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 564668160908384226}
   - {fileID: 5074776327640072849}
-  - {fileID: 0}
+  - {fileID: 8337321730409143365}
+  - {fileID: 6754503916428016920}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -608,7 +611,7 @@ MonoBehaviour:
   m_SynchronizeAngularVelocity: 0
   m_TeleportEnabled: 0
   m_TeleportIfDistanceGreaterThan: 3
---- !u!114 &-2806158089842065068
+--- !u!114 &6731073287857355759
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -617,12 +620,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 8375901364799043233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88b5595146911da48a75dd3d7d256426, type: 3}
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &8337321730409143365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8375901364799043233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf653fc177421ef46815234b7e14683f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   RB: {fileID: 0}
   AN: {fileID: 0}
-  SR: {fileID: 0}
+  SR: {fileID: 8375901364799043245}
   PV: {fileID: 0}
   NickNameText: {fileID: 8375901364521192189}
   HealthImage: {fileID: 8375901364045505310}
@@ -630,3 +648,15 @@ MonoBehaviour:
   inventory: {fileID: 0}
   moveHorizontal: 0
   moveVertical: 0
+--- !u!114 &6754503916428016920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8375901364799043233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f658a2c28325604ebd62e892ef9c534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

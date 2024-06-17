@@ -7,11 +7,11 @@ using UnityEngine.UI;
 using Cinemachine;
 using System;
 
-public class Ai : MonoBehaviourPunCallbacks, IPunObservable
+public abstract class Ai : MonoBehaviourPunCallbacks, IPunObservable
 {
     [HideInInspector] public Rigidbody2D RB;
     [HideInInspector] public Animator AN;
-    [HideInInspector] public SpriteRenderer SR;
+   [HideInInspector]  public SpriteRenderer SR;
     [HideInInspector] public PhotonView PV;
     public Text NickNameText;
     public Image HealthImage;
@@ -32,7 +32,7 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
         AN = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
         PV = GetComponent<PhotonView>();
-        inventory = GameManager.Instance.gameObject.GetComponent<Inventory>();
+        inventory = Manager.Instance.GetChild<GameManager>().GetComponent<Inventory>();
         // 닉네임
         NickNameText.text = PV.IsMine ? PhotonNetwork.NickName : PV.Owner.NickName;
         NickNameText.color = PV.IsMine ? Color.green : Color.red;
@@ -43,9 +43,8 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
             var CM = GameObject.Find("CMCamera").GetComponent<CinemachineVirtualCamera>();
             CM.Follow = transform;
             CM.LookAt = transform;
-
-            actionNodes.Add(typeof(AIUtils.MoveNode), new Sequence(this));
-            GetNode<AIUtils.MoveNode>()._Attach(new AIUtils.MoveNode());
+            SetNode<MoveNode>(new MoveNode(RB, AN, this));
+            PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
         }
     }
 
@@ -57,7 +56,7 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
             moveHorizontal = Input.GetAxisRaw("Horizontal");
             moveVertical = Input.GetAxisRaw("Vertical");
             Vector2 movement = new Vector2(moveHorizontal, moveVertical).normalized;
-            CallActionNode<AIUtils.MoveNode>(movement);
+            CallActionNode<MoveNode>(movement);
         }
         // IsMine이 아닌 것들은 부드럽게 위치 동기화
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
@@ -112,34 +111,49 @@ public class Ai : MonoBehaviourPunCallbacks, IPunObservable
             HealthImage.fillAmount = (float)stream.ReceiveNext();
         }
     }
-
-    public Node GetNode<T>() where T : Node, new()
+    public Node GetNode<T>() where T : Node
     {
         var type = typeof(T);
         if (!actionNodes.TryGetValue(type, out var node))
         {
-            node = new T();
-            actionNodes.Add(type, new Sequence(this));
-            actionNodes[type]._Attach(node);
+            Debug.Log(type + "이 없습니다");
+            return null;
         }
         return actionNodes[type];
     }
+    public void SetNode<T>(Node node) where T : Node
+    {
+        var type = typeof(T);
+        var parentNode = GetNode<T>();
 
-    public NodeState CallActionNode<T>(params object[] objects) where T : Node, new()
+        if (parentNode == null)
+        {
+            var sequenceNode = new Sequence();
+            actionNodes.Add(type, sequenceNode);
+        }
+        actionNodes[type]._Attach(node);
+    }
+    public NodeState CallActionNode<T>(params object[] objects) where T : Node
     {
         var node = GetNode<T>();
         if (objects.Length > 0)
         {
             foreach (object obj in objects)
             {
-                node.SetDeta(obj);
+                node.SetData(obj);
             }
         }
         return node.Evaluate();
     }
 
-    public void AddNode<T>(Node node) where T : Node
+    public bool RemoveNode<T>(object _source) where T : Node
     {
-        actionNodes[typeof(T)]._Attach(node);
+        var type = typeof(T);
+        if (actionNodes.TryGetValue(type, out var node))
+        {
+
+        }
+        Debug.Log(type + " 노드가 존재하지 않습니다.");
+        return false;
     }
 }

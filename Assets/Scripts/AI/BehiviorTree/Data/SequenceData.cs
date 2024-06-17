@@ -18,7 +18,7 @@ public class SequenceData : NodeData
 
     public class Sequence : Node
     {
-        public Sequence(Ai ai) : base(ai){ }
+        public Sequence() : base(){ }
         public Sequence(List<Node> childern) : base(childern) { }   
         public override NodeState Evaluate()
         {
