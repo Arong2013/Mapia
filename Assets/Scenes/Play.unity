@@ -3426,6 +3426,7 @@ GameObject:
   - component: {fileID: 1678499914}
   - component: {fileID: 1678499917}
   - component: {fileID: 1678499919}
+  - component: {fileID: 1678499920}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3526,6 +3527,18 @@ MonoBehaviour:
   itemSlots: []
   NowItem_img: {fileID: 275442512}
   DragSlot: {fileID: 0}
+--- !u!114 &1678499920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678499912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51583b4a6b580c241be09146343cf401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1721913876
 GameObject:
   m_ObjectHideFlags: 0
