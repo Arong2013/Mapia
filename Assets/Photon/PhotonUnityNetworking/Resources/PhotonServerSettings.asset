@@ -44,5 +44,6 @@ MonoBehaviour:
   - UnregisterVote
   - SpawnItem
   - ChooseRandomnum
+  - Invisibility
   DisableAutoOpenWizard: 1
   ShowSettings: 1
