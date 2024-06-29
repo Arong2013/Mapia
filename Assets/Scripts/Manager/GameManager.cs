@@ -5,11 +5,18 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
 using System.Linq;
-public class GameManager : MonoBehaviourPunCallbacks
+public class GameManager : Singleton<GameManager>
 {
+    public GameObject RespawnPanel;
+
+    public VoteManager voteManager;
+
     public Inventory invenTory;
+
     private void Start()
     {
+
+        voteManager = GetComponent<VoteManager>();
         invenTory = GetComponent<Inventory>();
     }
 
@@ -33,6 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void Spawn()
     {
         PhotonNetwork.Instantiate("Player", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+        RespawnPanel.SetActive(false);
     }
 
     void Update()
@@ -43,5 +51,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
+        RespawnPanel.SetActive(false);
     }
 }

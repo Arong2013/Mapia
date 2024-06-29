@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     public List <Item> items = new List <Item> ();
     //public List<ItemSlot> itemSlots = new List<ItemSlot>();
     public Image NowItem_img;
-    InventoryUI inventoryUI;
+    public InventoryUI inventoryUI;
 
 
     PhotonView PV;
@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I) && PV.IsMine)
+        if(Input.GetKeyDown(KeyCode.I))
         {
             if(inventoryUI.gameObject.activeSelf == false)
             {
