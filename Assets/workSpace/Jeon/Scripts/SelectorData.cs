@@ -22,7 +22,6 @@ public class Selector : Node
         public Selector(List<Node> childern) : base(childern) { }   
         public override NodeState Evaluate()
         {
-
             foreach(Node node in children)
             {
                 switch(node.Evaluate())
@@ -39,7 +38,6 @@ public class Selector : Node
                         continue;
                 }
             }
-
             state = NodeState.FAILURE;
             return state;   
         }

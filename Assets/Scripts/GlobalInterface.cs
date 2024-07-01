@@ -8,3 +8,20 @@ public interface IPickupable
 {
     public void Pickup();
 }
+public interface IStatComponent
+{
+    void RemoveModifiersFromSource(object source);
+}
+
+public interface IStatusable
+{
+    public HashSet<IStatComponent> StatComponents { get; }
+
+    public T GetStatComponent<T>() where T : IStatComponent;
+
+}
+public interface ICallNodeDataHandler<T>
+where T : Node
+{
+    void SetData(Node data);
+}

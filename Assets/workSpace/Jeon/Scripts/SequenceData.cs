@@ -35,13 +35,12 @@ public class SequenceData : NodeData
                         continue;
                     case NodeState.RUNNING:
                         anyChildIsRunning = true;
-                        continue;
+                        return NodeState.RUNNING;
                     default:
                         state = NodeState.SUCCESS;
                         return state;
                 }
             }
-
             state = anyChildIsRunning ? NodeState.RUNNING : NodeState.SUCCESS;
             return state;   
         }

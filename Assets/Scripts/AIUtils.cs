@@ -6,38 +6,49 @@ using Photon.Realtime;
 using UnityEngine.UI;
 using Cinemachine;
 using System;
-public class MoveNode : Node
+
+
+public class MovementNode : Node, ICallNodeDataHandler<MovementNode>
 {
-    Rigidbody2D rigidbody2D;
-    Animator animator;
+    protected NodeState nodeState = NodeState.FAILURE;
+    protected Actor actor;
+    protected MovementStats movementStats;
 
-    PhotonView photonView;
-
-    Ai ai;
-    public MoveNode(Rigidbody2D _rigidbody2D, Animator _animator, Ai _ai)
+    readonly Vector3 dir;
+    public MovementNode(Actor _actor)
     {
-        rigidbody2D = _rigidbody2D;
-        animator = _animator;
-        ai = _ai;
+        actor = _actor;
+        movementStats = _actor.GetStatComponent<MovementStats>();
+    }
+    public MovementNode(Vector3 _dir)
+    {
+        dir = _dir;
     }
     public override NodeState Evaluate()
     {
-        var movement = (Vector2)GetData<Vector2>();
-        rigidbody2D.velocity = movement * 4;
-        if (movement != Vector2.zero)
+        Vector3 cundir = GetData<Vector3>();
+        if (cundir == new Vector3(0, 0, 0))
         {
-            animator.SetBool("walk", true);
-            //   ai.PV.RPC(nameof(ai.FlipXRPC), RpcTarget.AllBuffered, ai.moveHorizontal); // 재접속시 filpX를 동기화해주기 위해서 AllBuffered
+            nodeState = NodeState.FAILURE;
+            return nodeState;
         }
         else
         {
-            animator.SetBool("walk", false);
+            if (nodeState != NodeState.RUNNING)
+            {
+                nodeState = NodeState.SUCCESS;
+                return nodeState;
+            }
         }
-        return base.Evaluate();
+
+        return NodeState.SUCCESS;
+    }
+
+    public void SetData(Node data)
+    {
+        data.SetData(dir);
     }
 }
-
-
 public class InvisibilityNode : Node
 {
     float skillTime;
@@ -53,7 +64,7 @@ public class InvisibilityNode : Node
 
     public override NodeState Evaluate()
     {
-        if(skillTime <= 0)
+        if (skillTime <= 0)
         {
 
         }
@@ -61,7 +72,7 @@ public class InvisibilityNode : Node
         {
             skillTime -= Time.deltaTime;
         }
-        photonView.RPC(nameof(punRPC),RpcTarget.All);
+        photonView.RPC(nameof(punRPC), RpcTarget.All);
         return NodeState.RUNNING;
     }
 }

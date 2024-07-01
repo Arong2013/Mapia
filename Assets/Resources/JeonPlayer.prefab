@@ -382,10 +382,10 @@ GameObject:
   - component: {fileID: 564668160908384226}
   - component: {fileID: 5074776327640072849}
   - component: {fileID: 6731073287857355759}
+  - component: {fileID: 8337321730409143365}
   - component: {fileID: 6754503916428016920}
-  - component: {fileID: 8601243421614661150}
   m_Layer: 0
-  m_Name: Player
+  m_Name: JeonPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -563,7 +563,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 564668160908384226}
   - {fileID: 5074776327640072849}
-  - {fileID: 8601243421614661150}
+  - {fileID: 8337321730409143365}
   - {fileID: 6754503916428016920}
   viewIdField: 0
   InstantiationId: 0
@@ -626,6 +626,28 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
+--- !u!114 &8337321730409143365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8375901364799043233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf653fc177421ef46815234b7e14683f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RB: {fileID: 0}
+  AN: {fileID: 0}
+  SR: {fileID: 8375901364799043245}
+  PV: {fileID: 0}
+  NickNameText: {fileID: 8375901364521192189}
+  HealthImage: {fileID: 8375901364045505310}
+  itemChoice: 0
+  inventory: {fileID: 0}
+  moveHorizontal: 0
+  moveVertical: 0
 --- !u!114 &6754503916428016920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -638,23 +660,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f658a2c28325604ebd62e892ef9c534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8601243421614661150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8375901364799043233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c12dae62e7c28a4e9a9d377751a7c7b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RB: {fileID: 0}
-  AN: {fileID: 0}
-  SR: {fileID: 0}
-  PV: {fileID: 0}
-  moveHorizontal: 0
-  moveVertical: 0
-  nodeState: 2
-  DropObj: {fileID: 0}

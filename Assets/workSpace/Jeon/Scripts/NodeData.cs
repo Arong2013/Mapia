@@ -10,7 +10,7 @@ public abstract class NodeData : ScriptableObject
 [System.Serializable]
 public abstract class Node
 {
-   protected NodeState state;
+    protected NodeState state;
 
     protected Node parent;
     protected List<Node> children = new List<Node>();
@@ -25,14 +25,14 @@ public abstract class Node
     {
         foreach (Node child in children)
         {
-            _Attach(child);
+            _Attach(child,true);
         }
 
     }
-    public void _Attach(Node node, bool addToEnd = true)
+    public void _Attach(Node node, bool IsLower)
     {
         node.parent = this;
-        if (addToEnd)
+        if (IsLower)
         {
             children.Add(node);
         }
@@ -94,23 +94,21 @@ public abstract class Node
         }
         return false;
     }
+    // public Node GetNextSibling(Node node)
+    // {
+    //     if (parent != null && parent.GetType() != typeof(Selector))
+    //     {
+    //         return parent.GetNextSibling(node);
+    //     }
+    //     else
+    //     {
+    //         int currentIndex = children.IndexOf(node);
+    //         if (currentIndex >= 0 && currentIndex < children.Count - 1)
+    //         {
+    //             return children[currentIndex + 1];
+    //         }
+    //         return null;
+    //     }
 
-
-    public Node GetNextSibling(Node node)
-    {
-        if (parent != null && parent.GetType() != typeof(Selector))
-        {
-            return parent.GetNextSibling(node);
-        }
-        else
-        {
-            int currentIndex = children.IndexOf(node);
-            if (currentIndex >= 0 && currentIndex < children.Count - 1)
-            {
-                return children[currentIndex + 1];
-            }
-            return null;
-        }
-
-    }
+    // }
 }
