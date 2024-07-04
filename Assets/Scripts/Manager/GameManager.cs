@@ -37,9 +37,9 @@ public class GameManager : Singleton<GameManager>
         foreach (GameObject GO in GameObject.FindGameObjectsWithTag("Bullet")) GO.GetComponent<PhotonView>().RPC("DestroyRPC", RpcTarget.All);
     }
 
-    public void Spawn()
+    public void Spawn() //여기 변경함
     {
-        PhotonNetwork.Instantiate("Player", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+        PhotonNetwork.Instantiate("Dong", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
         RespawnPanel.SetActive(false);
     }
 

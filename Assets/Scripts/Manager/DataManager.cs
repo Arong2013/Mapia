@@ -9,26 +9,31 @@ public class DataManager : Singleton<DataManager>
     public List<string> Actor_List = new List<string>();
     public bool[] Actor_Choosed;
     //데이터 매니저 직업 정보를 저장하고 있으며 필요할 때 빼옴
-
+    PhotonView pv;
     public int[] ID_arr;
+    int[] rand;
 
 
     public void Start()
     {
+        pv = GetComponent<PhotonView>();
         Actor_Choosed = new bool[Actor_List.Count];
     }
 
     public void Update()
     {
         //스타트에서 바로 됬으면 좋겠지만 이게 더 빨리 실행되서 제대로 값을 못받아옴
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            Set_Actor();
+            Set_Actor_Num();
+            pv.RPC("Set_Actor", RpcTarget.All, rand, ID_arr);
+            //Set_Actor();
         }
     }
 
 
-    public void Set_Actor() // bool 배열의 상태가 전부 true 일 경우 게임이 멈춤
+    [PunRPC]
+    public void Set_Actor_Num() // bool 배열의 상태가 전부 true 일 경우 게임이 멈춤
     {
         /*
          현재 플레이어 인원 수를 체크해서 각각의 플레이어들에게 랜덤 직업을 배분함
@@ -39,38 +44,58 @@ public class DataManager : Singleton<DataManager>
          */
 
         GameObject[] Player = GameObject.FindGameObjectsWithTag("Player");
-
+        rand = new int[Player.Length];
         ID_arr = new int[Player.Length];
         //Actor_Choosed = new bool[Actor_List.Count];
-        for(int i=0; i<Player.Length; i++)
+        for (int i = 0; i < Player.Length; i++)
         {
             ID_arr[i] = Player[i].GetComponent<PhotonView>().ViewID;
         }
 
-        for(int i=0; i<ID_arr.Length; i++)
+        for (int i = 0; i < ID_arr.Length; i++)
         {
             //Debug.Log(Player.Length);
             //Debug.Log(ID_arr[i]);
-            int rand = Random.Range(0, Actor_List.Count);
-            Debug.Log(rand);
-            while (Actor_Choosed[rand] == true)//게임이 튕겨요
+            rand[i] = Random.Range(0, Actor_List.Count);
+            while (Actor_Choosed[rand[i]] == true)//게임이 튕겨요
             {
                 Debug.Log("겹침");
-                rand = Random.Range(0, Actor_List.Count);
+                rand[i] = Random.Range(0, Actor_List.Count);
             }
-            Player[i].GetComponent<PlayerController>().Actor_What = Actor_List[rand];
-            Actor_Choosed[rand]=true;
+            Actor_Choosed[rand[i]] = true;
 
         }
-
-
-
-
-
-
     }
 
+    [PunRPC]
+    public void Set_Actor(int[] num_arr, int[] id)
+    {
+        GameObject[] Player = GameObject.FindGameObjectsWithTag("Player");
 
+        if(ID_arr.Length == 0)
+        {
+            ID_arr = new int[Player.Length];
+            //Actor_Choosed = new bool[Actor_List.Count];
+            ID_arr = id;
+        }
+        
+
+        for (int i = 0; i < Player.Length; i++)
+        {
+
+
+            for (int j = 0; j < Player.Length; j++)
+            {
+                Debug.Log(ID_arr[i]);
+                if (ID_arr[i] == Player[j].GetComponent<PhotonView>().ViewID)
+                {
+                    Player[j].GetComponent<Dectective>().Actor_What = Actor_List[num_arr[i]];
+                }
+
+            }
+        }
+
+    }
 
 
 }

@@ -3739,6 +3739,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7098305264265906615, guid: 4102427842e829b428dd53b9fc5f223e,
+        type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7098305264265906615, guid: 4102427842e829b428dd53b9fc5f223e,
+        type: 3}
+      propertyPath: InstantiationId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7098305264265906615, guid: 4102427842e829b428dd53b9fc5f223e,
+        type: 3}
+      propertyPath: Synchronization
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7098305264265906615, guid: 4102427842e829b428dd53b9fc5f223e,
+        type: 3}
+      propertyPath: ObservedComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8681741175530249512, guid: 4102427842e829b428dd53b9fc5f223e,
         type: 3}
       propertyPath: m_Name

@@ -10,6 +10,7 @@ public class Dectective : Ai, IPointerClickHandler
 {
     string hello = "Hello World!";
     public Text ActorText;
+    public string Actor_What;
     RpcManager rpcManager;
 
     private void OnMouseDown()
@@ -28,7 +29,7 @@ public class Dectective : Ai, IPointerClickHandler
     {
         if (!PV.IsMine)
         {
-            ActorText.text = hello;
+            ActorText.text = Actor_What;
         }
     }
 

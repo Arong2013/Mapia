@@ -643,8 +643,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 564668160908384226}
   - {fileID: 5074776327640072849}
-  - {fileID: 6731073287857355759}
   - {fileID: 6754503916428016920}
+  - {fileID: 1719301885835299747}
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0
@@ -729,6 +729,7 @@ MonoBehaviour:
   moveHorizontal: 0
   moveVertical: 0
   ActorText: {fileID: 7945381087935632658}
+  Actor_What: 
 --- !u!114 &6754503916428016920
 MonoBehaviour:
   m_ObjectHideFlags: 0
