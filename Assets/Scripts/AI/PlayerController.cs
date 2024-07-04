@@ -7,7 +7,9 @@ using UnityEngine;
 public class PlayerController : Ai
 {
     RpcManager rpcManager;
-    
+    public string Actor_What;
+
+
     private void OnMouseDown()
     {
        // GameManager.Instance.voteManager.InitiateVote();

@@ -648,6 +648,7 @@ MonoBehaviour:
   inventory: {fileID: 0}
   moveHorizontal: 0
   moveVertical: 0
+  Actor_What: 
 --- !u!114 &6754503916428016920
 MonoBehaviour:
   m_ObjectHideFlags: 0
