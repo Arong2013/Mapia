@@ -10,10 +10,10 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
-    private int count; 
+    private int count;
     public Item item;
     public Image myImage;
-    public Inventory inventory;
+    public InventoryUI inventoryUI;
     Vector2 defaultPosition;
     Transform ParentTransform;
     public ItemType type;
@@ -21,21 +21,21 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void Start()
     {
         //myImage = GetComponent<Image>();
-        inventory = GameManager.Instance.invenTory;
+        inventoryUI = UiUtils.GetUI<InventoryUI>();
         ParentTransform = transform.parent;
         Debug.Log(ParentTransform.name);
     }
 
-    public void OnBeginDrag(PointerEventData eventData) //�巡�� ����
+    public void OnBeginDrag(PointerEventData eventData) //드래그 시작
     {
         transform.SetParent(UiUtils.GetUI<InventoryUI>().transform);
         defaultPosition = GetComponent<RectTransform>().localPosition;
         myImage.raycastTarget = false;
-        inventory.DragSlot = GetComponent <ItemSlot>();
-        //���� ���� �巡�׸� ������ �� ó����ġ�� ��ǥ�� �����س���
+        inventoryUI.DragSlot = GetComponent<ItemSlot>();
+        //가장 먼저 드래그를 시작할 때 처음위치의 좌표를 저장해놓음
     }
 
-    public void OnDrag(PointerEventData eventData) //�巡������ ��
+    public void OnDrag(PointerEventData eventData) //드래그중일 때
     {
         //Debug.Log(gameObject.name);
         Vector2 CurrentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -43,7 +43,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     }
 
-    public void OnEndDrag(PointerEventData eventData) //�巡�� ������ ��
+    public void OnEndDrag(PointerEventData eventData) //드래그 끝났을 때
     {
         transform.localPosition = defaultPosition;
         transform.SetParent(ParentTransform);
@@ -53,26 +53,26 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnDrop(PointerEventData eventData)
     {
-        //���� �������� �ִ� ��ġ�� ������ ������ �����ϴ��� üũ�ؼ� �ִٸ� ������ �������
-        //���� ���´� �������� ������Ű�� ����
-        if(inventory.DragSlot.type == type)
+        //현재 아이템이 있는 위치에 아이템 슬롯이 존재하는지 체크해서 있다면 변경을 해줘야함
+        //지금 상태는 아이템을 복제시키는 거임
+        if (inventoryUI.DragSlot.type == type)
         {
-            if (inventory.DragSlot != null)
+            if (inventoryUI.DragSlot != null)
             {
                 if (item != null)
                 {
-                    Debug.Log("���� �־��" + item.Data.name);
+                    Debug.Log("뭐가 있어요" + item.Data.name);
                     var Temp_Data = item;
-                    item = inventory.DragSlot.item;
-                    inventory.DragSlot.item = Temp_Data;
+                    item = inventoryUI.DragSlot.item;
+                    inventoryUI.DragSlot.item = Temp_Data;
                     Insert_Data();
 
                 }
                 else
                 {
-                    Debug.Log("�۵��� �ǿ�");
-                    item = inventory.DragSlot.item;
-                    inventory.DragSlot.item = null;
+                    Debug.Log("작동이 되요");
+                    item = inventoryUI.DragSlot.item;
+                    inventoryUI.DragSlot.item = null;
                     Insert_Data();
 
                 }
@@ -81,12 +81,9 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             }
             else
             {
-                Debug.Log("null�̿���");
+                Debug.Log("null이에요");
             }
         }
-        
-
-
     }
 
     void Insert_Data()
@@ -105,13 +102,13 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void SetItem(Item data)
     {
-            item = data;
-            type = item.Data.Itemtype;
-            if (item != null)
-                myImage.sprite = item.Data.IconSprite;
-            else
-                myImage.sprite = null;
-        
+        item = data;
+        type = item.Data.Itemtype;
+        if (item != null)
+            myImage.sprite = item.Data.IconSprite;
+        else
+            myImage.sprite = null;
+
     }
 
 
