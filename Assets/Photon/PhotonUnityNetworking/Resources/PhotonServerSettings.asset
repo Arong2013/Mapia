@@ -18,7 +18,7 @@ MonoBehaviour:
     AppIdVoice: 
     AppVersion: 
     UseNameServer: 1
-    FixedRegion: 
+    FixedRegion: kr
     Server: 
     Port: 0
     Protocol: 0
@@ -45,5 +45,13 @@ MonoBehaviour:
   - SpawnItem
   - ChooseRandomnum
   - Invisibility
+  - ShowObjectToPlayer
+  - ShowObjectToPlayers
+  - <ShowObjectToPlayer>g__RPCShowObjectToPlayer|3_0
+  - RPCInvisibility
+  - RPCShowObjectToPlayer
+  - SetJob
+  - RPCAddPlayer
+  - RPCaddActor
   DisableAutoOpenWizard: 1
   ShowSettings: 1

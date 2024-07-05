@@ -24,8 +24,6 @@ public class BulletScript : MonoBehaviourPunCallbacks
             PV.RPC("DestroyRPC", RpcTarget.AllBuffered);
         }
     }
-
-
     [PunRPC]
     void DirRPC(int dir) => this.dir = dir;
 

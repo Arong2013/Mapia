@@ -5,6 +5,7 @@ using Photon.Pun;
 using System;
 using System.Linq;
 using Cinemachine;
+using System.IO;
 
 
 public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable
@@ -15,13 +16,13 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable
     [HideInInspector] public PhotonView PV;
     [HideInInspector] public float moveHorizontal;
     [HideInInspector] public float moveVertical;
-
-    RpcManager rpcManager;
     Dictionary<Type, Node> ActNodeDic = new Dictionary<Type, Node>();
     Vector3 curPos;
 
     protected HashSet<IStatComponent> statComponents = new HashSet<IStatComponent>();
     public NodeState nodeState = NodeState.FAILURE;
+
+    public string ID => PhotonNetwork.LocalPlayer.ActorNumber.ToString();
 
     public virtual void Awake()
     {
@@ -29,7 +30,6 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable
         AN = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
         PV = GetComponent<PhotonView>();
-        rpcManager = GetComponent<RpcManager>();
 
 
         if (PV.IsMine)
@@ -40,12 +40,15 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable
             PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
         }
     }
-
+    protected virtual void Start()
+    {
+        GameManager.Instance.AddActor();
+    }
     void Update()
     {
         if (PV.IsMine)
         {
-            Move();   
+            Move();
         }
         // IsMine이 아닌 것들은 부드럽게 위치 동기화
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;

@@ -382,7 +382,6 @@ GameObject:
   - component: {fileID: 564668160908384226}
   - component: {fileID: 5074776327640072849}
   - component: {fileID: 6731073287857355759}
-  - component: {fileID: 6754503916428016920}
   - component: {fileID: 8601243421614661150}
   m_Layer: 0
   m_Name: Player
@@ -564,7 +563,6 @@ MonoBehaviour:
   - {fileID: 564668160908384226}
   - {fileID: 5074776327640072849}
   - {fileID: 8601243421614661150}
-  - {fileID: 6754503916428016920}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -626,18 +624,6 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
---- !u!114 &6754503916428016920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8375901364799043233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f658a2c28325604ebd62e892ef9c534, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8601243421614661150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,4 +643,5 @@ MonoBehaviour:
   moveHorizontal: 0
   moveVertical: 0
   nodeState: 2
+  MaxKillCount: 0
   DropObj: {fileID: 0}

@@ -6,13 +6,19 @@ using UnityEngine.UIElements;
 
 public class Chaser : Actor
 {
+    [SerializeField] int MaxKillCount;
+    Dictionary<string, int> killCount = new Dictionary<string, int>();
     public GameObject DropObj;
     public override void Awake()
     {
         base.Awake();
         statComponents.Add(new MovementStats());
         AddNode<MovementNode>(new MovementNode(this), true);
-        AddNode<MovementNode>(new ChaserDrop(DropObj), true);
+        AddNode<MovementNode>(new ChaserDrop(this), true);
+    }
+    protected override void Start()
+    {
+       base.Start();
     }
     public override void Move()
     {
@@ -23,26 +29,40 @@ public class Chaser : Actor
         CallAct<MovementNode>(new MovementNode(movement));
         PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
     }
+
+    public void AddKillCount(string _name)
+    {
+        if (killCount.TryGetValue(_name, out int a))
+        {
+            if (a < MaxKillCount)
+                a++;
+        }
+        else
+        {
+            killCount.Add(_name, 0);
+        }
+    }
+
 }
 
 
 public class ChaserDrop : Node
 {
     float cunTime;
-    readonly GameObject DropObj;
-    public ChaserDrop(GameObject _dropObj)
+    readonly Actor target;
+    public ChaserDrop(Actor _target)
     {
-        DropObj = _dropObj;
+        target = _target;
     }
     public override NodeState Evaluate()
     {
         cunTime++;
-        if (cunTime > 1000)
+        if (cunTime > 100)
         {
             int rand = Random.Range(1, 10);
             if (rand > 7)
             {
-                Debug.Log("에헤이");
+                GameManager.Instance.ShowObjectToPlayer(PhotonNetwork.LocalPlayer.ActorNumber.ToString(),target.transform.position);
             }
             cunTime = 0;
         }

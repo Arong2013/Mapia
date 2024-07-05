@@ -21,7 +21,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void Start()
     {
         //myImage = GetComponent<Image>();
-        inventory = Manager.Instance.GetChild<GameManager>().invenTory;
+        inventory = GameManager.Instance.invenTory;
         ParentTransform = transform.parent;
         Debug.Log(ParentTransform.name);
     }
