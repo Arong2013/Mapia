@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Dectective : Ai, IPointerClickHandler
+public class Dectective : Actor, IPointerClickHandler
 {
     string hello = "Hello World!";
     public Text ActorText;
@@ -33,7 +33,13 @@ public class Dectective : Ai, IPointerClickHandler
         }
     }
 
-
-
-
+    public override void Move()
+    {
+        moveHorizontal = Input.GetAxisRaw("Horizontal");
+        moveVertical = Input.GetAxisRaw("Vertical");
+        Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0).normalized;
+        RB.velocity = movement * 4f;
+       // CallAct<MovementNode>(new MovementNode(movement));
+        PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
+    }
 }
