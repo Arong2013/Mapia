@@ -53,5 +53,7 @@ MonoBehaviour:
   - SetJob
   - RPCAddPlayer
   - RPCaddActor
+  - Set_Actor
+  - Set_Actor_Num
   DisableAutoOpenWizard: 1
   ShowSettings: 1
