@@ -25,3 +25,9 @@ where T : Node
 {
     void SetData(Node data);
 }
+public interface IAnimatable
+{
+    void SetAnimator(AnimatorOverrideController animatorController, bool isSet = false);
+    bool CanPlayAnimation(string _animeName);
+    void PlayAnimation(string _animeName, object key = null);
+}

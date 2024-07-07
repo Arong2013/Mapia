@@ -6,9 +6,10 @@ using System;
 using System.Linq;
 using Cinemachine;
 using System.IO;
+using UnityEditor.Animations;
 
 
-public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable
+public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
 {
     [HideInInspector] public Rigidbody2D RB;
     [HideInInspector] public Animator AN;
@@ -16,6 +17,9 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable
     [HideInInspector] public PhotonView PV;
     [HideInInspector] public float moveHorizontal;
     [HideInInspector] public float moveVertical;
+
+    [SerializeField] protected AnimatorController orianimatorController;
+
     Dictionary<Type, Node> ActNodeDic = new Dictionary<Type, Node>();
     Vector3 curPos;
 
@@ -93,10 +97,10 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable
 
         if (parentNode == null)
         {
-            var sequenceNode = new Sequence();
+            var sequenceNode = new Sequence(this);
             ActNodeDic.Add(type, sequenceNode);
         }
-        ActNodeDic[type]._Attach(node, IsLower);
+        ActNodeDic[type].Attach(node, IsLower);
     }
     public NodeState CallAct<T>(T _node) where T : Node
     {
@@ -124,5 +128,57 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable
     public T GetStatComponent<T>() where T : IStatComponent
     {
         return (T)statComponents.FirstOrDefault(component => component is T);
+    }
+
+    public void SetAnimator(AnimatorOverrideController animatorController, bool isSet = false)
+    {
+        if (isSet)
+            AN.runtimeAnimatorController = animatorController;
+        else
+            AN.runtimeAnimatorController = orianimatorController;
+    }
+
+    public bool CanPlayAnimation(string animationName)
+    {
+        if (IsAnimationPlaying("Hit"))
+        {
+            return false;
+        }
+        if (IsAnimationPlaying("Attack"))
+        {
+            return false;
+        }
+        if (IsAnimationPlaying("Walk"))
+        {
+            return true;
+        }
+        return false;
+    }
+    private bool IsAnimationPlaying(string animationName)
+    {
+        return AN.GetCurrentAnimatorStateInfo(0).IsName(animationName);
+    }
+    public void PlayAnimation(string _animeName, object key = null)
+    {
+        if (_animeName == "Hit")
+        {
+            AN.SetTrigger(_animeName);
+        }
+        if (_animeName == "Attack")
+        {
+            if (key is float _Dps)
+            {
+                AN.SetFloat("DPS", _Dps);
+                AN.SetTrigger(_animeName);
+            }
+        }
+        if (_animeName == "Walk")
+        {
+            if (key is float _speed)
+            {
+                AN.SetFloat(_animeName, _speed);
+            }
+
+        }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 public abstract class NodeData : ScriptableObject
 {
     public abstract Node GetNode(params object[] objects);
@@ -10,13 +11,23 @@ public abstract class NodeData : ScriptableObject
 [System.Serializable]
 public abstract class Node
 {
+    Actor nodeActors;
+    public Actor nodeActor
+    {
+        get
+        {
+            if (parent != null)
+                return parent.nodeActor;
+            else
+                return nodeActors;
+        }
+    }
     protected NodeState state;
 
     protected Node parent;
     protected List<Node> children = new List<Node>();
 
     Dictionary<Type, object> datadic = new Dictionary<Type, object>();
-
     public Node()
     {
         parent = null;
@@ -25,11 +36,16 @@ public abstract class Node
     {
         foreach (Node child in children)
         {
-            _Attach(child,true);
+            Attach(child, true);
         }
 
     }
-    public void _Attach(Node node, bool IsLower)
+
+    public void AddActor(Actor _actor)
+    {
+        nodeActors = _actor;
+    }
+    public void Attach(Node node, bool IsLower)
     {
         node.parent = this;
         if (IsLower)
@@ -62,16 +78,22 @@ public abstract class Node
 
     public T GetData<T>()
     {
-    
         if (parent != null)
         {
             return parent.GetData<T>();
         }
         else
         {
-            if (datadic.ContainsKey(typeof(T)))
+            foreach (var kvp in datadic)
             {
-                return (T)datadic[typeof(T)];
+                if (kvp.Key == typeof(T) || kvp.Key.IsSubclassOf(typeof(T)))
+                {
+                    if (kvp.Value is T cunkey)
+                    {
+                        Debug.Log(cunkey);
+                        return cunkey;
+                    }
+                }
             }
         }
         return default(T);
