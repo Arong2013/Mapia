@@ -6,8 +6,6 @@ using System;
 using System.Linq;
 using Cinemachine;
 using System.IO;
-using UnityEditor.Animations;
-
 
 public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
 {
@@ -18,7 +16,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     [HideInInspector] public float moveHorizontal;
     [HideInInspector] public float moveVertical;
 
-    [SerializeField] protected AnimatorController orianimatorController;
+    [SerializeField] protected AnimatorOverrideController orianimatorController;
 
     Dictionary<Type, Node> ActNodeDic = new Dictionary<Type, Node>();
     Vector3 curPos;
@@ -26,7 +24,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     protected HashSet<IStatComponent> statComponents = new HashSet<IStatComponent>();
     public NodeState nodeState = NodeState.FAILURE;
 
-    public string ID => PhotonNetwork.LocalPlayer.ActorNumber.ToString();
+    public string ID;
 
     public virtual void Awake()
     {

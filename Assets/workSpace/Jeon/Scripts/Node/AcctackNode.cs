@@ -13,15 +13,18 @@ public abstract class CombatNode : Node
 public class AttackNode : Node,ICallNodeDataHandler<AttackNode>
 {
     readonly Actor targetActor;
+     public AttackNode( )
+    {
+        
+    }
     public AttackNode(Actor _targetActor)
     {
-        PhotonNetwork.Destroy(_targetActor.gameObject);
         targetActor = _targetActor;
     }
     public override NodeState Evaluate()
     {
         var cuntarget = GetData<Actor>();
-        PhotonNetwork.Destroy(cuntarget.gameObject);
+        GameManager.Instance.DestroyGameobject(cuntarget.ID);
         return NodeState.SUCCESS;
     }
     public void SetData(Node data)

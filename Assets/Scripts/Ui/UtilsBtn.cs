@@ -28,7 +28,6 @@ public class UtilsBtn : MonoBehaviour, IPointerDownHandler
     {
         if (Icon != null)
         {
-            // Icon의 색상을 원래대로 복원합니다.
             Icon.color = Color.white;
         }
     }

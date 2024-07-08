@@ -55,5 +55,7 @@ MonoBehaviour:
   - RPCaddActor
   - Set_Actor
   - Set_Actor_Num
+  - RPCDestroyGameobject
+  - SetID
   DisableAutoOpenWizard: 1
   ShowSettings: 1

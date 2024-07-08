@@ -8,11 +8,8 @@ using System.Linq;
 public class GameManager : Singleton<GameManager>, IPunObservable
 {
     public Inventory invenTory;
-    private List<string> jobs = new List<string> { "Warrior", "Mage", "Archer", "Healer" };
-    private List<string> availableJobs;
-
+    private List<string> jobs = new List<string> { nameof(Chaser), nameof(Dectective), "Archer", "Healer" };
     PhotonView PV;
-
     Dictionary<string, Actor> playersData = new Dictionary<string, Actor>();
 
     protected override void Awake()
@@ -24,46 +21,55 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     private void Start()
     {
         invenTory = GetComponent<Inventory>();
-        availableJobs = new List<string>(jobs);
-        AssignJob();
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(AssignJob());
     }
 
     public override void OnEnable()
     {
         base.OnEnable();
     }
-    public void AssignJob()
+    IEnumerator AssignJob()
     {
+        while (PhotonNetwork.CurrentRoom == null)
+            yield return null;
+        var availableJobs = new List<string>(jobs);
         if (PhotonNetwork.IsMasterClient)
         {
-            if (availableJobs.Count > 0)
+            var counts = PhotonNetwork.CurrentRoom.PlayerCount;
+            var list = PhotonNetwork.CurrentRoom.Players.Values.ToList();
+            while (counts > 0)
             {
                 string job = availableJobs[Random.Range(0, availableJobs.Count)];
                 availableJobs.Remove(job);
                 PhotonView photonView = PhotonView.Get(this);
-                photonView.RPC("SetJob", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer, job);
-            }
-            else
-            {
-                Debug.LogWarning("No more jobs available to assign.");
+                photonView.RPC("SetJob", RpcTarget.AllBuffered, list[counts - 1], job);
+                counts--;
+                yield return null;
             }
         }
+        yield return null;
     }
 
     [PunRPC]
     public void SetJob(Player player, string job)
     {
-        if (player == PhotonNetwork.LocalPlayer)
+        if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            Debug.Log("Assigned Job: " + job);
-            Spawn("Player");
+            GameObject gameObject = PhotonNetwork.Instantiate("Player", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+            photonView.RPC(nameof(SetID), RpcTarget.AllBuffered, gameObject.GetPhotonView().ViewID, PhotonNetwork.LocalPlayer.ActorNumber.ToString());
         }
     }
-    public void Spawn(string _name)
+    [PunRPC]
+    void SetID(int viewID, string _ID)
     {
-        PhotonNetwork.Instantiate(_name, new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+        GameObject gameObject = PhotonView.Find(viewID).gameObject;
+        Actor actor = gameObject.GetComponent<Actor>();
+        if (actor != null)
+        {
+            actor.ID = _ID;
+        }
     }
-
     public void AddActor()
     {
         photonView.RPC(nameof(RPCaddActor), RpcTarget.All);
@@ -95,6 +101,21 @@ public class GameManager : Singleton<GameManager>, IPunObservable
         gameObject.GetComponent<ChaserFoot>().playerName = _name;
     }
 
+    public void DestroyGameobject(string _name)
+    {
+        PV.RPC(nameof(RPCDestroyGameobject), RpcTarget.All, _name);
+    }
+
+    [PunRPC]
+    void RPCDestroyGameobject(string _name)
+    {
+        Destroy(playersData[_name].gameObject);
+    }
+
+
+
+
+    
     public override void OnJoinedRoom()
     {
 
@@ -107,4 +128,5 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         throw new System.NotImplementedException();
     }
+
 }

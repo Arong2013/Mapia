@@ -1,11 +1,16 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Collections;
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 public class Chaser : Actor
 {
+    public Action<Collision2D> OnCollisionEnter2DEvent;
+
+    public Action<Collider2D> OnTriggerExit2DEvents;
     [SerializeField] int MaxKillCount;
     Dictionary<string, int> killCount = new Dictionary<string, int>();
     public GameObject DropObj;
@@ -15,10 +20,16 @@ public class Chaser : Actor
         statComponents.Add(new MovementStats());
         AddNode<MovementNode>(new MovementNode(this), true);
         AddNode<MovementNode>(new ChaserDrop(this), true);
+        AddNode<AttackNode>(new AttackNode(), true);
     }
     protected override void Start()
     {
-       base.Start();
+        base.Start();
+        OnCollisionEnter2DEvent += AddKillBtn;
+        OnTriggerExit2DEvents += (Collider2D other) =>
+        {
+            UiUtils.GetUI<UtilsBtn>().ResetButton();
+        };
     }
     public override void Move()
     {
@@ -43,7 +54,36 @@ public class Chaser : Actor
         }
     }
 
+    void AddKillBtn(Collision2D other)
+    {
+        if (other.gameObject.TryGetComponent<Actor>(out Actor actor) && other.gameObject != this.gameObject)
+        {
+            Debug.Log(actor.ID);
+            UiUtils.GetUI<UtilsBtn>().SetButtonAction(() =>
+            {
+                CallAct<AttackNode>(new AttackNode(actor));
+            });
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (PV.IsMine)
+        {
+            OnCollisionEnter2DEvent?.Invoke(other);
+        }
+
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (PV.IsMine)
+        {
+            OnTriggerExit2DEvents?.Invoke(other);
+        }
+
+    }
 }
+
 
 
 public class ChaserDrop : Node
@@ -59,10 +99,10 @@ public class ChaserDrop : Node
         cunTime++;
         if (cunTime > 100)
         {
-            int rand = Random.Range(1, 10);
+            int rand = UnityEngine.Random.Range(1, 10);
             if (rand > 7)
             {
-                GameManager.Instance.ShowObjectToPlayer(PhotonNetwork.LocalPlayer.ActorNumber.ToString(),target.transform.position);
+                GameManager.Instance.ShowObjectToPlayer(PhotonNetwork.LocalPlayer.ActorNumber.ToString(), target.transform.position);
             }
             cunTime = 0;
         }

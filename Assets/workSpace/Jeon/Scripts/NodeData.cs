@@ -90,7 +90,6 @@ public abstract class Node
                 {
                     if (kvp.Value is T cunkey)
                     {
-                        Debug.Log(cunkey);
                         return cunkey;
                     }
                 }

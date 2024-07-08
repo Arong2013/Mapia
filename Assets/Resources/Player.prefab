@@ -642,6 +642,9 @@ MonoBehaviour:
   PV: {fileID: 0}
   moveHorizontal: 0
   moveVertical: 0
+  orianimatorController: {fileID: 9100000, guid: 11bcc84ebfb6d5e4fb3b23025313bc25,
+    type: 2}
   nodeState: 2
+  ID: 
   MaxKillCount: 0
   DropObj: {fileID: 0}
