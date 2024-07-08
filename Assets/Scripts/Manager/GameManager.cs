@@ -56,7 +56,7 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            GameObject gameObject = PhotonNetwork.Instantiate("Player", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+            GameObject gameObject = PhotonNetwork.Instantiate("Dong", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
             photonView.RPC(nameof(SetID), RpcTarget.AllBuffered, gameObject.GetPhotonView().ViewID, PhotonNetwork.LocalPlayer.ActorNumber.ToString());
         }
     }
