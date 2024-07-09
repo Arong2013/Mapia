@@ -56,7 +56,7 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            GameObject gameObject = PhotonNetwork.Instantiate("Dong", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+            GameObject gameObject = PhotonNetwork.Instantiate("PapyrusMaker", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
             photonView.RPC(nameof(SetID), RpcTarget.AllBuffered, gameObject.GetPhotonView().ViewID, PhotonNetwork.LocalPlayer.ActorNumber.ToString());
         }
     }
@@ -82,10 +82,11 @@ public class GameManager : Singleton<GameManager>, IPunObservable
         {
             var cunActor = cunActors[i];
             var cunID = cunActor.ID;
-
+            Debug.Log("Actor : " + cunActor.PV.name);
             if (!playersData.ContainsKey(cunID))
             {
                 playersData.Add(cunID, cunActor);
+               
             }
         }
     }
@@ -103,16 +104,45 @@ public class GameManager : Singleton<GameManager>, IPunObservable
 
     public void DestroyGameobject(string _name)
     {
+       
         PV.RPC(nameof(RPCDestroyGameobject), RpcTarget.All, _name);
     }
 
     [PunRPC]
     void RPCDestroyGameobject(string _name)
     {
-        Destroy(playersData[_name].gameObject);
+        if(playersData.ContainsKey(_name)) 
+        {
+
+            Destroy(playersData[_name].gameObject);
+        }
+
+
     }
 
+    public string CheckData(string text)
+    {
+        List<string> list = playersData.Keys.ToList();
+        
+        foreach(var list_data in list)
+        {
+            if (playersData[list_data].PV.Owner.NickName == text)
+            {
+                return list_data;
+            }
+        }
+        return null;
 
+        //List<Actor> data = playersData.Values.ToList();
+        //foreach(var actor_ in data) 
+        //{
+        //    if(actor_.PV.name == text)
+        //    {
+        //        return 
+        //    }
+        
+        //}
+    }
 
 
     

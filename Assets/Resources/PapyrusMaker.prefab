@@ -59,7 +59,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -562,7 +562,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 564668160908384226}
   - {fileID: 5074776327640072849}
-  - {fileID: 0}
+  - {fileID: 245473693301459785}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -636,3 +636,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1abe724c0ad8842b1e1977b058d508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RB: {fileID: 0}
+  AN: {fileID: 0}
+  SR: {fileID: 0}
+  PV: {fileID: 0}
+  moveHorizontal: 0
+  moveVertical: 0
+  orianimatorController: {fileID: 0}
+  nodeState: 2
+  NickNameText: {fileID: 8375901364521192189}
+  ID: 

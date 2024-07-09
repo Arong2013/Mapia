@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using Cinemachine;
 using System.IO;
+using UnityEngine.UI;
 
 public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
 {
@@ -24,6 +25,8 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     protected HashSet<IStatComponent> statComponents = new HashSet<IStatComponent>();
     public NodeState nodeState = NodeState.FAILURE;
 
+    public Text NickNameText;
+
     public string ID;
 
     public virtual void Awake()
@@ -32,7 +35,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         AN = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
         PV = GetComponent<PhotonView>();
-
+        
 
         if (PV.IsMine)
         {
@@ -45,6 +48,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     protected virtual void Start()
     {
         GameManager.Instance.AddActor();
+        NickNameText.text = PV.Owner.NickName;
     }
     void Update()
     {
