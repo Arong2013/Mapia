@@ -33,10 +33,6 @@ public class Chaser : Actor
     }
     public override void Move()
     {
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
-        moveVertical = Input.GetAxisRaw("Vertical");
-        Vector3 movement = new Vector3(moveHorizontal, moveVertical, 0).normalized;
-        RB.velocity = movement * 4f;
         CallAct<MovementNode>(new MovementNode(movement));
         PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
     }

@@ -34,14 +34,9 @@ public class MovementNode : Node, ICallNodeDataHandler<MovementNode>
         }
         else
         {
-            if (nodeState != NodeState.RUNNING)
-            {
-                nodeState = NodeState.SUCCESS;
-                return nodeState;
-            }
+            actor.RB.velocity = dir * 5;
+           return NodeState.SUCCESS;;
         }
-
-        return NodeState.SUCCESS;
     }
 
     public void SetData(Node data)

@@ -8,7 +8,7 @@ using System.Linq;
 public class GameManager : Singleton<GameManager>, IPunObservable
 {
     public Inventory invenTory;
-    private List<string> jobs = new List<string> { nameof(Chaser), nameof(Dectective), "Archer", "Healer" };
+    private List<string> jobs = new List<string> { nameof(Chaser), nameof(Dectective), nameof(Sasori), "Healer" };
     PhotonView PV;
     Dictionary<string, Actor> playersData = new Dictionary<string, Actor>();
 
@@ -56,7 +56,7 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            GameObject gameObject = PhotonNetwork.Instantiate("Player", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+            GameObject gameObject = PhotonNetwork.Instantiate("Sasori", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
             photonView.RPC(nameof(SetID), RpcTarget.AllBuffered, gameObject.GetPhotonView().ViewID, PhotonNetwork.LocalPlayer.ActorNumber.ToString());
         }
     }
@@ -89,7 +89,6 @@ public class GameManager : Singleton<GameManager>, IPunObservable
             }
         }
     }
-
     public void ShowObjectToPlayer(string _name, Vector3 _spawnPos)
     {
         PV.RPC(nameof(RPCShowObjectToPlayer), RpcTarget.All, _name, _spawnPos);
@@ -111,11 +110,6 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         Destroy(playersData[_name].gameObject);
     }
-
-
-
-
-    
     public override void OnJoinedRoom()
     {
 
