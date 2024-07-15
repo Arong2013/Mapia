@@ -29,12 +29,14 @@ public class MovementNode : Node, ICallNodeDataHandler<MovementNode>
         Vector3 cundir = GetData<Vector3>();
         if (cundir == new Vector3(0, 0, 0))
         {
+            actor.RB.velocity = cundir;
             nodeState = NodeState.FAILURE;
             return nodeState;
         }
         else
         {
-            actor.RB.velocity = dir * 5;
+            nodeState = NodeState.SUCCESS;
+            actor.RB.velocity = cundir * 5;
            return NodeState.SUCCESS;;
         }
     }

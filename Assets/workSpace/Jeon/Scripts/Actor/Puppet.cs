@@ -22,7 +22,7 @@ public class Puppet : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
     Vector3 curPos;
 
     Sasori sasori;
-    float sasoriTime = 50f;
+    float sasoriTime = 20f;
     float cunTime;
     public virtual void Awake()
     {

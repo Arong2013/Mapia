@@ -5,6 +5,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
+using Cinemachine;
 
 public class Sasori : Actor
 {
@@ -44,6 +45,9 @@ public class Sasori : Actor
 
     public void DestoryPuppet()
     {
+        var CM = GameObject.Find("CMCamera").GetComponent<CinemachineVirtualCamera>();
+        CM.Follow = transform;
+        CM.LookAt = transform;
         isMoveable = true;
     }
 }
