@@ -110,6 +110,30 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         Destroy(playersData[_name].gameObject);
     }
+     public string CheckData(string text)
+    {
+        List<string> list = playersData.Keys.ToList();
+        
+        foreach(var list_data in list)
+        {
+            if (playersData[list_data].PV.Owner.NickName == text)
+            {
+                return list_data;
+            }
+        }
+        return null;
+
+        //List<Actor> data = playersData.Values.ToList();
+        //foreach(var actor_ in data) 
+        //{
+        //    if(actor_.PV.name == text)
+        //    {
+        //        return 
+        //    }
+        
+        //}
+    }
+   
     public override void OnJoinedRoom()
     {
 
