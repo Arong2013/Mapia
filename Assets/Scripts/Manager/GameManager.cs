@@ -56,7 +56,7 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            GameObject gameObject = PhotonNetwork.Instantiate("Sasori", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+            GameObject gameObject = PhotonNetwork.Instantiate("PapyrusMaker", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
             photonView.RPC(nameof(SetID), RpcTarget.AllBuffered, gameObject.GetPhotonView().ViewID, PhotonNetwork.LocalPlayer.ActorNumber.ToString());
         }
     }
@@ -102,6 +102,7 @@ public class GameManager : Singleton<GameManager>, IPunObservable
 
     public void DestroyGameobject(string _name)
     {
+        
         PV.RPC(nameof(RPCDestroyGameobject), RpcTarget.All, _name);
     }
 
@@ -122,18 +123,34 @@ public class GameManager : Singleton<GameManager>, IPunObservable
             }
         }
         return null;
-
-        //List<Actor> data = playersData.Values.ToList();
-        //foreach(var actor_ in data) 
-        //{
-        //    if(actor_.PV.name == text)
-        //    {
-        //        return 
-        //    }
-        
-        //}
     }
    
+    public List<string> GetNickNames()
+    {
+        List<string> NickNames = new List<string>();
+        
+        foreach (var nickName in playersData.Values)
+        {
+            NickNames.Add(nickName.PV.Owner.NickName);
+        }
+        if(NickNames.Count > 0) 
+        {
+            for (int i = 0; i < NickNames.Count; i++)
+            {
+                //Debug.Log(NickNames[i]);
+            }
+        }
+        else
+        {
+            //Debug.Log("¿Ö ¾øÀ½");
+        }
+        
+
+        return NickNames;
+
+    }
+
+
     public override void OnJoinedRoom()
     {
 
