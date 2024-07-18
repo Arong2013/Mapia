@@ -54,6 +54,9 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     }
     void Update()
     {
+
+        Debug.Log(PV.IsMine);
+
         if (PV.IsMine)
         {
             moveHorizontal = Input.GetAxisRaw("Horizontal");

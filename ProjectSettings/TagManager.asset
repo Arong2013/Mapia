@@ -9,6 +9,7 @@ TagManager:
   - Item
   - Dust
   - Wipe
+  - Wall
   layers:
   - Default
   - TransparentFX
