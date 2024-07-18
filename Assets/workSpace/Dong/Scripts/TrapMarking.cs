@@ -12,12 +12,22 @@ public class TrapMarking : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void Update()
+    {
+        FollowingMouse();
+    }
+
+    void FollowingMouse() // 마우스 따라가요
+    {
+        Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = new Vector3(MousePos.x, MousePos.y, 0);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision != null)
         {
-            if(collision.CompareTag("Wall"))
+            if(collision.CompareTag("Wall") || collision.CompareTag("Ground") || collision.CompareTag("Trap"))
             {
                 spriteRenderer.color = Color.red;
                 Set = false;
@@ -28,9 +38,9 @@ public class TrapMarking : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Wall"))
+        if (collision.CompareTag("Wall") || collision.CompareTag("Ground") || collision.CompareTag("Trap"))
         {
-            spriteRenderer.color = Color.white;
+            spriteRenderer.color = Color.green;
             Set = true;
         }
     }

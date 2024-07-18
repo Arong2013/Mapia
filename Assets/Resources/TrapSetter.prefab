@@ -645,6 +645,7 @@ MonoBehaviour:
   moveVertical: 0
   orianimatorController: {fileID: 0}
   nodeState: 2
+  PlayerSide: 1
   NickNameText: {fileID: 8375901364521192189}
   ID: 
   trap_marking: {fileID: 5590617669423567242}

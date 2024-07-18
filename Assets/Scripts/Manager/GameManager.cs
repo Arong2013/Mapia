@@ -126,6 +126,22 @@ public class GameManager : Singleton<GameManager>, IPunObservable
         return null;
     }
    
+     public Camp CheckLocalPlayerSide()
+    {
+        foreach(var player in playersData.Values)
+        {
+            if (player.PV.IsMine)
+            {
+                return player.PlayerSide;
+            }
+        }
+
+        return Camp.None;
+        
+    }
+
+
+
     public List<string> GetNickNames()
     {
         List<string> NickNames = new List<string>();

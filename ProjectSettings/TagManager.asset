@@ -10,6 +10,7 @@ TagManager:
   - Dust
   - Wipe
   - Wall
+  - Trap
   layers:
   - Default
   - TransparentFX

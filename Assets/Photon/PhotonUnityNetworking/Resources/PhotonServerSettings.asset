@@ -58,5 +58,6 @@ MonoBehaviour:
   - RPCDestroyGameobject
   - SetID
   - Maketrap
+  - VisibleALLPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 1

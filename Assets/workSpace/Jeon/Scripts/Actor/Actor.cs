@@ -8,6 +8,16 @@ using Cinemachine;
 using System.IO;
 using UnityEngine.UI;
 
+
+public enum Camp
+{
+   None,
+   Good,
+   Bad,
+   Neutral
+}
+
+
 public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
 {
     [HideInInspector] public Rigidbody2D RB;
@@ -26,6 +36,8 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
 
     protected HashSet<IStatComponent> statComponents = new HashSet<IStatComponent>();
     public NodeState nodeState = NodeState.FAILURE;
+
+    public Camp PlayerSide = Camp.None;
 
     public Text NickNameText;
 
@@ -52,10 +64,8 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         GameManager.Instance.AddActor();
         NickNameText.text = PV.Owner.NickName;
     }
-    void Update()
+    protected virtual void Update()
     {
-
-        Debug.Log(PV.IsMine);
 
         if (PV.IsMine)
         {
