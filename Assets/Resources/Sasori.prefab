@@ -644,4 +644,5 @@ MonoBehaviour:
   moveVertical: 0
   orianimatorController: {fileID: 0}
   nodeState: 2
+  NickNameText: {fileID: 0}
   ID: 

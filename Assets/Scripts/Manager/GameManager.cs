@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     public Inventory invenTory;
     private List<string> jobs = new List<string> { nameof(Chaser), nameof(Dectective), nameof(Sasori), "Healer" };
     PhotonView PV;
-    Dictionary<string, Actor> playersData = new Dictionary<string, Actor>();
+    List<Actor> playersData = new List<Actor>();
 
     protected override void Awake()
     {
@@ -83,9 +83,9 @@ public class GameManager : Singleton<GameManager>, IPunObservable
             var cunActor = cunActors[i];
             var cunID = cunActor.ID;
 
-            if (!playersData.ContainsKey(cunID))
+            if (!playersData.Exists(x => x.ID == cunID))
             {
-                playersData.Add(cunID, cunActor);
+                playersData.Add(cunActor);
             }
         }
     }
@@ -108,32 +108,14 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     [PunRPC]
     void RPCDestroyGameobject(string _name)
     {
-        Destroy(playersData[_name].gameObject);
+        Destroy(playersData.Find(x => x.ID == _name));
     }
-     public string CheckData(string text)
+    public string CheckData(string text)
     {
-        List<string> list = playersData.Keys.ToList();
-        
-        foreach(var list_data in list)
-        {
-            if (playersData[list_data].PV.Owner.NickName == text)
-            {
-                return list_data;
-            }
-        }
-        return null;
-
-        //List<Actor> data = playersData.Values.ToList();
-        //foreach(var actor_ in data) 
-        //{
-        //    if(actor_.PV.name == text)
-        //    {
-        //        return 
-        //    }
-        
-        //}
+        var actorName = playersData.Find(x => x.PV.Owner.NickName == text);
+        return actorName.PV.Owner.NickName;
     }
-   
+
     public override void OnJoinedRoom()
     {
 
