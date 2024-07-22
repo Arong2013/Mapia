@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     private List<string> jobs = 
         new List<string> { nameof(Chaser), nameof(Dectective), nameof(Sasori), nameof(Trap_Maker), nameof(DeathNote) };
     PhotonView PV;
-    Dictionary<string, Actor> playersData = new Dictionary<string, Actor>();
+    List<Actor> playersData = new List<Actor>();
 
     protected override void Awake()
     {
@@ -84,9 +84,9 @@ public class GameManager : Singleton<GameManager>, IPunObservable
             var cunActor = cunActors[i];
             var cunID = cunActor.ID;
 
-            if (!playersData.ContainsKey(cunID))
+            if (!playersData.Exists(x => x.ID == cunID))
             {
-                playersData.Add(cunID, cunActor);
+                playersData.Add(cunActor);
             }
         }
     }
@@ -110,63 +110,13 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     [PunRPC]
     void RPCDestroyGameobject(string _name)
     {
-        Destroy(playersData[_name].gameObject);
+        Destroy(playersData.Find(x => x.ID == _name));
     }
-     public string CheckData(string text)
+    public string CheckData(string text)
     {
-        List<string> list = playersData.Keys.ToList();
-        
-        foreach(var list_data in list)
-        {
-            if (playersData[list_data].PV.Owner.NickName == text)
-            {
-                return list_data;
-            }
-        }
-        return null;
+        var actorName = playersData.Find(x => x.PV.Owner.NickName == text);
+        return actorName.PV.Owner.NickName;
     }
-   
-     public Camp CheckLocalPlayerSide()
-    {
-        foreach(var player in playersData.Values)
-        {
-            if (player.PV.IsMine)
-            {
-                return player.PlayerSide;
-            }
-        }
-
-        return Camp.None;
-        
-    }
-
-
-
-    public List<string> GetNickNames()
-    {
-        List<string> NickNames = new List<string>();
-        
-        foreach (var nickName in playersData.Values)
-        {
-            NickNames.Add(nickName.PV.Owner.NickName);
-        }
-        if(NickNames.Count > 0) 
-        {
-            for (int i = 0; i < NickNames.Count; i++)
-            {
-                //Debug.Log(NickNames[i]);
-            }
-        }
-        else
-        {
-            //Debug.Log("¿Ö ¾øÀ½");
-        }
-        
-
-        return NickNames;
-
-    }
-
 
     public override void OnJoinedRoom()
     {
