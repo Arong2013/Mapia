@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CleanDustQuest : MonoBehaviour
+public class CleanDustQuest : MonoBehaviour, IQuestInitalize
 {
     public static int Count = 3;
     public List<Vector2> Dust_Pos;
@@ -99,6 +99,16 @@ public class CleanDustQuest : MonoBehaviour
 
 
     }
+
+
+    public void InitalizeQuest()
+    {
+        Clean = false;
+        //다른 것도 초기화시켜줘야함
+
+
+    }
+
 
 
 

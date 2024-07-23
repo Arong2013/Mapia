@@ -8,6 +8,7 @@ using System.Linq;
 public class GameManager : Singleton<GameManager>, IPunObservable
 {
     public Inventory invenTory;
+ 
     private List<string> jobs = 
         new List<string> { nameof(Chaser), nameof(Dectective), nameof(Sasori), nameof(Trap_Maker), nameof(DeathNote) };
     PhotonView PV;
@@ -112,10 +113,41 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         Destroy(playersData.Find(x => x.ID == _name));
     }
+
+
+    public Camp CheckLocalPlayerSide()
+    {
+        foreach (var player in playersData)
+        {
+            if (player.PV.IsMine)
+            {
+                return player.PlayerSide;
+            }
+        }
+
+        return Camp.None;
+
+    }
+
+
+
     public string CheckData(string text)
     {
         var actorName = playersData.Find(x => x.PV.Owner.NickName == text);
         return actorName.PV.Owner.NickName;
+    }
+
+    public List<string> GetNickNames()
+    {
+        List<string> nicknames = new List<string>();
+
+        foreach(var name in playersData)
+        {
+            nicknames.Add(name.PV.Owner.NickName);
+        }
+        return nicknames;
+
+
     }
 
     public override void OnJoinedRoom()
