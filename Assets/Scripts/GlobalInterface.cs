@@ -31,3 +31,8 @@ public interface IAnimatable
     bool CanPlayAnimation(string _animeName);
     void PlayAnimation(string _animeName, object key = null);
 }
+
+public interface IPlayerable
+{
+    void SetPlayer(Actor player);
+}

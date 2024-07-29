@@ -31,6 +31,8 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
 
     public string ID;
 
+    public Inventory inventory = new Inventory();
+
     public virtual void Awake()
     {
         RB = GetComponent<Rigidbody2D>();

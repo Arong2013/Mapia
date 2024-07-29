@@ -3,93 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
-
-public class Inventory : MonoBehaviour
+[System.Serializable]
+public class Inventory 
 {
-    public List <Item> items = new List <Item> ();
-    //public List<ItemSlot> itemSlots = new List<ItemSlot>();
-    public Image NowItem_img;
-    public InventoryUI inventoryUI;
-
-
-    PhotonView PV;
-
-    private void Start()
+    readonly List<Item> items = new List<Item>();
+    public List<Item> Items => items;
+    public bool isCanAdd
     {
-        PV = GetComponent<PhotonView>();
-        inventoryUI = UiUtils.GetUI<InventoryUI>();
-        //UIUtils에서 컴포넌트 가져와서 그걸 컬렉션에 넣어줘야함
-        
-        //foreach (Transform child in inventory)
-        //{
-        //    //Debug.Log(child.childCount);
-        //    ItemSlot slot = child.GetComponentInChildren<ItemSlot>();
-
-        //    if(slot != null)
-        //    {
-        //        itemSlots.Add(slot);
-        //    }
-
-        //}
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.I))
+        get
         {
-            if(inventoryUI.gameObject.activeSelf == false)
+            return 3 > items.Count;
+        }
+    }
+    public bool AddItem(Item _item)
+    {
+        if (!isCanAdd)
+            return false;
+        if (_item is CountableItem countItem)
+        {
+            if (Items.Count > 0)
             {
-                inventoryUI.gameObject.SetActive(true);
+                for (var i = 0; i < Items.Count; i++)
+                {
+                    var curitem = Items[i];
+                    if (curitem.Data == _item.Data && curitem is CountableItem ci)
+                    {
+                        countItem.SetAmount(-ci.AddAmountAndGetExcess(countItem.Amount));
+                    }
+                }
             }
-            else
-            {
-                inventoryUI.gameObject.SetActive(false);
-            }
-            
+            if (countItem.IsEmpty)
+                return true;
         }
+        Items.Add(_item);
+        return true;
     }
-
-
-    //아이템 획득
-    public void GetItem(Item item, ItemType type)
-    {
-        if (inventoryUI.ItemSlotCheck(item, type))
-        {
-            items.Add(item);
-        }
-    }
-
-    public void UseItem(int num)
-    {
-
-        if (items[num] != null)
-        {
-            //아이템 효과 발동을 여기서 하거나 아니면 다른 곳에서
-            //items[num].SetItem(null);
-            //NowItemImage(num);
-            return;
-        }
-        else
-        {
-            //empty item storage
-        }
-
-    }
-
-    //public void NowItemImage(int num)
-    //{
-    //    if (itemSlots[num].item != null)
-    //    {
-    //        NowItem_img.sprite = itemSlots[num].item.Data.IconSprite;
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("nothing");
-    //        NowItem_img.sprite = null;
-    //    }
-        
-    //}
-
-
-   
 }

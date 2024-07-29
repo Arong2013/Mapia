@@ -4,10 +4,12 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
+using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 
 public class GameManager : Singleton<GameManager>, IPunObservable
 {
-    public Inventory invenTory;
+    Actor playerController;
     private List<string> jobs = new List<string> { nameof(Chaser), nameof(Dectective), nameof(Sasori), "Healer" };
     PhotonView PV;
     List<Actor> playersData = new List<Actor>();
@@ -20,11 +22,48 @@ public class GameManager : Singleton<GameManager>, IPunObservable
 
     private void Start()
     {
-        invenTory = GetComponent<Inventory>();
         if (PhotonNetwork.IsMasterClient)
             StartCoroutine(AssignJob());
     }
 
+    public void AddPlayer(Actor _char)
+    {
+        playerController = _char;
+
+
+        
+        List<GameObject> allObjects = new List<GameObject>();
+
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+
+            if (scene.isLoaded)
+            {
+                GameObject[] rootObjects = scene.GetRootGameObjects();
+                foreach (GameObject rootObject in rootObjects)
+                {
+                    GetAllChildObjects(rootObject, allObjects);
+                }
+            }
+        }
+        foreach (GameObject obj in allObjects)
+        {
+            foreach (var playerSettable in obj.GetComponents<IPlayerable>())
+            {
+                playerSettable.SetPlayer(_char);
+            }
+        }
+    }
+    void GetAllChildObjects(GameObject parent, List<GameObject> allObjects)
+    {
+        allObjects.Add(parent);
+
+        foreach (Transform child in parent.transform)
+        {
+            GetAllChildObjects(child.gameObject, allObjects);
+        }
+    }
     public override void OnEnable()
     {
         base.OnEnable();
@@ -56,7 +95,7 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
         {
-            GameObject gameObject = PhotonNetwork.Instantiate("Sasori", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+            GameObject gameObject = PhotonNetwork.Instantiate(job, new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
             photonView.RPC(nameof(SetID), RpcTarget.AllBuffered, gameObject.GetPhotonView().ViewID, PhotonNetwork.LocalPlayer.ActorNumber.ToString());
         }
     }

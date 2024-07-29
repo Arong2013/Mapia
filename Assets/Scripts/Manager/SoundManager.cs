@@ -7,12 +7,12 @@ public class SoundManager : Singleton<SoundManager>
     public AudioSource bgmSource;
     public AudioSource sfxSource;
 
-    // º¼·ý Á¶Àý
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public float bgmVolume = 1f;
     public float sfxVolume = 1f;
 
 
-    // ¹è°æ À½¾Ç Àç»ý
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     public void PlayBGM(AudioClip bgmClip)
     {
         bgmSource.clip = bgmClip;
@@ -21,13 +21,13 @@ public class SoundManager : Singleton<SoundManager>
         bgmSource.Play();
     }
 
-    // È¿°úÀ½ Àç»ý
+    // È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     public void PlaySFX(AudioClip sfxClip)
     {
         sfxSource.PlayOneShot(sfxClip, sfxVolume);
     }
 
-    // º¼·ý Á¶Àý
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void SetBGMVolume(float volume)
     {
         bgmVolume = Mathf.Clamp01(volume);

@@ -21,6 +21,10 @@ public class Chaser : Actor
         AddNode<MovementNode>(new MovementNode(this), true);
         AddNode<MovementNode>(new ChaserDrop(this), true);
         AddNode<AttackNode>(new AttackNode(), true);
+        if(PV.IsMine)
+        {
+            GameManager.Instance.AddPlayer(this);
+        }
     }
     protected override void Start()
     {
