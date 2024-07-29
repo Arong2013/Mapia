@@ -28,8 +28,8 @@ public class NickNameDropdown : MonoBehaviour
     {
         List<string> names = new List<string>();
         names.Add("Choose");
-        
-        foreach (var name in GameManager.Instance.GetNickNames())
+
+        foreach (var name in GameManager.Instance.GetNickNames()) //다시해야함
         {
             names.Add(name);
         }
