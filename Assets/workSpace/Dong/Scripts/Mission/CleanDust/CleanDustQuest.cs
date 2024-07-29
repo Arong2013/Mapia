@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CleanDustQuest : MonoBehaviour, IQuestInitalize
+
+//Quest 1
+
+public class CleanDustQuest : Quest
 {
+    
     public static int Count = 3;
     public List<Vector2> Dust_Pos;
 
@@ -15,13 +19,18 @@ public class CleanDustQuest : MonoBehaviour, IQuestInitalize
     public GameObject TaskCompleteText;
     
     public bool Clean = false;
-    
 
+    protected override void Awake()
+    {
+        QuestID = 1;
+    }
 
 
     // Start is called before the first frame update
     void Start()
     {
+        TaskCompleteText = UiUtils.GetUI<QuestClear>().gameObject;
+
         //먼지 위치 랜덤으로 설정해줘야함
 
         SetDustPos();
@@ -101,15 +110,20 @@ public class CleanDustQuest : MonoBehaviour, IQuestInitalize
     }
 
 
-    public void InitalizeQuest()
+    public override void InitalizeQuest()
     {
+        Debug.Log("작동");
+
         Clean = false;
         //다른 것도 초기화시켜줘야함
 
 
     }
 
-
+    public override int GetQuestID()
+    {
+        return QuestID;
+    }
 
 
 }

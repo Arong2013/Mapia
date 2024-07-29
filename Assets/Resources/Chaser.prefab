@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 6731073287857355759}
   - component: {fileID: 8601243421614661150}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Chaser
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -645,6 +645,9 @@ MonoBehaviour:
   orianimatorController: {fileID: 9100000, guid: 11bcc84ebfb6d5e4fb3b23025313bc25,
     type: 2}
   nodeState: 2
+  PlayerSide: 0
+  NickNameText: {fileID: 0}
   ID: 
+  inventory: {fileID: 0}
   MaxKillCount: 0
   DropObj: {fileID: 0}

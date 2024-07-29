@@ -726,8 +726,10 @@ MonoBehaviour:
   moveVertical: 0
   orianimatorController: {fileID: 0}
   nodeState: 2
+  PlayerSide: 0
   NickNameText: {fileID: 8375901364521192189}
   ID: 
+  inventory: {fileID: 0}
   ActorText: {fileID: 7945381087935632658}
   Actor_What: 
 --- !u!114 &6754503916428016920

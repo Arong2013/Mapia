@@ -20,12 +20,9 @@ public class DeathNote : Actor
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        //if(PV.IsMine)
-        //{
-        //    Move();
-        //}
+        base.Update();
         if(Input.GetKeyDown(KeyCode.Alpha4))
         {
             if(MyNote.gameObject.activeSelf == false)

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+
 [System.Serializable]
-public class Inventory 
+public class Inventory :MonoBehaviour
 {
     readonly List<Item> items = new List<Item>();
     public List<Item> Items => items;

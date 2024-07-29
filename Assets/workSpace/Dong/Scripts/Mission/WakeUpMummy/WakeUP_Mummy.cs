@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
 
-class WakeUP_Mummy : MonoBehaviour, IQuestInitalize
+
+//Quest 2
+
+class WakeUP_Mummy : Quest
 {
     public List<Sprite> MummyImg = new List<Sprite>(); //미라 이미지에 대한 정보를 저장해줌
 
@@ -27,11 +30,18 @@ class WakeUP_Mummy : MonoBehaviour, IQuestInitalize
     public bool Clear = false;
     //다른 스크립트에 클리어를 했다는 것을 알려줄 변수
 
+
+    protected override void Awake()
+    {
+        QuestID = 2;
+    }
+
+
     void Start()
     {
         //RectTransform ck = Range_Click.GetComponent<RectTransform>();
         //ck.anchoredPosition = LeftUp;
-
+        ClearUI = UiUtils.GetUI<QuestClear>().gameObject;
         Mummy.sprite = MummyImg[0];
         Click_Range_Place(); //처음 시작 범위 지정
     }
@@ -120,8 +130,9 @@ class WakeUP_Mummy : MonoBehaviour, IQuestInitalize
         //여기에서 게임 매니저나 다른 매니저에 게임이 끝났다는 것을 알림
     }
 
-    public void InitalizeQuest() //미라깨우기 퀘스트 초기화
+    public override void InitalizeQuest() //미라깨우기 퀘스트 초기화
     {
+        Debug.Log("미라깨우기 초기화");
         click_num = 0; //클릭 몇번 했는지 체크해줄 변수
 
         num = 1;
@@ -135,8 +146,10 @@ class WakeUP_Mummy : MonoBehaviour, IQuestInitalize
         Range_Click.IntializeClick_Num();
 
     }
-
-
+    public override int GetQuestID()
+    {
+        return QuestID;
+    }
 
 
 }

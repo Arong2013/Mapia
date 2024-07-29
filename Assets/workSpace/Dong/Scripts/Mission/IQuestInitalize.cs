@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IQuestInitalize
 { 
 
-    public void InitalizeQuest();
+    //public abstract void InitalizeQuest();
     
 
 

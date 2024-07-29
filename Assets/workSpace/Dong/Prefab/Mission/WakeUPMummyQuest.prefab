@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 8625842293307321147}
   - component: {fileID: 6126015005606039827}
   m_Layer: 5
-  m_Name: WakeUPMummyQuest 1
+  m_Name: WakeUPMummyQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -261,5 +261,4 @@ MonoBehaviour:
   Particles: {fileID: 0}
   Range_Click: {fileID: 2749642925554872119}
   ClearUI: {fileID: 0}
-  Test: 0
   Clear: 0
