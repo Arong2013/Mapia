@@ -1826,9 +1826,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc7fd11f3a7f67f498a128b4faccc131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myImage: {fileID: 500779178}
-  inventoryUI: {fileID: 0}
-  type: 0
+  OrizinImage: {fileID: 0}
+  iconImage: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,7 +1950,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.31019932, y: 0.05602503, z: -10}
+  m_LocalPosition: {x: -0.31020027, y: 0.056079865, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4053,9 +4053,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc7fd11f3a7f67f498a128b4faccc131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myImage: {fileID: 1208807219}
-  inventoryUI: {fileID: 0}
-  type: 0
+  OrizinImage: {fileID: 0}
+  iconImage: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!1 &1234144150
 GameObject:
   m_ObjectHideFlags: 0
@@ -4182,7 +4182,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1392183407}
   - component: {fileID: 1392183409}
-  - component: {fileID: 1392183408}
   - component: {fileID: 1392183410}
   m_Layer: 0
   m_Name: GameManager
@@ -4206,20 +4205,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1392183408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392183406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 357ba2b760b00cc4c82ee3e879740a99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NowItem_img: {fileID: 275442512}
-  inventoryUI: {fileID: 0}
 --- !u!114 &1392183409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4232,7 +4217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 954d07b05ae476947b200a29d03c8e60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invenTory: {fileID: 0}
 --- !u!114 &1392183410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6634,9 +6618,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc7fd11f3a7f67f498a128b4faccc131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myImage: {fileID: 2030371801}
-  inventoryUI: {fileID: 0}
-  type: 1
+  OrizinImage: {fileID: 0}
+  iconImage: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!1 &2045369289
 GameObject:
   m_ObjectHideFlags: 0
