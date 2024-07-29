@@ -4,7 +4,7 @@ using Photon.Pun;
 using System.Collections.Generic;
 using System.Linq;
 
-public class VoteManager : MonoBehaviourPunCallbacks
+public class VoteManager : Singleton<VoteManager>
 {
     public Dictionary<string, int> voteCounts = new Dictionary<string, int>();
     public Dictionary<string, string> playerVotes = new Dictionary<string, string>();

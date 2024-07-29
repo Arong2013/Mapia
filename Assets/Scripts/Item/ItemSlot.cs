@@ -1,118 +1,79 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using UnityEditor;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
-
-public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
+public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    private int count; 
     public Item item;
-    public Image myImage;
-    public Inventory inventory;
-    Vector2 defaultPosition;
-    Transform ParentTransform;
-    public ItemType type;
 
-    public void Start()
+    [SerializeField] Sprite OrizinImage;
+    [SerializeField] Image iconImage;
+    [SerializeField] private TextMeshProUGUI _amountText;
+
+    private Dictionary<Type, Action> touchDic = new Dictionary<Type, Action>();
+
+    private void Awake()
     {
-        //myImage = GetComponent<Image>();
-        inventory = Manager.Instance.GetChild<GameManager>().invenTory;
-        ParentTransform = transform.parent;
-        Debug.Log(ParentTransform.name);
+        OrizinImage = iconImage.sprite;
     }
 
-    public void OnBeginDrag(PointerEventData eventData) //�巡�� ����
+    public void SetItem(Item _item)
     {
-        transform.SetParent(UiUtils.GetUI<InventoryUI>().transform);
-        defaultPosition = GetComponent<RectTransform>().localPosition;
-        myImage.raycastTarget = false;
-        inventory.DragSlot = GetComponent <ItemSlot>();
-        //���� ���� �巡�׸� ������ �� ó����ġ�� ��ǥ�� �����س���
-    }
+        item = _item;
+        iconImage.sprite = item?.Data.IconSprite ?? OrizinImage;
+        iconImage.color = iconImage.sprite != null ? Color.white : new Color(0, 0, 0, 0);
 
-    public void OnDrag(PointerEventData eventData) //�巡������ ��
-    {
-        //Debug.Log(gameObject.name);
-        Vector2 CurrentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        this.transform.position = CurrentPos;
-
-    }
-
-    public void OnEndDrag(PointerEventData eventData) //�巡�� ������ ��
-    {
-        transform.localPosition = defaultPosition;
-        transform.SetParent(ParentTransform);
-        myImage.raycastTarget = true;
-        Insert_Data();
-    }
-
-    public void OnDrop(PointerEventData eventData)
-    {
-        //���� �������� �ִ� ��ġ�� ������ ������ �����ϴ��� üũ�ؼ� �ִٸ� ������ �������
-        //���� ���´� �������� ������Ű�� ����
-        if(inventory.DragSlot.type == type)
+        if(_item is CountableItem countableItem)
         {
-            if (inventory.DragSlot != null)
-            {
-                if (item != null)
-                {
-                    Debug.Log("���� �־��" + item.Data.name);
-                    var Temp_Data = item;
-                    item = inventory.DragSlot.item;
-                    inventory.DragSlot.item = Temp_Data;
-                    Insert_Data();
-
-                }
-                else
-                {
-                    Debug.Log("�۵��� �ǿ�");
-                    item = inventory.DragSlot.item;
-                    inventory.DragSlot.item = null;
-                    Insert_Data();
-
-                }
-
-
-            }
-            else
-            {
-                Debug.Log("null�̿���");
-            }
+            _amountText.text = countableItem.Amount.ToString();
         }
-        
-
-
     }
-
-    void Insert_Data()
+    private void Update()
     {
         if (item != null)
         {
-            myImage.sprite = item.Data.IconSprite;
+            SetItem(null);
+        }
+    }
+    public void AddPointer<T>(Action action) where T : IEventSystemHandler
+    {
+        var handler = typeof(T);
+        if (touchDic.ContainsKey(handler))
+        {
+            touchDic[handler] = action;
         }
         else
         {
-            myImage.sprite = null;
+            touchDic.Add(handler, action);
         }
-
     }
-
-
-    public void SetItem(Item data)
+    public void RemovePointer<T>() where T : IEventSystemHandler
     {
-            item = data;
-            type = item.Data.Itemtype;
-            if (item != null)
-                myImage.sprite = item.Data.IconSprite;
-            else
-                myImage.sprite = null;
-        
+        var handler = typeof(T);
+        if (touchDic.ContainsKey(handler))
+        {
+            touchDic.Remove(handler);
+        }
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        var handler = typeof(IPointerDownHandler);
+        if (touchDic.ContainsKey(handler))
+        {
+            touchDic[handler].Invoke();
+        }
+    }
 
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        var handler = typeof(IPointerUpHandler);
+        if (touchDic.ContainsKey(handler))
+        {
+            touchDic[handler].Invoke();
+        }
+    }
 }

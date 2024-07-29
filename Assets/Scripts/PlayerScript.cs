@@ -100,25 +100,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks, IPunObservable
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
         else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
     }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Item"))
-        {
-            if (collision.GetComponent<Item_Script>().item != null && PV.IsMine)
-            {
-                // UIManager.Instance.inventory.GetComponent<Inventory>().GetItem(collision.GetComponent<Item_Script>().item);
-                // UIManager.Instance.SetNowItem(itemChoice);
-            }
-            else
-            {
-                Debug.Log("nullnull");
-            }
-
-            Destroy(collision.gameObject);
-        }
-    }
-
     [PunRPC]
     void FlipXRPC(float axis) => SR.flipX = axis == -1;
 

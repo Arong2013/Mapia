@@ -11,16 +11,16 @@ public abstract class CountableItem : Item
 {
     public CountableItemData CountableData { get; private set; }
 
-    /// <summary> ÇöÀç ¾ÆÀÌÅÛ °³¼ö </summary>
+    /// <summary> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ </summary>
     public int Amount { get; protected set; }
 
-    /// <summary> ÇÏ³ªÀÇ ½½·ÔÀÌ °¡Áú ¼ö ÀÖ´Â ÃÖ´ë °³¼ö(±âº» 99) </summary>
+    /// <summary> ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½âº» 99) </summary>
     public int MaxAmount => CountableData.MaxAmount;
 
-    /// <summary> ¼ö·®ÀÌ °¡µæ Ã¡´ÂÁö ¿©ºÎ </summary>
+    /// <summary> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ </summary>
     public bool IsMax => Amount >= CountableData.MaxAmount;
 
-    /// <summary> °³¼ö°¡ ¾ø´ÂÁö ¿©ºÎ </summary>
+    /// <summary> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ </summary>
     public bool IsEmpty => Amount <= 0;
 
 
@@ -30,13 +30,13 @@ public abstract class CountableItem : Item
         SetAmount(amount);
     }
 
-    /// <summary> °³¼ö ÁöÁ¤(¹üÀ§ Á¦ÇÑ) </summary>
+    /// <summary> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½) </summary>
     public void SetAmount(int amount)
     {
         Amount = Mathf.Clamp(amount, 0, MaxAmount);
     }
 
-    /// <summary> °³¼ö Ãß°¡ ¹× ÃÖ´ëÄ¡ ÃÊ°ú·® ¹ÝÈ¯(ÃÊ°ú·® ¾øÀ» °æ¿ì 0) </summary>
+    /// <summary> ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½Ä¡ ï¿½Ê°ï¿½ï¿½ï¿½ ï¿½ï¿½È¯(ï¿½Ê°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 0) </summary>
     public int AddAmountAndGetExcess(int amount)
     {
         int nextAmount = Amount + amount;
@@ -45,10 +45,10 @@ public abstract class CountableItem : Item
         return (nextAmount > MaxAmount) ? (nextAmount - MaxAmount) : 0;
     }
 
-    /// <summary> °³¼ö¸¦ ³ª´©¾î º¹Á¦ </summary>
+    /// <summary> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ </summary>
     public CountableItem SeperateAndClone(int amount)
     {
-        // ¼ö·®ÀÌ ÇÑ°³ ÀÌÇÏÀÏ °æ¿ì, º¹Á¦ ºÒ°¡
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
         if (Amount <= 1) return null;
 
         if (amount > Amount - 1)

@@ -3,45 +3,142 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.UI;
 using System.Linq;
-public class GameManager : MonoBehaviourPunCallbacks
+using UnityEngine.SceneManagement;
+
+public class GameManager : Singleton<GameManager>, IPunObservable
 {
-    public Inventory invenTory;
+    private Actor playerController;
+    private PhotonView PV;
+    private List<string> jobs = new List<string> { nameof(Chaser), nameof(Dectective), nameof(Sasori), nameof(DeathNote), nameof(Trap_Maker) };
+    private List<Actor> playersData = new List<Actor>();
+
+    protected override void Awake()
+    {
+        base.Awake();
+        PV = GetComponent<PhotonView>();
+    }
+
     private void Start()
     {
-        invenTory = GetComponent<Inventory>();
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(AssignJob());
     }
 
-    public override void OnEnable()
+    public void AddPlayer(Actor _char)
     {
-        base.OnEnable();
-        Spawn();
+        playerController = _char;
+        List<GameObject> allObjects = new List<GameObject>();
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+            if (scene.isLoaded)
+                GetAllChildObjects(scene.GetRootGameObjects(), allObjects);
+        }
+        foreach (GameObject obj in allObjects)
+            foreach (var playerSettable in obj.GetComponents<IPlayerable>())
+                playerSettable.SetPlayer(_char);
     }
 
-    public override void OnJoinedRoom()
+    private void GetAllChildObjects(GameObject[] rootObjects, List<GameObject> allObjects)
     {
-
+        foreach (GameObject obj in rootObjects)
+        {
+            allObjects.Add(obj);
+            foreach (Transform child in obj.transform)
+                GetAllChildObjects(new GameObject[] { child.gameObject }, allObjects);
+        }
     }
 
-    IEnumerator DestroyBullet()
+    IEnumerator AssignJob()
     {
-        yield return new WaitForSeconds(0.2f);
-        foreach (GameObject GO in GameObject.FindGameObjectsWithTag("Bullet")) GO.GetComponent<PhotonView>().RPC("DestroyRPC", RpcTarget.All);
+        while (PhotonNetwork.CurrentRoom == null)
+            yield return null;
+
+        var availableJobs = new List<string>(jobs);
+        var players = PhotonNetwork.CurrentRoom.Players.Values.ToList();
+        foreach (var player in players)
+        {
+            string job = availableJobs[Random.Range(0, availableJobs.Count)];
+            availableJobs.Remove(job);
+            PV.RPC("SetJob", RpcTarget.AllBuffered, player, job);
+            yield return null;
+        }
     }
 
-    public void Spawn()
+    [PunRPC]
+    public void SetJob(Player player, string job)
     {
-        PhotonNetwork.Instantiate("Player", new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+        if (player.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
+        {
+            GameObject gameObject = PhotonNetwork.Instantiate(job, new Vector3(Random.Range(-6f, 19f), 4, 0), Quaternion.identity);
+            PV.RPC(nameof(SetID), RpcTarget.AllBuffered, gameObject.GetPhotonView().ViewID, PhotonNetwork.LocalPlayer.ActorNumber.ToString());
+        }
     }
 
-    void Update()
+    [PunRPC]
+    private void SetID(int viewID, string _ID)
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && PhotonNetwork.IsConnected)
-            PhotonNetwork.Disconnect();
+        var actor = PhotonView.Find(viewID).gameObject.GetComponent<Actor>();
+        if (actor != null) actor.ID = _ID;
     }
 
-    public override void OnDisconnected(DisconnectCause cause)
+    public void AddActor()
     {
+        PV.RPC(nameof(RPCaddActor), RpcTarget.All);
     }
+
+    [PunRPC]
+    private void RPCaddActor()
+    {
+        foreach (var actor in GameObject.FindObjectsOfType<Actor>())
+        {
+            if (!playersData.Exists(x => x.ID == actor.ID))
+                playersData.Add(actor);
+        }
+    }
+
+    public void ShowObjectToPlayer(string _name, Vector3 _spawnPos)
+    {
+        PV.RPC(nameof(RPCShowObjectToPlayer), RpcTarget.All, _name, _spawnPos);
+    }
+
+    [PunRPC]
+    private void RPCShowObjectToPlayer(string _name, Vector3 _spawnPos)
+    {
+        var foot = PhotonNetwork.Instantiate("foot", _spawnPos, Quaternion.identity).GetComponent<ChaserFoot>();
+        foot.playerName = _name;
+    }
+
+    public void DestroyGameobject(string _name)
+    {
+        PV.RPC(nameof(RPCDestroyGameobject), RpcTarget.All, _name);
+    }
+
+    [PunRPC]
+    private void RPCDestroyGameobject(string _name)
+    {
+        Destroy(playersData.Find(x => x.ID == _name).gameObject);
+    }
+
+    public string CheckData(string text)
+    {
+        return playersData.Find(x => x.PV.Owner.NickName == text)?.PV.Owner.NickName;
+    }
+
+    public List<string> GetNickNames()
+    {
+        return playersData.Select(player => player.PV.Owner.NickName).ToList();
+    }
+    public Camp CheckLocalPlayerSide()
+    {
+        var localPlayer = playersData.FirstOrDefault(player => player.PV.IsMine);
+        return localPlayer?.PlayerSide ?? Camp.None;
+    }
+
+    public override void OnJoinedRoom() { }
+
+    public override void OnDisconnected(DisconnectCause cause) { }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
 }

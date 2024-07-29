@@ -14,7 +14,7 @@ public class VoteUI : MonoBehaviourPunCallbacks
     VoteManager voteManager;
     private void Awake()
     {
-        voteManager = Manager.Instance.GetChild<VoteManager>();
+        voteManager = VoteManager.Instance.GetComponent<VoteManager>();
     }
 
     public void OpenUI()

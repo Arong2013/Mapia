@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class RpcManager : MonoBehaviourPunCallbacks, IPunObservable
+public class RpcManager : Singleton<RpcManager>, IPunObservable
 {
-    PlayerController playerController;
-    private void Awake()
+    PhotonView PV;
+    protected override void Awake()
     {
-        playerController = GetComponent<PlayerController>();
-    }
-    [PunRPC]
-    public void Invisibility()
-    {
-        if(playerController.PV.IsMine)
-        {
-            playerController.SR.color = new Color(0,0,0,0);
-        }   
+        base.Awake();
+        PV = GetComponent<PhotonView>();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
     }
+    public void Invisibility(Actor actor)
+    {
+        PV.RPC(nameof(RPCInvisibility), RpcTarget.All, actor);
+    }
+    [PunRPC]
+    public void RPCInvisibility(Actor actor)
+    {
+        if (actor.PV.IsMine)
+        {
+            actor.SR.color = new Color(0, 0, 0, 0);
+        }
+    }
+
 }
