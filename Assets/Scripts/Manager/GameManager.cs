@@ -130,10 +130,15 @@ public class GameManager : Singleton<GameManager>, IPunObservable
     {
         return playersData.Select(player => player.PV.Owner.NickName).ToList();
     }
+    public Camp CheckLocalPlayerSide()
+    {
+        var localPlayer = playersData.FirstOrDefault(player => player.PV.IsMine);
+        return localPlayer?.PlayerSide ?? Camp.None;
+    }
 
-    public override void OnJoinedRoom() {}
+    public override void OnJoinedRoom() { }
 
-    public override void OnDisconnected(DisconnectCause cause) {}
+    public override void OnDisconnected(DisconnectCause cause) { }
 
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {}
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) { }
 }
