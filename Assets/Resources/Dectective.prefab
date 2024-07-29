@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 1719301885835299747}
   - component: {fileID: 6754503916428016920}
   m_Layer: 0
-  m_Name: Dong
+  m_Name: Dectective
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -722,12 +722,12 @@ MonoBehaviour:
   AN: {fileID: 0}
   SR: {fileID: 0}
   PV: {fileID: 0}
-  NickNameText: {fileID: 8375901364521192189}
-  HealthImage: {fileID: 8375901364045505310}
-  itemChoice: 0
-  inventory: {fileID: 0}
   moveHorizontal: 0
   moveVertical: 0
+  orianimatorController: {fileID: 0}
+  nodeState: 2
+  NickNameText: {fileID: 8375901364521192189}
+  ID: 
   ActorText: {fileID: 7945381087935632658}
   Actor_What: 
 --- !u!114 &6754503916428016920

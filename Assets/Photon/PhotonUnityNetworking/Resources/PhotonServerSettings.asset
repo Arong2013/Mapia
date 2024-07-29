@@ -57,5 +57,7 @@ MonoBehaviour:
   - Set_Actor_Num
   - RPCDestroyGameobject
   - SetID
+  - Maketrap
+  - VisibleALLPlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 1

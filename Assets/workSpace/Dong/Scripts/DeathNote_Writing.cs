@@ -16,7 +16,7 @@ public class DeathNote_Writing : MonoBehaviour
 
     private void Update()
     {
-        
+     //인풋에 텍스트 들어가면 메서드 작동되게 만들어주기   
     }
 
 
@@ -49,6 +49,22 @@ public class DeathNote_Writing : MonoBehaviour
         //플레이어 ID 확인했을 때 닉네임도 똑같이 확인해야함
         Debug.Log(GameManager.Instance.CheckData(text));
         return GameManager.Instance.CheckData(text);
+    }
+
+    public void OperateDeathNoteBtn()
+    {
+        string Nickname = CheckData(Write.text);
+
+        if (Nickname != null)
+        {
+            GameManager.Instance.DestroyGameobject(Nickname);
+            Write.text = null;
+        }
+        else
+        {
+            Debug.Log("에러 값을 찾을 수 없습니다.");
+            Write.text = null;
+        }
     }
 
 
