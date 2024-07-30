@@ -9,6 +9,13 @@ public class DeathNote : Actor
 
     bool isMoveable = true;
 
+    public override void Awake()
+    {
+        base.Awake();
+        statComponents.Add(new MovementStats());
+        AddNode<MovementNode>(new MovementNode(this), true);
+    }
+
 
     // Start is called before the first frame update
     protected override void Start()

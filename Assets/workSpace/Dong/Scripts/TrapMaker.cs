@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Trap_Maker : Actor
+public class TrapMaker : Actor
 {
     bool isMoveable = true;
     public TrapMarking trap_marking; //이거는 트랩 만드는 사람 하위 오브젝트로 넣어서 키보드 눌렀을 때 켜지고 뗐을 때 꺼지도록

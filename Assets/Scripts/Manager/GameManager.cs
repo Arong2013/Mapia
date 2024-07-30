@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>, IPunObservable
 {
     private Actor playerController;
     private PhotonView PV;
-    private List<string> jobs = new List<string> { nameof(Chaser), nameof(Dectective), nameof(Sasori), nameof(DeathNote), nameof(Trap_Maker) };
+    private List<string> jobs = new List<string> { nameof(Chaser), nameof(Detective), nameof(Sasori), nameof(DeathNote), nameof(TrapMaker) };
     private List<Actor> playersData = new List<Actor>();
 
     protected override void Awake()

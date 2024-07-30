@@ -32,7 +32,7 @@ public class QuestManager : Singleton<QuestManager>
         {
             Debug.Log(quest.GetQuestID());
 
-            if (quest.GetQuestID() == Mission.GetQuestID())
+            if (quest.GetType() == Mission.GetType())
             {
                 Debug.Log(Mission.gameObject.name);
                 MissionPanel.gameObject.SetActive(true);
@@ -44,8 +44,8 @@ public class QuestManager : Singleton<QuestManager>
             }
             else
             {
-                Debug.Log(quest.GetQuestID());
-                Debug.Log(Mission.GetQuestID());
+                Debug.Log(quest.GetType());
+                Debug.Log(Mission.GetType());
             }
         }
     }
