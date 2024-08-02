@@ -30,7 +30,7 @@ public class QuestManager : Singleton<QuestManager>
 
         foreach (Quest Mission in MissionPanel.QuestList)
         {
-            Debug.Log(quest.GetQuestID());
+            //Debug.Log(quest.GetQuestID());
 
             if (quest.GetType() == Mission.GetType())
             {
@@ -44,8 +44,8 @@ public class QuestManager : Singleton<QuestManager>
             }
             else
             {
-                Debug.Log(quest.GetType());
-                Debug.Log(Mission.GetType());
+                //Debug.Log(quest.GetType());
+                //Debug.Log(Mission.GetType());
             }
         }
     }

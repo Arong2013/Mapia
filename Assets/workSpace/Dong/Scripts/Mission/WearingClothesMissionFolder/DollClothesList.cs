@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,10 @@ using UnityEngine.UI;
 public class DollClothesList : MonoBehaviour
 {
     public List<Image> ClothesImageList;
+
+    public List<int> randNumList;
+
+
 
     public void Awake()
     {
@@ -45,6 +50,7 @@ public class DollClothesList : MonoBehaviour
         foreach (var clothes in ClothesImageList)
         {
             int randNum = GetRandomNum(clothesCountList);
+            randNumList.Add(clothesCountList[randNum]);
             clothes.sprite = ClothesSpriteList[clothesCountList[randNum]];
             clothesCountList.RemoveAt(randNum);
         }
@@ -66,11 +72,15 @@ public class DollClothesList : MonoBehaviour
 
     public int GetRandomNum(List<int> NumList)
     {
-        int num = Random.Range(0, NumList.Count);
+        int num = UnityEngine.Random.Range(0, NumList.Count);
+        
         return num;
     } //리스트 내의 값에서 랜덤으로 값을 뽑아줌
 
-
+    public List<int> GetrandomNumList()
+    {
+        return randNumList;
+    }
 
 
 }

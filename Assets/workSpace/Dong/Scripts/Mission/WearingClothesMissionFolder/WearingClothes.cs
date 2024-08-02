@@ -3,43 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WearingClothes : MonoBehaviour,IQuestInitalize
+public class WearingClothes : Quest,IQuestInitalize
 {
+    static public WearingClothes instance;
+
+    public List<int> ClothesToWear;
     public List<Sprite> ClothesList = new List<Sprite>();
     
     public GameObject Clothes;
-    public List<GameObject> ClothesObjList = new List<GameObject>();
+    public List<Clothes> ClothesObjList = new List<Clothes>();
+    public List<ClothesSlot>ClothesSlotList = new List<ClothesSlot>();
 
     public Vector2[] AreaToUse_left = new Vector2[2];
     public Vector2[] AreaToUse_right = new Vector2[2];
 
+    public Clothes pick;
 
 
     public DollClothesList WearingClothesList; //뭐 입을 건지 옷을 보여줌
 
 
+    protected override void Awake()
+    {
+        QuestID = 3;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        WearingClothesList = GetComponentInChildren<DollClothesList>();
-        InitializeQuest();
+        instance = this;
+
+        
+        //InitalizeQuest();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(ClearQuestCheck())
+        {
+            UiUtils.GetUI<QuestClear>().gameObject.SetActive(true);
+        }    
         
-    }
-
-
-
-    public void InitializeQuest() //퀘스트 초기화
-    {
-        WearingClothesList.SetImgSprite(ClothesList); //입어야 하는 옷에 대한 리스트를 띄워줍니다.
-        MakeClothes();
-
-
-
     }
 
     public void MakeClothes()
@@ -50,9 +55,14 @@ public class WearingClothes : MonoBehaviour,IQuestInitalize
             foreach (var clothesImg in ClothesList)
             {
                 GameObject ClothesObj = Instantiate(Clothes, transform);
-                ClothesObj.GetComponent<Image>().sprite = clothesImg; 
+                ClothesObj.GetComponent<Image>().sprite = clothesImg;
+                ClothesObj.GetComponent<Clothes>().SetID(num);
                 RectTransform rect = ClothesObj.GetComponent<RectTransform>();
                 rect.anchoredPosition = SetPos();
+
+                ClothesObjList.Add(ClothesObj.GetComponent<Clothes>());
+
+                num++;
         }
         }
         
@@ -76,35 +86,43 @@ public class WearingClothes : MonoBehaviour,IQuestInitalize
         }
     }
 
-    //void SetDustPos()
-    //{
-    //    Vector2[] Vector_Dust_Pos = new Vector2[3];
+    public bool ClearQuestCheck()
+    {
+        int count = 0;
+        //여기에서 옷을 다 알맞게 입었는지 확인 후 체크해서 모두 다 올바르다면 true 하나라도 틀렸다면 false
+        foreach (var obj in ClothesSlotList)
+        {
+            if(obj.CurrentID != obj.ID)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
-    //    for (int i = 0; i < 3; i++)
-    //    {
-    //        Vector_Dust_Pos[i] = new Vector2(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100));
-    //    }
-
-
-
-    //    while (Vector2.Distance(Vector_Dust_Pos[0], Vector_Dust_Pos[1]) < 130)
-    //    {
-    //        //Debug.Log("i : " + i + " , " + " j : " + j);
-    //        // Debug.Log("i : "+ i + " " + Vector2.Distance(Vector_Dust_Pos[i], Vector_Dust_Pos[j]));
-    //        Vector_Dust_Pos[1] = new Vector2(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100));
-    //    }
-
-    //    Vector_Dust_Pos[2] = -Vector_Dust_Pos[1];
-
-    //    for (int i = 0; i < 3; i++)
-    //    {
-    //        Dust_Pos.Add(Vector_Dust_Pos[i]);
-    //    }
-
-    //}
+    public override void InitalizeQuest()
+    {
+        WearingClothesList = GetComponentInChildren<DollClothesList>();
+        ClothesSlotList.AddRange(GetComponentsInChildren<ClothesSlot>());
 
 
+        WearingClothesList.SetImgSprite(ClothesList); //입어야 하는 옷에 대한 리스트를 띄워줍니다.
+        ClothesToWear = WearingClothesList.GetrandomNumList();
+
+        int count = 0;
+        foreach (var slot in ClothesSlotList)
+        {
+            Debug.Log(slot.gameObject);
+            slot.ID = ClothesToWear[count++];
+        }
+        MakeClothes();
 
 
 
+    }
+
+    public override int GetQuestID()
+    {
+        return QuestID;
+    }
 }
