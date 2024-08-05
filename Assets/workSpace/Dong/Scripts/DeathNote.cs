@@ -13,7 +13,6 @@ public class DeathNote : Actor
     {
         base.Awake();
         statComponents.Add(new MovementStats());
-        AddNode<MovementNode>(new MovementNode(this), true);
     }
 
 
@@ -48,8 +47,8 @@ public class DeathNote : Actor
     {
         if (isMoveable)
         {
-            CallAct<MovementNode>(new MovementNode(movement));
-            PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
+        RB.velocity = movement;
+        PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
         }
     }
 }

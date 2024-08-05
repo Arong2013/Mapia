@@ -20,11 +20,7 @@ public interface IStatusable
     public T GetStatComponent<T>() where T : IStatComponent;
 
 }
-public interface ICallNodeDataHandler<T>
-where T : Node
-{
-    void SetData(Node data);
-}
+
 public interface IAnimatable
 {
     void SetAnimator(AnimatorOverrideController animatorController, bool isSet = false);

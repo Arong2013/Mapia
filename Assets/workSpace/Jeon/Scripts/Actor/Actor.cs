@@ -30,17 +30,11 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     protected Vector3 movement;
 
     [SerializeField] protected AnimatorOverrideController orianimatorController;
-
-    Dictionary<Type, Node> ActNodeDic = new Dictionary<Type, Node>();
     Vector3 curPos;
 
     protected HashSet<IStatComponent> statComponents = new HashSet<IStatComponent>();
-    public NodeState nodeState = NodeState.FAILURE;
-
     public Camp PlayerSide = Camp.None;
-
     public Text NickNameText;
-
     public string ID;
 
     public Inventory inventory = new Inventory();
@@ -51,8 +45,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         AN = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
         PV = GetComponent<PhotonView>();
-        statComponents.Add(new MovementStats());
-        statComponents.Add(new HealthStats());
+
 
         if (PV.IsMine)
         {
@@ -94,60 +87,9 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     }
     [PunRPC]
     public void FlipXRPC(float axis) => SR.flipX = axis == -1;
-
     [PunRPC]
     public void DestroyRPC() => Destroy(gameObject);
-
-
     public abstract void Move();
-
-
-    protected Node GetNode<T>() where T : Node
-    {
-        var type = typeof(T);
-        if (!ActNodeDic.TryGetValue(type, out var node))
-        {
-            Debug.Log(type + "이 없습니다");
-            return null;
-        }
-        return ActNodeDic[type];
-    }
-
-    public void AddNode<T>(Node node, bool IsLower) where T : Node
-    {
-        var type = typeof(T);
-        var parentNode = GetNode<T>();
-
-        if (parentNode == null)
-        {
-            var sequenceNode = new Sequence(this);
-            ActNodeDic.Add(type, sequenceNode);
-        }
-        ActNodeDic[type].Attach(node, IsLower);
-    }
-    public NodeState CallAct<T>(T _node) where T : Node
-    {
-        if (nodeState == NodeState.RUNNING)
-            return NodeState.RUNNING;
-        var cunSequence = GetNode<T>();
-
-        if (_node != null && _node is ICallNodeDataHandler<T> IcallData)
-        {
-            IcallData.SetData(cunSequence);
-        }
-        return cunSequence.Evaluate();
-    }
-
-    public void RemoveNode<T>() where T : Node
-    {
-        var type = typeof(T);
-        var parentNode = GetNode<T>();
-        if (parentNode == null)
-        {
-            Debug.LogError(type + "그런 노드 없습니다");
-        }
-        ActNodeDic.Remove(type);
-    }
     public T GetStatComponent<T>() where T : IStatComponent
     {
         return (T)statComponents.FirstOrDefault(component => component is T);
@@ -202,14 +144,6 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
                 AN.SetFloat(_animeName, _speed);
             }
 
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.TryGetComponent<ItemObj>(out ItemObj component))
-        {
-            component.Pickup(this);
         }
     }
 }
