@@ -14,42 +14,73 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
     [SerializeField] GameObject heartSlot, inventorySlot;
 
     private List<Image> hearts = new List<Image>();
-    private List<Image> inventorySlots = new List<Image>();
-    void Update()
+    private List<ItemSlot> inventorySlots = new List<ItemSlot>();
+
+    void UpdataUI()
     {
-        if (actor != null)
-        {
-            UpdateUI(HeartParent, hearts, (int)healthStats.maxHp.Value, heartSlot, (int)healthStats.curHp.Value);
-            UpdateUI(InventoryParent, inventorySlots, inventory.Items.Count, inventorySlot, -1);
-        }
+        UpdateHeartUI();
+        UpdateInventoryUI();
     }
-    void UpdateUI(Transform parent, List<Image> slots, int targetCount, GameObject slotPrefab, int fillAmount)
+    void UpdateHeartUI()
     {
-        if (slots.Count != targetCount)
+        int targetCount = (int)healthStats.maxHp.Value;
+        int fillAmount = (int)healthStats.curHp.Value;
+
+        if (hearts.Count != targetCount)
         {
-            foreach (Transform child in parent)
+            foreach (Transform child in HeartParent)
             {
                 Destroy(child.gameObject);
             }
-            slots.Clear();
+            hearts.Clear();
 
             for (int i = 0; i < targetCount; i++)
             {
-                GameObject slot = Instantiate(slotPrefab, parent);
-                slots.Add(slot.GetComponent<Image>());
+                GameObject slot = Instantiate(heartSlot, HeartParent);
+                hearts.Add(slot.GetComponent<Image>());
             }
         }
 
-        if (fillAmount >= 0)
+        for (int i = 0; i < hearts.Count; i++)
         {
-            for (int i = 0; i < slots.Count; i++)
+            hearts[i].fillAmount = (fillAmount > i) ? 1 : 0;
+        }
+    }
+
+    void UpdateInventoryUI()
+    {
+        int targetCount = 4;
+
+        if (inventorySlots.Count != targetCount)
+        {
+            foreach (Transform child in InventoryParent)
             {
-                slots[i].fillAmount = (fillAmount > i) ? 1 : 0;
+                Destroy(child.gameObject);
+            }
+            inventorySlots.Clear();
+
+            for (int i = 0; i < targetCount; i++)
+            {
+                GameObject slot = Instantiate(inventorySlot, InventoryParent);
+                if (inventory.Items[i] != null)
+                {
+                    var index = i;
+                    slot.GetComponent<ItemSlot>().SetItem(inventory.Items[index]);
+                    
+                }
+                else
+                {
+                    slot.GetComponent<ItemSlot>().SetItem(null);
+                }
+
+                inventorySlots.Add(slot.GetComponent<ItemSlot>());
+
             }
         }
     }
     public void SetPlayer(Actor player)
     {
         actor = player;
+        actor.inventory.ItemChangeActions += UpdateInventoryUI;
     }
 }

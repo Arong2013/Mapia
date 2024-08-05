@@ -17,11 +17,7 @@ public class Chaser : Actor
     public override void Awake()
     {
         base.Awake();
-        statComponents.Add(new MovementStats());
-        AddNode<MovementNode>(new MovementNode(this), true);
-        AddNode<MovementNode>(new ChaserDrop(this), true);
-        AddNode<AttackNode>(new AttackNode(), true);
-        if(PV.IsMine)
+        if (PV.IsMine)
         {
             GameManager.Instance.AddPlayer(this);
         }
@@ -37,7 +33,7 @@ public class Chaser : Actor
     }
     public override void Move()
     {
-        CallAct<MovementNode>(new MovementNode(movement));
+        RB.velocity = movement;
         PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
     }
 
@@ -61,7 +57,7 @@ public class Chaser : Actor
             Debug.Log(actor.ID);
             UiUtils.GetUI<UtilsBtn>().SetButtonAction(() =>
             {
-                CallAct<AttackNode>(new AttackNode(actor));
+                //CallAct<AttackNode>(new AttackNode(actor));
             });
         }
     }
@@ -83,10 +79,7 @@ public class Chaser : Actor
 
     }
 }
-
-
-
-public class ChaserDrop : Node
+public class ChaserDrop
 {
     float cunTime;
     readonly Actor target;
@@ -94,7 +87,7 @@ public class ChaserDrop : Node
     {
         target = _target;
     }
-    public override NodeState Evaluate()
+    public NodeState Evaluate()
     {
         cunTime++;
         if (cunTime > 100)

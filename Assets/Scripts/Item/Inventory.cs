@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System;
 
 [System.Serializable]
-public class Inventory :MonoBehaviour
+public class Inventory
 {
+    public Action ItemChangeActions;
     readonly List<Item> items = new List<Item>();
     public List<Item> Items => items;
     public bool isCanAdd
@@ -20,22 +22,21 @@ public class Inventory :MonoBehaviour
     {
         if (!isCanAdd)
             return false;
-        if (_item is CountableItem countItem)
+        if (Items.Count > 0)
         {
-            if (Items.Count > 0)
+            for (var i = 0; i < Items.Count; i++)
             {
-                for (var i = 0; i < Items.Count; i++)
+                var curitem = Items[i];
+                if (curitem.Data == _item.Data)
                 {
-                    var curitem = Items[i];
-                    if (curitem.Data == _item.Data && curitem is CountableItem ci)
-                    {
-                        countItem.SetAmount(-ci.AddAmountAndGetExcess(countItem.Amount));
-                    }
+                    _item.SetAmount(-curitem.AddAmountAndGetExcess(_item.Amount));
                 }
             }
-            if (countItem.IsEmpty)
-                return true;
         }
+        ItemChangeActions?.Invoke();
+        if (_item.IsEmpty)
+            return true;
+        ItemChangeActions?.Invoke();
         Items.Add(_item);
         return true;
     }

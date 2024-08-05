@@ -15,7 +15,6 @@ public class Detective : Actor, IPointerClickHandler
     {
         base.Awake();
         statComponents.Add(new MovementStats());
-        AddNode<MovementNode>(new MovementNode(this), true);
     }
 
     protected override void Start()
@@ -35,8 +34,7 @@ public class Detective : Actor, IPointerClickHandler
     {
         if (isMoveable)
         {
-            //print("ÀßµÇ¿ä");
-            CallAct<MovementNode>(new MovementNode(movement));
+            RB.velocity = movement;
             PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
         }
     }

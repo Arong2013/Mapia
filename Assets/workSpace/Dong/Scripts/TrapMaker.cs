@@ -7,18 +7,17 @@ using UnityEngine.EventSystems;
 public class TrapMaker : Actor
 {
     bool isMoveable = true;
-    public TrapMarking trap_marking; //ÀÌ°Å´Â Æ®·¦ ¸¸µå´Â »ç¶÷ ÇÏÀ§ ¿ÀºêÁ§Æ®·Î ³Ö¾î¼­ Å°º¸µå ´­·¶À» ¶§ ÄÑÁö°í ¶ÃÀ» ¶§ ²¨Áöµµ·Ï
+    public TrapMarking trap_marking; //ï¿½Ì°Å´ï¿½ Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö¾î¼­ Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-    bool CanSetTrap = false; //ÇÔÁ¤À» ¼³Ä¡ÇÒ ¼ö ÀÖ´Â À§Ä¡ÀÎ°¡?
+    bool CanSetTrap = false; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½Ä¡ï¿½Î°ï¿½?
 
-    public GameObject trap; // Å°º¸µå ¶ÃÀ» ¶§ ÇØ´ç ¿µ¿ª¿¡ ¼³Ä¡ °¡´ÉÇÒ ½Ã ¼³Ä¡ÇÔ
+    public GameObject trap; // Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½
     public List<GameObject> trapList = new List<GameObject>();
 
     public override void Awake()
     {
         base.Awake();
         statComponents.Add(new MovementStats());
-        AddNode<MovementNode>(new MovementNode(this), true);
     }
 
 
@@ -26,8 +25,8 @@ public class TrapMaker : Actor
     {
         base.Start();
 
-        //¾î¶² ±â´ÉÀ» Ãß°¡ÇØ¾ß ÇÒÁö ¹Ì¸® Á¤ÇØ¾ßÇÔ
-        //Æ®·¦À» ¾î¶²½ÄÀ¸·Î º¸¿©ÁÙ°ÇÁö¿¡ ´ëÇÑ Á¤º¸°¡ ºÎÁ·ÇØ¿ä
+        //ï¿½î¶² ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ø¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
+        //Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½î¶²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¿ï¿½
 
     }
 
@@ -65,7 +64,7 @@ public class TrapMaker : Actor
 
     }
 
-    void SetTrap() //Æ®·¦ ¼³Ä¡ ¸Þ¼­µå
+    void SetTrap() //Æ®ï¿½ï¿½ ï¿½ï¿½Ä¡ ï¿½Þ¼ï¿½ï¿½ï¿½
     {
 
 
@@ -120,7 +119,7 @@ public class TrapMaker : Actor
         //    //trapList.Add(trap, )
 
 
-        //    //Æ®·¦¼³Ä¡ Æ®·¦Àº 
+        //    //Æ®ï¿½ï¿½ï¿½ï¿½Ä¡ Æ®ï¿½ï¿½ï¿½ï¿½ 
 
 
        // }
@@ -138,9 +137,8 @@ public class TrapMaker : Actor
     {
         if (isMoveable)
         {
-            //print("ÀßµÇ¿ä");
-            CallAct<MovementNode>(new MovementNode(movement));
-            PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
+                  RB.velocity = movement;
+        PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
         }
     }
 }

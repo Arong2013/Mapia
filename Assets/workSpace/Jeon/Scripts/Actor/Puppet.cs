@@ -17,8 +17,6 @@ public class Puppet : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
     protected Vector3 movement;
 
     [SerializeField] protected AnimatorOverrideController orianimatorController;
-
-    Dictionary<Type, Node> ActNodeDic = new Dictionary<Type, Node>();
     Vector3 curPos;
 
     Sasori sasori;

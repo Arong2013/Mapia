@@ -2,8 +2,8 @@
 [System.Serializable]
 public class HealthStats : IStatComponent
 {
-    public Stat maxHp = new Stat(100);
-    public Stat curHp = new Stat(100);
+    public Stat maxHp = new Stat(3);
+    public Stat curHp = new Stat(3);
     public Stat hpRegenRate = new Stat(0.2f);
     public void RemoveModifiersFromSource(object source)
     {
