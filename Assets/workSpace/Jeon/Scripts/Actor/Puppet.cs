@@ -42,9 +42,9 @@ public class Puppet : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
     private void Start()
     {
         Actor[] cunActors = GameObject.FindObjectsOfType<Actor>();
-        foreach(var cunActor in cunActors)
+        foreach (var cunActor in cunActors)
         {
-            if(cunActor.TryGetComponent<Sasori>(out Sasori component))
+            if (cunActor.TryGetComponent<Sasori>(out Sasori component))
             {
                 sasori = component;
             }
@@ -63,12 +63,11 @@ public class Puppet : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
         else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
         else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
     }
-
     void Move()
     {
         RB.velocity = movement * 5;
         cunTime += Time.deltaTime;
-        if(cunTime > sasoriTime)
+        if (cunTime > sasoriTime)
         {
             sasori.DestoryPuppet();
             PhotonNetwork.Destroy(PV);
@@ -87,7 +86,7 @@ public class Puppet : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
     }
     [PunRPC]
     public void FlipXRPC(float axis) => SR.flipX = axis == -1;
-
+    
     [PunRPC]
     public void DestroyRPC() => Destroy(gameObject);
     public void SetAnimator(AnimatorOverrideController animatorController, bool isSet = false)
@@ -97,26 +96,15 @@ public class Puppet : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
         else
             AN.runtimeAnimatorController = orianimatorController;
     }
-
-    public bool CanPlayAnimation(string animationName)
+    public NodeState IsAnimationPlaying(string animationName)
     {
-        if (IsAnimationPlaying("Hit"))
+        if (AN.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+            return NodeState.RUNNING;
+        else if (AN.GetCurrentAnimatorStateInfo(0).IsName("Walk") && AN.GetFloat("Walk") == 0)
         {
-            return false;
+            return NodeState.SUCCESS;
         }
-        if (IsAnimationPlaying("Attack"))
-        {
-            return false;
-        }
-        if (IsAnimationPlaying("Walk"))
-        {
-            return true;
-        }
-        return false;
-    }
-    private bool IsAnimationPlaying(string animationName)
-    {
-        return AN.GetCurrentAnimatorStateInfo(0).IsName(animationName);
+        return NodeState.FAILURE;
     }
     public void PlayAnimation(string _animeName, object key = null)
     {

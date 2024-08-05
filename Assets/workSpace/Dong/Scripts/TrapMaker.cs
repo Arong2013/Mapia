@@ -17,7 +17,6 @@ public class TrapMaker : Actor
     public override void Awake()
     {
         base.Awake();
-        statComponents.Add(new MovementStats());
     }
 
 

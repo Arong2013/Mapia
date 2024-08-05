@@ -30,7 +30,7 @@ public class Sasori : Actor
     {
         if (isMoveable)
         {
-            RB.velocity = movement;
+            RB.velocity = movement * GetStatComponent<BaseStats>().speed.Value;
             PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
         }
 

@@ -643,6 +643,6 @@ MonoBehaviour:
   moveHorizontal: 0
   moveVertical: 0
   orianimatorController: {fileID: 0}
-  nodeState: 2
+  PlayerSide: 0
   NickNameText: {fileID: 0}
   ID: 

@@ -24,7 +24,7 @@ public interface IStatusable
 public interface IAnimatable
 {
     void SetAnimator(AnimatorOverrideController animatorController, bool isSet = false);
-    bool CanPlayAnimation(string _animeName);
+    NodeState IsAnimationPlaying(string _animeName);
     void PlayAnimation(string _animeName, object key = null);
 }
 
