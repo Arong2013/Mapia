@@ -9,15 +9,6 @@ using System.IO;
 using UnityEngine.UI;
 
 
-public enum Camp
-{
-    None,
-    Good,
-    Bad,
-    Neutral
-}
-
-
 public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimatable
 {
     [HideInInspector] public Rigidbody2D RB;
@@ -26,9 +17,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     [HideInInspector] public PhotonView PV;
     [HideInInspector] public float moveHorizontal;
     [HideInInspector] public float moveVertical;
-
     protected Vector3 movement;
-
     [SerializeField] protected AnimatorOverrideController orianimatorController;
     Vector3 curPos;
 
@@ -62,7 +51,6 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     }
     protected virtual void Update()
     {
-
         if (PV.IsMine)
         {
             moveHorizontal = Input.GetAxisRaw("Horizontal");

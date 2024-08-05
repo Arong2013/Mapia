@@ -644,10 +644,8 @@ MonoBehaviour:
   moveVertical: 0
   orianimatorController: {fileID: 9100000, guid: 11bcc84ebfb6d5e4fb3b23025313bc25,
     type: 2}
-  nodeState: 2
   PlayerSide: 0
   NickNameText: {fileID: 0}
   ID: 
-  inventory: {fileID: 0}
   MaxKillCount: 0
   DropObj: {fileID: 0}

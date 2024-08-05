@@ -6,6 +6,8 @@ using Photon.Realtime;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
+
+
 public class GameManager : Singleton<GameManager>, IPunObservable
 {
     private Actor playerController;

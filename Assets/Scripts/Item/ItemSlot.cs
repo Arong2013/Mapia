@@ -12,9 +12,7 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [SerializeField] Sprite OrizinImage;
     [SerializeField] Image iconImage;
     [SerializeField] private TextMeshProUGUI _amountText;
-
     private Dictionary<Type, Action> touchDic = new Dictionary<Type, Action>();
-
     private void Awake()
     {
         OrizinImage = iconImage.sprite;

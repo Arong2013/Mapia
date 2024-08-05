@@ -20,3 +20,10 @@ public enum NodeState
     SUCCESS,
     FAILURE
 }
+public enum Camp
+{
+    None,
+    Good,
+    Bad,
+    Neutral
+}
