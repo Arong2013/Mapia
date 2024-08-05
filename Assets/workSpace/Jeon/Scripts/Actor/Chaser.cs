@@ -33,7 +33,7 @@ public class Chaser : Actor
     }
     public override void Move()
     {
-        RB.velocity = movement;
+        RB.velocity = movement * GetStatComponent<BaseStats>().speed.Value;
         PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
     }
 

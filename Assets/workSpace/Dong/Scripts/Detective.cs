@@ -9,19 +9,14 @@ public class Detective : Actor, IPointerClickHandler
 {
     bool isMoveable = true;
     public Text ActorText;
-    //public string Actor_What;
-
     public override void Awake()
     {
         base.Awake();
-        statComponents.Add(new MovementStats());
     }
-
     protected override void Start()
     {
         base.Start();
     }
-
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!PV.IsMine)
@@ -29,7 +24,6 @@ public class Detective : Actor, IPointerClickHandler
             //ActorText.text = Actor_What;
         }
     }
-
     public override void Move()
     {
         if (isMoveable)

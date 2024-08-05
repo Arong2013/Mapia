@@ -12,11 +12,7 @@ public class DeathNote : Actor
     public override void Awake()
     {
         base.Awake();
-        statComponents.Add(new MovementStats());
     }
-
-
-    // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
@@ -24,8 +20,6 @@ public class DeathNote : Actor
         Debug.Log(GetComponent<DeathNote>().ID);
         Debug.Log(PV.Owner.NickName);
     }
-
-    // Update is called once per frame
     protected override void Update()
     {
         base.Update();

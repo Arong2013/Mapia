@@ -46,7 +46,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         SR = GetComponent<SpriteRenderer>();
         PV = GetComponent<PhotonView>();
 
-
+        statComponents.Add(new BaseStats());
         if (PV.IsMine)
         {
             var CM = GameObject.Find("CMCamera").GetComponent<CinemachineVirtualCamera>();
@@ -102,26 +102,15 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         else
             AN.runtimeAnimatorController = orianimatorController;
     }
-
-    public bool CanPlayAnimation(string animationName)
+    public NodeState IsAnimationPlaying(string animationName)
     {
-        if (IsAnimationPlaying("Hit"))
+        if (AN.GetCurrentAnimatorStateInfo(0).IsName(animationName))
+            return NodeState.RUNNING;
+        else if (AN.GetCurrentAnimatorStateInfo(0).IsName("Walk") && AN.GetFloat("Walk") == 0)
         {
-            return false;
+            return NodeState.SUCCESS;
         }
-        if (IsAnimationPlaying("Attack"))
-        {
-            return false;
-        }
-        if (IsAnimationPlaying("Walk"))
-        {
-            return true;
-        }
-        return false;
-    }
-    private bool IsAnimationPlaying(string animationName)
-    {
-        return AN.GetCurrentAnimatorStateInfo(0).IsName(animationName);
+        return NodeState.FAILURE;
     }
     public void PlayAnimation(string _animeName, object key = null)
     {

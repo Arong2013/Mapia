@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UnderBarUI : MonoBehaviour, IPlayerable
 {
     Actor actor;
-    HealthStats healthStats => actor.GetStatComponent<HealthStats>();
+    BaseStats healthStats => actor.GetStatComponent<BaseStats>();
     Inventory inventory => actor.inventory;
 
     [SerializeField] Transform HeartParent, InventoryParent;
