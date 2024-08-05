@@ -9,7 +9,6 @@ using UnityEngine.UIElements;
 public class Chaser : Actor
 {
     public Action<Collision2D> OnCollisionEnter2DEvent;
-
     public Action<Collider2D> OnTriggerExit2DEvents;
     [SerializeField] int MaxKillCount;
     Dictionary<string, int> killCount = new Dictionary<string, int>();
@@ -36,7 +35,6 @@ public class Chaser : Actor
         RB.velocity = movement * GetStatComponent<BaseStats>().speed.Value;
         PV.RPC(nameof(FlipXRPC), RpcTarget.AllBuffered, moveHorizontal);
     }
-
     public void AddKillCount(string _name)
     {
         if (killCount.TryGetValue(_name, out int a))
@@ -49,7 +47,6 @@ public class Chaser : Actor
             killCount.Add(_name, 0);
         }
     }
-
     void AddKillBtn(Collision2D other)
     {
         if (other.gameObject.TryGetComponent<Actor>(out Actor actor) && other.gameObject != this.gameObject)
@@ -61,14 +58,12 @@ public class Chaser : Actor
             });
         }
     }
-
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (PV.IsMine)
         {
             OnCollisionEnter2DEvent?.Invoke(other);
         }
-
     }
     private void OnTriggerExit2D(Collider2D other)
     {

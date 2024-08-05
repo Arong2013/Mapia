@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestPanel : MonoBehaviour
 {
-    //Äù½ºÆ® ¸ñ·Ï °¡Áö°í ÀÖ°í ¾îµðÀÖ³Ä¿¡ µû¶ó¼­ ±× À§Ä¡¿¡ ¸Â´Â Äù½ºÆ® ÆÐ³Î ÄÑÁÜ
+    //ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½Ö³Ä¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ð³ï¿½ ï¿½ï¿½ï¿½ï¿½
     public List<Quest> QuestList;
 
     public GameObject ClearPanel;
@@ -18,10 +18,6 @@ public class QuestPanel : MonoBehaviour
         }
         ClearPanel = UiUtils.GetUI<QuestClear>().gameObject;
     }
-
-
-
-    //À§Ä¡ È¤Àº Æ¯Á¤ Æ®¸®°Å Á¶°Ç È®ÀÎÇÏ°í Äù½ºÆ® ÄÑÁÖ´Â ±â´É
     public void CheckQuest(Quest quest)
     {
         foreach(Quest Mission in QuestList)
@@ -34,13 +30,6 @@ public class QuestPanel : MonoBehaviour
             
         }
     }
-
-    public void OpenQuestClearPanel()
-    {
-        ClearPanel.gameObject.SetActive(true);
-    }
-
-
     public void QuitObject()
     {
         foreach (var childobj in gameObject.GetComponentsInChildren<Quest>())
@@ -54,7 +43,7 @@ public class QuestPanel : MonoBehaviour
 
     public void InitalizeQuest()
     {
-        //Äù½ºÆ® ÇÒ´çµÇ¾îÀÖ´Â°Å ÇØÁ¦ÇØÁÖ°í À§Ä¡³ª Æ¯Á¤ Æ®¸®°Å È®ÀÎÇÏ°í ±×°Å¿¡ ¸Â°Ô ÄÑÁÖ±â
+        //ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ò´ï¿½Ç¾ï¿½ï¿½Ö´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ Æ¯ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½×°Å¿ï¿½ ï¿½Â°ï¿½ ï¿½ï¿½ï¿½Ö±ï¿½
 
         UiUtils.GetUI<QuestClear>().gameObject.SetActive(false);
     }

@@ -7,26 +7,20 @@ public abstract class Quest : MonoBehaviour
 {
     protected int QuestID;
 
-    protected bool AlreadySet; //ÀÌ¹Ì ¼¼ÆÃÀÌ µÇ¾îÀÖ´ÂÁö ÀÌÀü¿¡ ÇØ´ç ¹Ì¼ÇÀÌ ½ÇÇà‰ç¾ú´ÂÁö¿¡ ´ëÇÑ °ÍÀ» Ã¼Å©ÇØÁÜ
+    protected bool AlreadySet; //ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¼Å©ï¿½ï¿½ï¿½ï¿½
 
 
-    //ÀÌ°Å »ó¼Ó¹Þµµ·Ï ¸¸µé¾î¼­ °ü¸®ÇÏ°Ô ÆíÇÏµµ·Ï ÇØÁÖ±â    
+    //ï¿½Ì°ï¿½ ï¿½ï¿½Ó¹Þµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö±ï¿½    
     //public Quest quest;
-
-
     protected virtual void Awake()
     {
         QuestID = 0;
     }
-
     //public abstract void GetMission(Quest quest);
-
     public abstract void InitalizeQuest();
 
 
     public abstract void ClearQuest();
 
     public abstract int GetQuestID();
-
-
 }

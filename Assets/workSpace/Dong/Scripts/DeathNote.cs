@@ -6,7 +6,6 @@ using UnityEngine;
 public class DeathNote : Actor
 {
     DeathNote_Writing MyNote;
-
     bool isMoveable = true;
 
     public override void Awake()
@@ -36,7 +35,6 @@ public class DeathNote : Actor
                   
         }
     }
-
     public override void Move()
     {
         if (isMoveable)
