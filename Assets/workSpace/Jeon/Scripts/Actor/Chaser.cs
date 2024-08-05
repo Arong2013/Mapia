@@ -17,7 +17,7 @@ public class Chaser : Actor
     public override void Awake()
     {
         base.Awake();
-        statComponents.Add(new MovementStats());
+        
         AddNode<MovementNode>(new MovementNode(this), true);
         AddNode<MovementNode>(new ChaserDrop(this), true);
         AddNode<AttackNode>(new AttackNode(), true);

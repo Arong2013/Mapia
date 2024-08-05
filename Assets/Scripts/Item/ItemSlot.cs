@@ -25,11 +25,7 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         item = _item;
         iconImage.sprite = item?.Data.IconSprite ?? OrizinImage;
         iconImage.color = iconImage.sprite != null ? Color.white : new Color(0, 0, 0, 0);
-
-        if(_item is CountableItem countableItem)
-        {
-            _amountText.text = countableItem.Amount.ToString();
-        }
+        _amountText.text = item?.Amount.ToString() ?? "";
     }
     private void Update()
     {

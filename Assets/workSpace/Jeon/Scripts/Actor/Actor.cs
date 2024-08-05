@@ -11,10 +11,10 @@ using UnityEngine.UI;
 
 public enum Camp
 {
-   None,
-   Good,
-   Bad,
-   Neutral
+    None,
+    Good,
+    Bad,
+    Neutral
 }
 
 
@@ -51,7 +51,8 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         AN = GetComponent<Animator>();
         SR = GetComponent<SpriteRenderer>();
         PV = GetComponent<PhotonView>();
-        
+        statComponents.Add(new MovementStats());
+        statComponents.Add(new HealthStats());
 
         if (PV.IsMine)
         {
@@ -201,6 +202,14 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
                 AN.SetFloat(_animeName, _speed);
             }
 
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.TryGetComponent<ItemObj>(out ItemObj component))
+        {
+            component.Pickup(this);
         }
     }
 }

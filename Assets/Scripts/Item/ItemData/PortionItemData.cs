@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Item_Portion_", menuName = "Inventory System/Item Data/Portion", order = 3)]
-public class PortionItemData : CountableItemData
+public class PortionItemData : ItemData
 {
     /// <summary> ȿ����(ȸ���� ��) </summary>
     public float Value => _value;
@@ -15,21 +15,17 @@ public class PortionItemData : CountableItemData
 }
 
 [System.Serializable]
-public class PortionItem : CountableItem
+public class PortionItem : Item
 {
-    public PortionItem(PortionItemData data, int amount = 1) : base(data, amount) { }
-
+    public PortionItem(PortionItemData data) : base(data) { }
     public bool Use()
     {
-
-
         Amount--;
-
         return true;
     }
 
-    protected override CountableItem Clone(int amount)
+    protected override Item Clone(int amount)
     {
-        return new PortionItem(CountableData as PortionItemData, amount);
+        return new PortionItem(Data as PortionItemData);
     }
 }

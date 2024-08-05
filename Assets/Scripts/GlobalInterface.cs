@@ -6,7 +6,7 @@ using System.Threading;
 using UnityEngine;
 public interface IPickupable
 {
-    public void Pickup();
+    bool Pickup(Actor actor);
 }
 public interface IStatComponent
 {
