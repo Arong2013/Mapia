@@ -90,4 +90,10 @@ public class Clothes : MonoBehaviour, IPointerUpHandler, IPointerDownHandler, ID
         myImg.raycastTarget = false;
         WearingClothes.instance.pick = this;
     }
+
+    public void RaycastTargetOn()
+    {
+        myImg.raycastTarget = true;
+    }
+
 }

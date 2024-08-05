@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class QuestManager : Singleton<QuestManager>
 {
@@ -48,6 +49,12 @@ public class QuestManager : Singleton<QuestManager>
                 //Debug.Log(Mission.GetType());
             }
         }
+    }
+
+    public void OpenClearPanel()
+    {
+        QuestPanel QPanel = UiUtils.GetUI<QuestPanel>();
+        QPanel.OpenQuestClearPanel();
     }
 
     public void QuestClear()

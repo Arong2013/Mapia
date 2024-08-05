@@ -23,26 +23,24 @@ public class WearingClothes : Quest,IQuestInitalize
     public DollClothesList WearingClothesList; //뭐 입을 건지 옷을 보여줌
 
 
+
+
     protected override void Awake()
     {
         QuestID = 3;
+        AlreadySet = false;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         instance = this;
-
-        
-        //InitalizeQuest();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(ClearQuestCheck())
         {
-            UiUtils.GetUI<QuestClear>().gameObject.SetActive(true);
+            ClearQuest();
         }    
         
     }
@@ -63,10 +61,21 @@ public class WearingClothes : Quest,IQuestInitalize
                 ClothesObjList.Add(ClothesObj.GetComponent<Clothes>());
 
                 num++;
+            }
         }
+        else
+        {
+            foreach (var clothesObj in ClothesObjList)
+            {
+               
+                RectTransform rect = clothesObj.GetComponent<RectTransform>();
+                rect.anchoredPosition = SetPos();
+                clothesObj.RaycastTargetOn();
+            }
         }
         
     }
+
 
     public Vector2 SetPos()
     {
@@ -102,8 +111,17 @@ public class WearingClothes : Quest,IQuestInitalize
 
     public override void InitalizeQuest()
     {
-        WearingClothesList = GetComponentInChildren<DollClothesList>();
-        ClothesSlotList.AddRange(GetComponentsInChildren<ClothesSlot>());
+        if(AlreadySet == false)
+        {
+            WearingClothesList = GetComponentInChildren<DollClothesList>();
+            ClothesSlotList.AddRange(GetComponentsInChildren<ClothesSlot>());
+        }
+        else
+        {
+            Debug.Log("작동되고 있어요ㅕ");
+        }
+
+
 
 
         WearingClothesList.SetImgSprite(ClothesList); //입어야 하는 옷에 대한 리스트를 띄워줍니다.
@@ -113,16 +131,20 @@ public class WearingClothes : Quest,IQuestInitalize
         foreach (var slot in ClothesSlotList)
         {
             Debug.Log(slot.gameObject);
+            slot.Initalizing(transform);
             slot.ID = ClothesToWear[count++];
         }
         MakeClothes();
-
-
-
     }
 
     public override int GetQuestID()
     {
         return QuestID;
+    }
+
+    public override void ClearQuest()
+    {
+        AlreadySet = true;
+        QuestManager.Instance.OpenClearPanel();
     }
 }

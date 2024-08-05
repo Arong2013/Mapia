@@ -4,37 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Dust : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Dust : MonoBehaviour
 {
     public bool Erased = false;
 
-    void Start()
-    {
-
-    }
-
-
-    void Update()
-    {
-
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-
-    }
-
-    public void OnEndDrag(PointerEventData eventData)
-    {
-
-    }
-
-
+    float StartAlbedoValue = 1;
     float albedo = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -60,6 +34,15 @@ public class Dust : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         }
     }
+
+    public void Initalizing()
+    {
+        Image dust_img = GetComponent<Image>();
+        dust_img.color = new Color(0, 0, 0, StartAlbedoValue);
+        albedo = 1;
+        Erased = false;
+    }
+    
 
 
 }

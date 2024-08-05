@@ -7,12 +7,16 @@ public class QuestPanel : MonoBehaviour
     //퀘스트 목록 가지고 있고 어디있냐에 따라서 그 위치에 맞는 퀘스트 패널 켜줌
     public List<Quest> QuestList;
 
+    public GameObject ClearPanel;
+
+
     public void Awake()
     {
         foreach(var mission in gameObject.GetComponentsInChildren<Quest>())
         {
             QuestList.Add(mission);
         }
+        ClearPanel = UiUtils.GetUI<QuestClear>().gameObject;
     }
 
 
@@ -30,6 +34,12 @@ public class QuestPanel : MonoBehaviour
             
         }
     }
+
+    public void OpenQuestClearPanel()
+    {
+        ClearPanel.gameObject.SetActive(true);
+    }
+
 
     public void QuitObject()
     {

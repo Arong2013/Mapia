@@ -39,13 +39,24 @@ public class ClothesSlot : MonoBehaviour, IDropHandler
     void Start()
     {
         CurrentID = 100;
-
-        //wearingClothes = UiUtils.GetUI<WearingClothes>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Initalizing(Transform ParentTransform)
     {
-
+        CurrentID = 100;
+        if (transform.childCount >0)
+        {
+            foreach(Clothes child in transform.GetComponentsInChildren<Clothes>())
+            {
+                if(child != transform)
+                {
+                    child.transform.parent = ParentTransform;
+                }
+                
+            }
+        }
     }
+
+
+    
 }

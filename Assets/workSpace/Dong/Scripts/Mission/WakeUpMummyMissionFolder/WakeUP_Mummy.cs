@@ -34,13 +34,12 @@ class WakeUP_Mummy : Quest
     protected override void Awake()
     {
         QuestID = 2;
+        AlreadySet = false;
     }
 
 
     void Start()
     {
-        //RectTransform ck = Range_Click.GetComponent<RectTransform>();
-        //ck.anchoredPosition = LeftUp;
         ClearUI = UiUtils.GetUI<QuestClear>().gameObject;
         Mummy.sprite = MummyImg[0];
         Click_Range_Place(); //처음 시작 범위 지정
@@ -71,17 +70,6 @@ class WakeUP_Mummy : Quest
         {
             MiniGameClear();
         }
-
-        
-        //if (click_num == click_Amount)
-        //{
-
-
-        //    MiniGameClear();
-
-
-        //}
-
 
     }
 
@@ -149,6 +137,14 @@ class WakeUP_Mummy : Quest
     public override int GetQuestID()
     {
         return QuestID;
+    }
+
+    public override void ClearQuest()
+    {
+        AlreadySet = true;
+        Clear = true;
+        QuestManager.Instance.OpenClearPanel();
+
     }
 
 

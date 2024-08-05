@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,6 +45,12 @@ public class DollClothesList : MonoBehaviour
         //하위 오브젝트의 이미지 스프라이트에 이미지를 교체해줌
         List<int> clothesCountList = SetClothesCountList(ClothesSpriteList.Count);
 
+        Debug.Log(clothesCountList.Count);
+
+        if(randNumList.Count != 0) //초기화
+        {
+            randNumList.Clear();
+        }
 
         //랜덤으로 숫자를 뽑아오고 그 숫자에 해당하는 인덱스는 삭제시킴
         //그러면 따로 중복체크할 필요 없이 쉽게 중복없이 랜덤 값 얻을 수 있음
