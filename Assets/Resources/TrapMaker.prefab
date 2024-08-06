@@ -644,14 +644,15 @@ MonoBehaviour:
   moveHorizontal: 0
   moveVertical: 0
   orianimatorController: {fileID: 0}
-  nodeState: 2
   PlayerSide: 1
   NickNameText: {fileID: 8375901364521192189}
   ID: 
-  inventory: {fileID: 0}
-  trap_marking: {fileID: 5590617669423567242}
-  trap: {fileID: 687029826190504442, guid: c70747466c638f8408bf824dd1b1c7fa, type: 3}
-  trapList: []
+  skill:
+    icon: {fileID: 21300000, guid: 94c564e7ada48bc439352bcdc6250cf1, type: 3}
+    cooldown: 10
+    cunCoolTime: 0
+  trapPrefab: {fileID: 687029826190504442, guid: c70747466c638f8408bf824dd1b1c7fa,
+    type: 3}
 --- !u!1001 &24455395984530223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -747,15 +748,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 24455395984530223}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5590617669423567242 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5603391819380181669, guid: 7e1e222f955f4624fbbd535852d820a6,
-    type: 3}
-  m_PrefabInstance: {fileID: 24455395984530223}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f220b247da387d4b88f55ba847d9960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

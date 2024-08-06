@@ -646,4 +646,8 @@ MonoBehaviour:
   PlayerSide: 0
   NickNameText: {fileID: 0}
   ID: 
+  skill:
+    icon: {fileID: 21300000, guid: da97216394a43e3458209221d3a0758b, type: 3}
+    cooldown: 10
+    cunCoolTime: 0
   ActorText: {fileID: 0}
