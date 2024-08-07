@@ -53,8 +53,7 @@ public class QuestManager : Singleton<QuestManager>
 
     public void OpenClearPanel()
     {
-        QuestPanel QPanel = UiUtils.GetUI<QuestPanel>();
-        QPanel.OpenQuestClearPanel();
+        UiUtils.GetUI<QuestClear>().gameObject.SetActive(true);
     }
 
     public void QuestClear()

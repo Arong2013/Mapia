@@ -31,24 +31,25 @@ public class CleanDustQuest : Quest
 
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         TaskCompleteText = UiUtils.GetUI<QuestClear>().gameObject;
 
         //먼지 위치 랜덤으로 설정해줘야함
 
-        SetDustPos();
+        //SetDustPos();
 
-        for (int i = 0; i < Count;i++)
-        {
-            GameObject Dust = Instantiate(DustPrefab,Jewel.transform);
-            dusts[i] = Dust.GetComponent<Dust>();
-            RectTransform dust_rect = Dust.GetComponent<RectTransform>();
+        //for (int i = 0; i < Count;i++)
+        //{
+        //    GameObject Dust = Instantiate(DustPrefab,Jewel.transform);
+        //    dusts[i] = Dust.GetComponent<Dust>();
+        //    RectTransform dust_rect = Dust.GetComponent<RectTransform>();
 
-            dust_rect.anchoredPosition = Dust_Pos[i];
+        //    dust_rect.anchoredPosition = Dust_Pos[i];
             
-            Debug.Log(dust_rect.rect);
-        }
+        //    Debug.Log(dust_rect.rect);
+        //}
     }
 
     // Update is called once per frame
@@ -110,7 +111,9 @@ public class CleanDustQuest : Quest
             for (int i = 0; i < Count; i++)
             {
                     RectTransform dust_rect;
-                if (dusts.Length == 0)
+            Debug.Log(dusts.Length);
+
+                if (dusts[Count-1] == null)
                 {
                     GameObject Dust = Instantiate(DustPrefab, Jewel.transform);
                     dusts[i] = Dust.GetComponent<Dust>();
@@ -149,12 +152,13 @@ public class CleanDustQuest : Quest
     {
         Debug.Log("작동");
 
+        SetDust();
+
         for (int i = 0; i < Count; i++)
         {
             dusts[i].Initalizing();
         }
 
-        SetDust();
         wipe.Initializing();
         Clean = false;
         //다른 것도 초기화시켜줘야함
@@ -167,8 +171,9 @@ public class CleanDustQuest : Quest
         return QuestID;
     }
 
-    public override void ClearQuest()
+    protected override void ClearQuest()
     {
+        base.ClearQuest();
         AlreadySet = true;
         QuestManager.Instance.OpenClearPanel();
     }

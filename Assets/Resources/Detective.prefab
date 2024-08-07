@@ -646,4 +646,5 @@ MonoBehaviour:
   PlayerSide: 0
   NickNameText: {fileID: 0}
   ID: 
+  DoQuest: 0
   ActorText: {fileID: 0}

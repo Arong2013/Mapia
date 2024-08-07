@@ -31,8 +31,9 @@ public class WearingClothes : Quest,IQuestInitalize
         AlreadySet = false;
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         instance = this;
     }
 
@@ -142,8 +143,9 @@ public class WearingClothes : Quest,IQuestInitalize
         return QuestID;
     }
 
-    public override void ClearQuest()
+    protected override void ClearQuest()
     {
+        base.ClearQuest();
         AlreadySet = true;
         QuestManager.Instance.OpenClearPanel();
     }

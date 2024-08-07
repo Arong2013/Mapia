@@ -28,6 +28,9 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
 
     public Inventory inventory = new Inventory();
 
+    public bool DoQuest = false;
+
+
     public virtual void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
@@ -51,16 +54,23 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     }
     protected virtual void Update()
     {
-        if (PV.IsMine)
+        if (PV.IsMine && !DoQuest)
         {
             moveHorizontal = Input.GetAxisRaw("Horizontal");
             moveVertical = Input.GetAxisRaw("Vertical");
             movement = new Vector3(moveHorizontal, moveVertical, 0).normalized;
             Move();
         }
+        else if(PV.IsMine && DoQuest)
+        {
+            movement = new Vector3(0, 0, 0).normalized;
+            Move();
+        }
         // IsMine이 아닌 것들은 부드럽게 위치 동기화
-        else if ((transform.position - curPos).sqrMagnitude >= 100) transform.position = curPos;
-        else transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
+        else if ((transform.position - curPos).sqrMagnitude >= 100) 
+            transform.position = curPos;
+        else 
+            transform.position = Vector3.Lerp(transform.position, curPos, Time.deltaTime * 10);
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -123,4 +133,18 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
 
         }
     }
+
+    public void DoingMission()
+    {
+        DoQuest = true;
+    }
+
+    public void FinishMission()
+    {
+        Debug.Log("작동되나요");
+        DoQuest = false;
+    }
+
+
+
 }

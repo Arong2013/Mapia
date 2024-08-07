@@ -647,5 +647,6 @@ MonoBehaviour:
   PlayerSide: 0
   NickNameText: {fileID: 0}
   ID: 
+  DoQuest: 0
   MaxKillCount: 0
   DropObj: {fileID: 0}

@@ -38,9 +38,10 @@ class WakeUP_Mummy : Quest
     }
 
 
-    void Start()
+    protected override void Start()
     {
-        ClearUI = UiUtils.GetUI<QuestClear>().gameObject;
+        base.Start();
+        //ClearUI = UiUtils.GetUI<QuestClear>().gameObject;
         Mummy.sprite = MummyImg[0];
         Click_Range_Place(); //처음 시작 범위 지정
     }
@@ -111,7 +112,7 @@ class WakeUP_Mummy : Quest
     {
         //클리어 했다는 UI 띄워줌
 
-        ClearUI.SetActive(true); //이거 UIUtils에서 관리해주면 될 것 같음
+        QuestManager.Instance.OpenClearPanel();
 
 
         Clear = true;
@@ -139,8 +140,9 @@ class WakeUP_Mummy : Quest
         return QuestID;
     }
 
-    public override void ClearQuest()
+    protected override void ClearQuest()
     {
+        base.ClearQuest();
         AlreadySet = true;
         Clear = true;
         QuestManager.Instance.OpenClearPanel();
