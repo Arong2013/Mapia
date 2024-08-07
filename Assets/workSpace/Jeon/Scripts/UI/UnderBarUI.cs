@@ -68,6 +68,7 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
             for (int i = 0; i < targetCount; i++)
             {
                 GameObject slot = Instantiate(inventorySlot, InventoryParent);
+                Debug.Log(i);
                 if (inventory.Items[i] != null)
                 {
                     var index = i;

@@ -69,7 +69,7 @@ class WakeUP_Mummy : Quest
         }
         else
         {
-            MiniGameClear();
+            ClearQuest();
         }
 
     }

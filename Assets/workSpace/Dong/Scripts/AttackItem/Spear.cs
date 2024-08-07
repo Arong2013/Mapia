@@ -31,6 +31,15 @@ public class CloseRangeItem : Item
 
 public class Spear : MonoBehaviour
 {
+    //줍기 
+    //사용하기 기능 구현해야함 
+
+
+    public ItemData data;
+
+
+    public int test = 10;
+
     // Start is called before the first frame update
     void Start()
     {

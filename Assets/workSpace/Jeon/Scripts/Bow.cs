@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bow : Item
+public class Bow : RangeItem
 {
     public Bow(ItemData data) : base(data)
     {
