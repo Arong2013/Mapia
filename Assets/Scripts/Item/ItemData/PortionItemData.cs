@@ -17,7 +17,7 @@ public class PortionItemData : ItemData
 [System.Serializable]
 public class PortionItem : Item
 {
-    public PortionItem(PortionItemData data) : base(data) { }
+    public PortionItem(PortionItemData data) : base(data) {Amount = 1;}
     public bool Use()
     {
         Amount--;

@@ -93,8 +93,8 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     }
 
     protected virtual void Start()
-    {   
-        NickNameText.text = PV.Owner.NickName;
+    {
+        //  NickNameText.text = PV.Owner.NickName;
         SetSkill();
         GameManager.Instance.AddActor();
     }
@@ -113,7 +113,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
             {
                 UseSkill();
             }
-            if(skill.cunCoolTime >= 0)
+            if (skill.cunCoolTime >= 0)
             {
                 skill.cunCoolTime -= Time.deltaTime;
             }
@@ -193,5 +193,17 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     private void UseSkill()
     {
         skill?.method?.Invoke();
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(PV.IsMine)
+        {
+            if(other.gameObject.TryGetComponent<IPickupable>(out IPickupable component))
+            {
+                component.Pickup(this);
+            }
+        }
     }
 }

@@ -17,3 +17,6 @@ public abstract class Quest : MonoBehaviour
     public abstract void InitalizeQuest();
     public abstract int GetQuestID();
 }
+
+
+

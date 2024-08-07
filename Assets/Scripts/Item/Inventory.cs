@@ -33,11 +33,10 @@ public class Inventory
                 }
             }
         }
-        ItemChangeActions?.Invoke();
         if (_item.IsEmpty)
             return true;
-        ItemChangeActions?.Invoke();
         Items.Add(_item);
+        ItemChangeActions?.Invoke();
         return true;
     }
 }
