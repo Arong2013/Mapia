@@ -49,9 +49,6 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     [FoldoutGroup("Movement Settings")]
     public float moveVertical;
 
-
-    
-
     protected Vector3 movement;
 
     [FoldoutGroup("Animation Settings"), HideLabel, PreviewField(Height = 50)]
@@ -77,8 +74,6 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     [ShowInInspector, InlineProperty, ShowIf("@this.skill != null")]
     public Skill skill; // 스킬 변수 추가
 
-    public bool DoQuest = false; //퀘스트를 하고 있는지 확인 
-
     public virtual void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
@@ -98,15 +93,15 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     }
 
     protected virtual void Start()
-    {   
-        NickNameText.text = PV.Owner.NickName;
+    {
+        //  NickNameText.text = PV.Owner.NickName;
         SetSkill();
         GameManager.Instance.AddActor();
     }
 
     protected virtual void Update()
     {
-        if (PV.IsMine && !DoQuest)
+        if (PV.IsMine)
         {
             moveHorizontal = Input.GetAxisRaw("Horizontal");
             moveVertical = Input.GetAxisRaw("Vertical");
@@ -118,15 +113,10 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
             {
                 UseSkill();
             }
-            if(skill.cunCoolTime >= 0)
+            if (skill.cunCoolTime >= 0)
             {
                 skill.cunCoolTime -= Time.deltaTime;
             }
-        }
-        else if (PV.IsMine && DoQuest)
-        {
-            movement = new Vector3(0, 0, 0).normalized;
-            Move();
         }
         else
         {
@@ -205,26 +195,15 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         skill?.method?.Invoke();
     }
 
-    public void DoingMission()
-    {
-        DoQuest = true;
-    }
 
-    public void FinishMission()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        DoQuest = false;
-    }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Item"))
+        if(PV.IsMine)
         {
-            ItemObj itemObj = collision.GetComponent<ItemObj>();
-            itemObj.Pickup(this);
+            if(other.gameObject.TryGetComponent<IPickupable>(out IPickupable component))
+            {
+                component.Pickup(this);
+            }
         }
     }
-
-
-
-
 }

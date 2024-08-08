@@ -20,8 +20,6 @@ public class Inventory
     }
     public bool AddItem(Item _item)
     {
-        
-
         if (!isCanAdd)
             return false;
         if (Items.Count > 0)
@@ -35,21 +33,10 @@ public class Inventory
                 }
             }
         }
-        Debug.Log("추가되는지 확인");
-        ItemChangeActions?.Invoke();
         if (_item.IsEmpty)
             return true;
-        Debug.Log("추가되는지 확인222");
-        ItemChangeActions?.Invoke();
         Items.Add(_item);
-        
+        ItemChangeActions?.Invoke();
         return true;
     }
-
-    public bool UseItem(Item _item)
-    {
-
-        return false;
-    }
-
 }

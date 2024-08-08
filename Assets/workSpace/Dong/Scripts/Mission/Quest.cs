@@ -52,3 +52,6 @@ public abstract class Quest : MonoBehaviour
 
 
 }
+
+
+
