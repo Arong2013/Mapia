@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f0f906594f1b2440b3b5d60abb139e1, type: 3}
-  m_Name: HP_Potion
+  m_Name: BowData
   m_EditorClassIdentifier: 
-  _id: 1
-  _name: HpPotion
-  _tooltip: "\uD50C\uB808\uC774\uC5B4\uC758 \uCCB4\uB825\uC744 10 \uC99D\uAC00\uC2DC\uD0B4"
-  _iconSprite: {fileID: 21300000, guid: dfda84b523fc4524a969256e914fccdd, type: 3}
-  _itemtype: 2
-  _damage: 0
-  _weapondistance: 0
+  _id: 101
+  _name: Bow
+  _tooltip: asdf
+  _iconSprite: {fileID: 21300000, guid: 4df4e94b68d78454b98d4f9f9e3fdf70, type: 3}
+  _itemtype: 1
+  _damage: 5
+  _weapondistance: 10
   _maxAmount: 99
-  _value: 5
+  _value: 0

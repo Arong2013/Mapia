@@ -650,5 +650,6 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 908081fa3071c3543b486775a6339742, type: 3}
     cooldown: 10
     cunCoolTime: 0
+  DoQuest: 0
   skillIcon: {fileID: 0}
   skillCooldown: 10

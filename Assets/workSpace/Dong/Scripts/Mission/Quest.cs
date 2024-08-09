@@ -46,7 +46,7 @@ public abstract class Quest : MonoBehaviour
 
     public void GetActor(Actor actor)
     {
-        Debug.Log(gameObject.name);
+        Debug.Log("gameObject.name");
         this.actor = actor; 
     }
 

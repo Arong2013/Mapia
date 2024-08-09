@@ -382,7 +382,7 @@ GameObject:
   - component: {fileID: 564668160908384226}
   - component: {fileID: 5074776327640072849}
   - component: {fileID: 6731073287857355759}
-  - component: {fileID: 4289382724272829363}
+  - component: {fileID: -9147347505714363225}
   m_Layer: 0
   m_Name: TrapMaker
   m_TagString: Player
@@ -563,7 +563,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 564668160908384226}
   - {fileID: 5074776327640072849}
-  - {fileID: 4289382724272829363}
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -625,7 +625,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
---- !u!114 &4289382724272829363
+--- !u!114 &-9147347505714363225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -644,13 +644,14 @@ MonoBehaviour:
   moveHorizontal: 0
   moveVertical: 0
   orianimatorController: {fileID: 0}
-  PlayerSide: 1
-  NickNameText: {fileID: 8375901364521192189}
+  PlayerSide: 0
+  NickNameText: {fileID: 0}
   ID: 
   skill:
-    icon: {fileID: 21300000, guid: 94c564e7ada48bc439352bcdc6250cf1, type: 3}
-    cooldown: 10
+    icon: {fileID: 0}
+    cooldown: 0
     cunCoolTime: 0
+  DoQuest: 0
   trapPrefab: {fileID: 687029826190504442, guid: c70747466c638f8408bf824dd1b1c7fa,
     type: 3}
 --- !u!1001 &24455395984530223

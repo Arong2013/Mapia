@@ -7,6 +7,12 @@ public class CloseRangeItemData : ItemData
     [SerializeField] int damage;
     [SerializeField] float distance;
 
+    public CloseRangeItemData(int damage, float distance)
+    {
+        this.damage = damage;
+        this.distance = distance;
+    }
+
     public override Item CreateItem()
     {
         return new CloseRangeItem(this);
@@ -17,7 +23,7 @@ public class CloseRangeItem : Item
 {
     public CloseRangeItem(CloseRangeItemData data) : base(data)
     {
-
+        
     }
 
     protected override Item Clone(int amount)
@@ -27,28 +33,32 @@ public class CloseRangeItem : Item
 }
 
 
-
-
-public class Spear : MonoBehaviour
+public class SpearUpgrade : Spear
 {
-    //줍기 
-    //사용하기 기능 구현해야함 
-
-
-    public ItemData data;
-
-
-    public int test = 10;
-
-    // Start is called before the first frame update
-    void Start()
+    public SpearUpgrade(CloseRangeItemData data) : base(data)
     {
+
+    }
+}
+
+
+
+public class Spear : Item
+{
+    CloseRangeItemData Weapondata;
+
+    public Spear(CloseRangeItemData data) : base(data)
+    {
+        data = new CloseRangeItemData(10, 5);
+        //data.IconSprite = this;
+        Weapondata = data;
         
+
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override Item Clone(int amount)
     {
-        
+        throw new System.NotImplementedException();
     }
+
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using Cinemachine;
 using UnityEngine.UI;
 using System;
+using UnityEditor.PackageManager.Requests;
 
 [System.Serializable]
 public class Skill
@@ -74,6 +75,8 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     [ShowInInspector, InlineProperty, ShowIf("@this.skill != null")]
     public Skill skill; // 스킬 변수 추가
 
+    public bool DoQuest = false; //퀘스트를 하고 있는지 확인 
+
     public virtual void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
@@ -117,6 +120,13 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
             {
                 skill.cunCoolTime -= Time.deltaTime;
             }
+
+            if(Input.GetMouseButtonDown(0))
+            {
+                UseItem(0);
+            }
+
+
         }
         else
         {
@@ -206,4 +216,93 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
             }
         }
     }
+
+    public void DoingMission()
+    {
+        DoQuest = true;
+    }
+
+    public void FinishMission()
+    {
+        DoQuest = false;
+    }
+
+    //public void GetItem(int num)
+    //{
+    //    GameObject useItem = Instantiate(new GameObject(), transform);
+    //    Item item = inventory.Items[num];
+    //    ItemTestScript data = useItem.AddComponent<ItemTestScript>();
+    //    data.GetData(item.Data, num);
+
+    //}
+
+
+    public void UseItem(int num)
+    {
+        if (inventory.Items[1].Data != null)
+        {
+            GameObject myItem = new GameObject();
+            myItem.transform.parent = transform;
+            myItem.transform.position = transform.position;
+            ItemTestScript ITS = myItem.AddComponent<ItemTestScript>();
+            SpriteRenderer spriteRenderer = myItem.AddComponent<SpriteRenderer>();
+            ITS.GetData(inventory.Items[1].Data, PosCheck());
+        }
+        
+    }
+
+
+    private int PosCheck()
+    {
+        
+        Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 PlayerPos = transform.position;
+        Vector2 relativePosition = mousepos -PlayerPos;
+ 
+        if (Mathf.Abs(relativePosition.x) > Mathf.Abs(relativePosition.y))
+        {
+            Debug.Log("x가 y보다 큽니다. (x: " + mousepos.x + ", y: " + mousepos.y + ")");
+
+            if (mousepos.x > PlayerPos.x)
+            {
+                //Debug.Log("x가 0보다 큽니다. (x: " + mousepos.x + ")");
+                return 1;
+
+            }
+
+            // x 좌표가 0보다 작은지 체크합니다.
+            if (mousepos.x < PlayerPos.x)
+            {
+                //Debug.Log("x가 0보다 작습니다. (x: " + mousepos.x + ")");
+
+                return 2;
+            }
+
+
+        }
+        else if (Mathf.Abs(relativePosition.y) > Mathf.Abs(relativePosition.x))
+        {
+            Debug.Log("y가 x보다 큽니다. (x: " + mousepos.x + ", y: " + mousepos.y + ")");
+
+            if (mousepos.y > PlayerPos.y)
+            {
+                //Debug.Log("y가 0보다 큽니다. (y: " + mousepos.y + ")");
+                return 3;
+            }
+
+            // y 좌표가 0보다 작은지 체크합니다.
+            if (mousepos.y < PlayerPos.y)
+            {
+                //Debug.Log("y가 0보다 작습니다. (y: " + mousepos.y + ")");
+                return 4;
+            }
+
+        }
+
+        return 0;
+    }
+
+
+
+
 }

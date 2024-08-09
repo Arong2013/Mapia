@@ -22,7 +22,7 @@ public class testPlayer : MonoBehaviour
     
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            UseItem();
+            //UseItem();
         }
 
 
@@ -33,13 +33,13 @@ public class testPlayer : MonoBehaviour
 
     public void UseItem()
     {
-        //아이템을 사용해요 
+        ////아이템을 사용해요 
 
-        //슬롯에 있는 데이터를 제거함
-        GameObject spear = Instantiate(new GameObject("item1"), transform);
-        SpriteRenderer sR = spear.AddComponent<SpriteRenderer>();
-        sR.sprite = item.IconSprite;        testItemUse tIU = spear.AddComponent<testItemUse>();
-        tIU.ItemMoving(1);
+        ////슬롯에 있는 데이터를 제거함
+        //GameObject spear = Instantiate(new GameObject("item1"), transform);
+        //SpriteRenderer sR = spear.AddComponent<SpriteRenderer>();
+        //sR.sprite = item.IconSprite;        testItemUse tIU = spear.AddComponent<testItemUse>();
+        ////tIU.ItemMoving(1);
 
     }
 

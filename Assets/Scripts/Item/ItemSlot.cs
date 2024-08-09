@@ -20,6 +20,8 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void SetItem(Item _item)
     {
+        Debug.Log(_item.Data.name);
+
         item = _item;
         iconImage.sprite = item?.Data.IconSprite ?? OrizinImage;
         iconImage.color = iconImage.sprite != null ? Color.white : new Color(0, 0, 0, 0);
@@ -31,6 +33,7 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             SetItem(null);
         }
+
     }
     public void AddPointer<T>(Action action) where T : IEventSystemHandler
     {
@@ -60,6 +63,10 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             touchDic[handler].Invoke();
         }
+        Image img = GetComponent<Image>();
+        img.color = Color.red;
+        Debug.Log("Å¬¸¯" + item.Data.name);
+
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -69,5 +76,7 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             touchDic[handler].Invoke();
         }
+        Image img = GetComponent<Image>();
+        img.color = Color.white;
     }
 }

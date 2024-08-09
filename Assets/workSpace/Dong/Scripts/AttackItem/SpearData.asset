@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f0f906594f1b2440b3b5d60abb139e1, type: 3}
   m_Name: SpearData
   m_EditorClassIdentifier: 
-  _id: 2
+  _id: 100
   _name: Spear
   _tooltip: asdf
-  _iconSprite: {fileID: 21300000, guid: 908081fa3071c3543b486775a6339742, type: 3}
+  _iconSprite: {fileID: 21300000, guid: 8ed42bd3ab4f6db4b839c28bb17b213a, type: 3}
+  _itemtype: 0
+  _damage: 10
+  _weapondistance: 3
   _maxAmount: 99
   _value: 0

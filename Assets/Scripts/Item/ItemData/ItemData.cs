@@ -7,12 +7,23 @@ public abstract class ItemData : ScriptableObject
 
     public int MaxAmount => _maxAmount;
 
+    //내가 추가함
+    public ItemType TYPE => _itemtype;
+
+    public int DAMAGE => _damage;
+    public float WEAPONDISTANCE => _weapondistance;
+
+    //
+
     public Sprite IconSprite => _iconSprite;
     [SerializeField] private int _id;
     [SerializeField] private string _name;    // ������ �̸�
     [Multiline]
     [SerializeField] private string _tooltip; // ������ ����
     [SerializeField] private Sprite _iconSprite; // ������ ������
+    [SerializeField] private ItemType _itemtype;
+    [SerializeField] private int _damage;
+    [SerializeField] private float _weapondistance;
     [SerializeField] private int _maxAmount = 99;
     public abstract Item CreateItem();
 }
@@ -48,3 +59,6 @@ public abstract class Item
     public Item(ItemData data) => Data = data;
     protected abstract Item Clone(int amount);
 }
+
+
+

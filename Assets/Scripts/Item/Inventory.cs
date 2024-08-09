@@ -39,4 +39,14 @@ public class Inventory
         ItemChangeActions?.Invoke();
         return true;
     }
+
+    public void UseItem(int num)
+    {
+        Items[num] = null;
+        Items.RemoveAt(num);
+        ItemChangeActions?.Invoke();
+    }
+
+    
+
 }

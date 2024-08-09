@@ -28,3 +28,10 @@ public enum Camp
     Bad,
     Neutral
 }
+
+public enum ItemType
+{
+    CloseWeapon,
+    RangeWeapon,
+    Consume
+}
