@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    public event Action<Item> SlotClicked;
+
+
     public Item item;
 
     [SerializeField] Sprite OrizinImage;
@@ -65,8 +68,8 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         Image img = GetComponent<Image>();
         img.color = Color.red;
-        Debug.Log("Å¬¸¯" + item.Data.name);
 
+        SlotClicked.Invoke(item);
     }
 
     public void OnPointerUp(PointerEventData eventData)

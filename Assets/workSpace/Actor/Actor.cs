@@ -76,6 +76,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     public Skill skill; // 스킬 변수 추가
 
     public bool DoQuest = false; //퀘스트를 하고 있는지 확인 
+    public bool ItemActivate = false;
 
     public virtual void Awake()
     {
@@ -239,15 +240,23 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
 
     public void UseItem(int num)
     {
-        if (inventory.Items[1].Data != null)
+        if(ItemActivate == true)
         {
-            GameObject myItem = new GameObject();
-            myItem.transform.parent = transform;
-            myItem.transform.position = transform.position;
-            ItemTestScript ITS = myItem.AddComponent<ItemTestScript>();
-            SpriteRenderer spriteRenderer = myItem.AddComponent<SpriteRenderer>();
-            ITS.GetData(inventory.Items[1].Data, PosCheck());
+            if (inventory.Choice != null)
+            {
+                GameObject myItem = new GameObject();
+                myItem.transform.parent = transform;
+                myItem.transform.position = transform.position;
+                ItemTestScript ITS = myItem.AddComponent<ItemTestScript>();
+                SpriteRenderer spriteRenderer = myItem.AddComponent<SpriteRenderer>();
+                ITS.GetData(inventory.Choice.Data, PosCheck());
+            }
+            else
+            {
+                Debug.Log("Null");
+            }
         }
+        
         
     }
 

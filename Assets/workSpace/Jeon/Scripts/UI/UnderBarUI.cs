@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UnderBarUI : MonoBehaviour, IPlayerable
@@ -77,10 +78,30 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
             }
 
         }
+        SetNowItem(actor);
+
     }
     public void SetPlayer(Actor player)
     {
         actor = player;
         actor.inventory.ItemChangeActions += UpdateInventoryUI;
     }
+
+    public void SetNowItem(Actor player)
+    {
+        actor = player;
+        foreach (var inventoryslot in inventorySlots)
+        {
+            inventoryslot.SlotClicked += actor.inventory.ItemChoiceActions;
+            Debug.Log(inventoryslot.item.Data.name + "1111111");
+
+        }
+        
+    }
+
+    public void SlotClicked()
+    {
+
+    }
+
 }
