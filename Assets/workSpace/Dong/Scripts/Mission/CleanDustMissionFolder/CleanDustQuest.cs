@@ -14,6 +14,9 @@ public class CleanDustQuest : Quest
 
     public Dust[] dusts = new Dust[Count];
 
+    public Wipe wipe;
+
+
     public GameObject Jewel;
     public GameObject DustPrefab; //이미 3개가 생성되어있다면 위치만 변경시켜주도록 함
     public GameObject TaskCompleteText;
@@ -23,28 +26,30 @@ public class CleanDustQuest : Quest
     protected override void Awake()
     {
         QuestID = 1;
+        AlreadySet = false;
     }
 
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         TaskCompleteText = UiUtils.GetUI<QuestClear>().gameObject;
 
         //먼지 위치 랜덤으로 설정해줘야함
 
-        SetDustPos();
+        //SetDustPos();
 
-        for (int i = 0; i < Count;i++)
-        {
-            GameObject Dust = Instantiate(DustPrefab,Jewel.transform);
-            dusts[i] = Dust.GetComponent<Dust>();
-            RectTransform dust_rect = Dust.GetComponent<RectTransform>();
+        //for (int i = 0; i < Count;i++)
+        //{
+        //    GameObject Dust = Instantiate(DustPrefab,Jewel.transform);
+        //    dusts[i] = Dust.GetComponent<Dust>();
+        //    RectTransform dust_rect = Dust.GetComponent<RectTransform>();
 
-            dust_rect.anchoredPosition = Dust_Pos[i];
+        //    dust_rect.anchoredPosition = Dust_Pos[i];
             
-            Debug.Log(dust_rect.rect);
-        }
+        //    Debug.Log(dust_rect.rect);
+        //}
     }
 
     // Update is called once per frame
@@ -57,7 +62,7 @@ public class CleanDustQuest : Quest
 
             if(Clean == true)
             {
-                TaskCompleteText.SetActive(true);
+                ClearQuest();
             }
             
         }
@@ -86,6 +91,11 @@ public class CleanDustQuest : Quest
 
         Vector_Dust_Pos[2] = -Vector_Dust_Pos[1];
 
+        if(Dust_Pos.Count >0)
+        {
+            Dust_Pos.Clear();
+        }
+
          for (int i = 0; i < 3; i++)
         {
             Dust_Pos.Add(Vector_Dust_Pos[i]);
@@ -93,9 +103,37 @@ public class CleanDustQuest : Quest
         
     }
 
+    void SetDust()
+    {
+        SetDustPos();
+
+      
+            for (int i = 0; i < Count; i++)
+            {
+                    RectTransform dust_rect;
+            Debug.Log(dusts.Length);
+
+                if (dusts[Count-1] == null)
+                {
+                    GameObject Dust = Instantiate(DustPrefab, Jewel.transform);
+                    dusts[i] = Dust.GetComponent<Dust>();
+                    dust_rect = Dust.GetComponent<RectTransform>();
+                }
+                else
+                {
+                    dust_rect = dusts[i].GetComponent<RectTransform>();
+                }
+                    dust_rect.anchoredPosition = Dust_Pos[i];
+
+                    Debug.Log(dust_rect.rect);
+            }
+        
+        
+    }
+
     public bool QuestClearCheck()
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < Count; i++)
         {
             if (dusts[i].Erased == false)
             {
@@ -114,15 +152,30 @@ public class CleanDustQuest : Quest
     {
         Debug.Log("작동");
 
+        SetDust();
+
+        for (int i = 0; i < Count; i++)
+        {
+            dusts[i].Initalizing();
+        }
+
+        wipe.Initializing();
         Clean = false;
         //다른 것도 초기화시켜줘야함
-
+        
 
     }
 
     public override int GetQuestID()
     {
         return QuestID;
+    }
+
+    protected override void ClearQuest()
+    {
+        base.ClearQuest();
+        AlreadySet = true;
+        QuestManager.Instance.OpenClearPanel();
     }
 
 

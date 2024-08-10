@@ -7,12 +7,16 @@ public class QuestPanel : MonoBehaviour
     //����Ʈ ��� ������ �ְ� ����ֳĿ� ���� �� ��ġ�� �´� ����Ʈ �г� ����
     public List<Quest> QuestList;
 
+    public GameObject ClearPanel;
+
+
     public void Awake()
     {
         foreach(var mission in gameObject.GetComponentsInChildren<Quest>())
         {
             QuestList.Add(mission);
         }
+        ClearPanel = UiUtils.GetUI<QuestClear>().gameObject;
     }
     public void CheckQuest(Quest quest)
     {

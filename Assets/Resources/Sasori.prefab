@@ -650,3 +650,5 @@ MonoBehaviour:
     icon: {fileID: 21300000, guid: 94c564e7ada48bc439352bcdc6250cf1, type: 3}
     cooldown: 10
     cunCoolTime: 0
+  DoQuest: 0
+  ItemActivate: 0

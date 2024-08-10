@@ -6,18 +6,21 @@ using UnityEngine.EventSystems;
 
 public class Wipe : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+
+    Vector3 StartPos;
     Vector3 CheckPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        StartPos = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Initializing()
     {
-        // CheckPos = Camera.main.WorldToScreenPoint(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
+        transform.position = StartPos;
     }
+
 
     public void OnBeginDrag(PointerEventData eventData)
     {

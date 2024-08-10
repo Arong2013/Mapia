@@ -31,4 +31,6 @@ public interface IAnimatable
 public interface IPlayerable
 {
     void SetPlayer(Actor player);
+
+    void SetNowItem(Actor player);
 }

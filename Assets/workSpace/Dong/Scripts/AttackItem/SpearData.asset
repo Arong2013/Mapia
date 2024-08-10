@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f0f906594f1b2440b3b5d60abb139e1, type: 3}
-  m_Name: HP_Potion
+  m_Name: SpearData
   m_EditorClassIdentifier: 
-  _id: 1
-  _name: HpPotion
-  _tooltip: "\uD50C\uB808\uC774\uC5B4\uC758 \uCCB4\uB825\uC744 10 \uC99D\uAC00\uC2DC\uD0B4"
-  _iconSprite: {fileID: 21300000, guid: dfda84b523fc4524a969256e914fccdd, type: 3}
-  _itemtype: 2
-  _damage: 0
-  _weapondistance: 0
+  _id: 100
+  _name: Spear
+  _tooltip: asdf
+  _iconSprite: {fileID: 21300000, guid: 8ed42bd3ab4f6db4b839c28bb17b213a, type: 3}
+  _itemtype: 0
+  _damage: 10
+  _weapondistance: 3
   _maxAmount: 99
-  _value: 5
+  _value: 0

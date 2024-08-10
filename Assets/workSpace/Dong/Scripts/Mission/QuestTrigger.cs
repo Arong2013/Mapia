@@ -26,7 +26,7 @@ public class QuestTrigger : MonoBehaviour, IPointerClickHandler
         {
             Debug.Log("닿음");
             QuestManager.Instance.CheckQuest(missionName);
-
+            missionName.GetActor(collision.GetComponent<Actor>());
             //플레이어가 다가갔을 시 자동으로 퀘스트 자동으로 실행 
             //퀘스트는 일단 리스트로 지금은 단일 퀘스트 아이템 찾기 퀘스트로 작동되도록 함
             //근데 이게 랜덤으로 리스트 중에 퀘스트를 실행하도록 하는게 아니라

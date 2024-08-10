@@ -24,7 +24,7 @@ public class ClickPlace : MonoBehaviour, IPointerClickHandler
 
        
 
-        Debug.Log("üũ");
+        //Debug.Log("üũ");
         Click_Num++;
     }
 

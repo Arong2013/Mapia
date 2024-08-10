@@ -9,8 +9,12 @@ using System;
 public class Inventory
 {
     public Action ItemChangeActions;
+    //public Action<Item> ItemChoiceActions;
     readonly List<Item> items = new List<Item>();
     public List<Item> Items => items;
+
+    public Item Choice;
+
     public bool isCanAdd
     {
         get
@@ -39,4 +43,28 @@ public class Inventory
         ItemChangeActions?.Invoke();
         return true;
     }
+
+    public void UseItem(int num)
+    {
+        Items[num] = null;
+        Items.RemoveAt(num);
+        ItemChangeActions?.Invoke();
+    }
+
+    public void ItemChoiceActions(Item item)
+    {
+        if (item == null)
+        {
+            Debug.Log("ㅁㄴㅇㄹ");
+        }
+        else
+        {
+            Debug.Log(item.Data.name);
+        }
+        Choice = item;
+
+        //ItemChoiceActions?.Invoke();
+        //UiUtils.GetUI<UnderBarUI>().
+    }
+
 }

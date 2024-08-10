@@ -74,6 +74,12 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     [ShowInInspector, InlineProperty, ShowIf("@this.skill != null")]
     public Skill skill; // 스킬 변수 추가
 
+    public bool DoQuest = false; //퀘스트를 하고 있는지 확인 
+    public bool ItemActivate = false;
+
+    //public GameObject Item_Use;
+
+
     public virtual void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
@@ -117,6 +123,45 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
             {
                 skill.cunCoolTime -= Time.deltaTime;
             }
+
+            if(Input.GetMouseButtonDown(0))
+            {
+                //UI 이미지를 클릭하는게 아닌 경우에만 작동되도록
+                /*
+                 && !EventSystem.current.IsPointerOverGameObject()
+                 */
+
+                if (ItemActivate == true)
+                {
+
+
+
+                    if (inventory.Choice != null)
+                    {
+                        ItemData data = inventory.Choice.Data;
+                        
+                        //PhotonNetwork.Instantiate("ItemUse", transform.position, Quaternion.identity);
+                        PV.RPC(nameof(UseItem), RpcTarget.All, inventory.Choice.Data.Name, PosCheck());
+
+                    }
+                    else
+                    {
+                        Debug.Log("Null");
+                    }
+                }
+
+
+
+                
+                //UseItem();
+                
+                
+            }
+            if(Input.GetKeyDown(KeyCode.I))
+            {
+                ItemActivate = true;
+            }
+
         }
         else
         {
@@ -213,4 +258,93 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
             }
         }
     }
+
+    public void DoingMission()
+    {
+        DoQuest = true;
+    }
+
+    public void FinishMission()
+    {
+        DoQuest = false;
+    }
+
+    //public void GetItem(int num)
+    //{
+    //    GameObject useItem = Instantiate(new GameObject(), transform);
+    //    Item item = inventory.Items[num];
+    //    ItemTestScript data = useItem.AddComponent<ItemTestScript>();
+    //    data.GetData(item.Data, num);
+
+    //}
+
+    [PunRPC]
+    public void UseItem(string ItemName, int poschecknum)
+    {
+        GameObject myItem = PhotonNetwork.Instantiate(ItemName, transform.position, Quaternion.identity);
+        ItemTestScript ITS = myItem.GetComponent<ItemTestScript>();
+        ITS.GetData(poschecknum);
+        //myItem.transform.parent = transform;
+        //myItem.transform.position = transform.position;
+        //ItemTestScript ITS = myItem.AddComponent<ItemTestScript>();
+        //SpriteRenderer spriteRenderer = myItem.AddComponent<SpriteRenderer>();
+        //
+
+
+    }
+
+
+    private int PosCheck()
+    {
+        
+        Vector2 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 PlayerPos = transform.position;
+        Vector2 relativePosition = mousepos -PlayerPos;
+ 
+        if (Mathf.Abs(relativePosition.x) > Mathf.Abs(relativePosition.y))
+        {
+            Debug.Log("x가 y보다 큽니다. (x: " + mousepos.x + ", y: " + mousepos.y + ")");
+
+            if (mousepos.x > PlayerPos.x)
+            {
+                //Debug.Log("x가 0보다 큽니다. (x: " + mousepos.x + ")");
+                return 1;
+
+            }
+
+            // x 좌표가 0보다 작은지 체크합니다.
+            if (mousepos.x < PlayerPos.x)
+            {
+                //Debug.Log("x가 0보다 작습니다. (x: " + mousepos.x + ")");
+
+                return 2;
+            }
+
+
+        }
+        else if (Mathf.Abs(relativePosition.y) > Mathf.Abs(relativePosition.x))
+        {
+            Debug.Log("y가 x보다 큽니다. (x: " + mousepos.x + ", y: " + mousepos.y + ")");
+
+            if (mousepos.y > PlayerPos.y)
+            {
+                //Debug.Log("y가 0보다 큽니다. (y: " + mousepos.y + ")");
+                return 3;
+            }
+
+            // y 좌표가 0보다 작은지 체크합니다.
+            if (mousepos.y < PlayerPos.y)
+            {
+                //Debug.Log("y가 0보다 작습니다. (y: " + mousepos.y + ")");
+                return 4;
+            }
+
+        }
+
+        return 0;
+    }
+
+
+
+
 }
