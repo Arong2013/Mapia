@@ -66,11 +66,12 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
                 GameObject slot = Instantiate(inventorySlot, InventoryParent);
                 if (i < inventory.Items.Count && inventory.Items[i] != null)
                 {
+                    print("아이뎀 먹음");
                     slot.GetComponent<ItemSlot>().SetItem(inventory.Items[i]);
                 }
                 else
                 {
-                    
+                    print("드롭");
                     slot.GetComponent<ItemSlot>().SetItem(null);
                 }
                 inventorySlots.Add(slot.GetComponent<ItemSlot>());

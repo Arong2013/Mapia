@@ -21,16 +21,10 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void SetItem(Item _item)
     {
         item = _item;
+
         iconImage.sprite = item?.Data.IconSprite ?? OrizinImage;
         iconImage.color = iconImage.sprite != null ? Color.white : new Color(0, 0, 0, 0);
         _amountText.text = item?.Amount.ToString() ?? "";
-    }
-    private void Update()
-    {
-        if (item != null)
-        {
-            SetItem(null);
-        }
     }
     public void AddPointer<T>(Action action) where T : IEventSystemHandler
     {
