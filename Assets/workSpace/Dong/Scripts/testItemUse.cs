@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class testItemUse : MonoBehaviour
@@ -9,6 +8,7 @@ public class testItemUse : MonoBehaviour
     public ItemData itemData;
     //GameObject item;
     public GameObject itemasdf;
+
 
     void Start()
     {

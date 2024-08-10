@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ItemTestScript : MonoBehaviour
+public class ItemTestScript : MonoBehaviourPunCallbacks
 {
 
     public ItemData itemData;
-    
+
+    PhotonView PV;
+
     int damage;
     float distance;
 
@@ -19,6 +22,7 @@ public class ItemTestScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PhotonView PV = GetComponent<PhotonView>();
         StartPos = transform.position;
     }
 
@@ -27,33 +31,40 @@ public class ItemTestScript : MonoBehaviour
     {
         if(Activate == true)
         {
-            //클릭한 위치가 현재 플레이어의 위치보다     
-            switch (direction)
+            if(itemData.TYPE != ItemType.Consume)
             {
-                case 1:
-                    transform.position = new Vector3(transform.position.x + 10 * Time.deltaTime, transform.position.y);
-                    break;
+                //클릭한 위치가 현재 플레이어의 위치보다     
+                switch (direction)
+                {
+                    case 1:
+                        transform.position = new Vector3(transform.position.x + 10 * Time.deltaTime, transform.position.y);
+                        break;
 
-                case 2:
-                    transform.position = new Vector2(transform.position.x - 10 * Time.deltaTime, transform.position.y);
-                    break;
+                    case 2:
+                        transform.position = new Vector2(transform.position.x - 10 * Time.deltaTime, transform.position.y);
+                        break;
 
-                case 3:
-                    transform.position = new Vector2(transform.position.x, transform.position.y + 10 * Time.deltaTime);
-                    break;
+                    case 3:
+                        transform.position = new Vector2(transform.position.x, transform.position.y + 10 * Time.deltaTime);
+                        break;
 
-                case 4:
-                    transform.position = new Vector2(transform.position.x, transform.position.y - 10 * Time.deltaTime);
-                    break;
+                    case 4:
+                        transform.position = new Vector2(transform.position.x, transform.position.y - 10 * Time.deltaTime);
+                        break;
 
-                default:
-                    Debug.LogError("Error");
-                    break;
+                    default:
+                        Debug.LogError("Error");
+                        break;
+                }
+
+                if (Vector2.Distance(transform.position, StartPos) >= distance)
+                {
+                    PhotonNetwork.Destroy(this.gameObject);
+                }
             }
-
-            if(Vector2.Distance(transform.position, StartPos) >= distance)
+            else
             {
-                Destroy(gameObject);
+                //소비아이템 사용
             }
 
         }

@@ -6,7 +6,6 @@ using System.Linq;
 using Cinemachine;
 using UnityEngine.UI;
 using System;
-using UnityEditor.PackageManager.Requests;
 
 [System.Serializable]
 public class Skill
@@ -78,6 +77,9 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     public bool DoQuest = false; //퀘스트를 하고 있는지 확인 
     public bool ItemActivate = false;
 
+    //public GameObject Item_Use;
+
+
     public virtual void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
@@ -124,9 +126,40 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
 
             if(Input.GetMouseButtonDown(0))
             {
-                UseItem(0);
-            }
+                //UI 이미지를 클릭하는게 아닌 경우에만 작동되도록
+                /*
+                 && !EventSystem.current.IsPointerOverGameObject()
+                 */
 
+                if (ItemActivate == true)
+                {
+
+
+
+                    if (inventory.Choice != null)
+                    {
+                        ItemData data = inventory.Choice.Data;
+                        //PhotonNetwork.Instantiate("ItemUse", transform.position, Quaternion.identity);
+                        PV.RPC(nameof(UseItem), RpcTarget.All, data);
+
+                    }
+                    else
+                    {
+                        Debug.Log("Null");
+                    }
+                }
+
+
+
+                
+                //UseItem();
+                
+                
+            }
+            if(Input.GetKeyDown(KeyCode.I))
+            {
+                ItemActivate = true;
+            }
 
         }
         else
@@ -237,25 +270,15 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
 
     //}
 
-
-    public void UseItem(int num)
+    [PunRPC]
+    public void UseItem(ItemData Idata)
     {
-        if(ItemActivate == true)
-        {
-            if (inventory.Choice != null)
-            {
-                GameObject myItem = new GameObject();
-                myItem.transform.parent = transform;
-                myItem.transform.position = transform.position;
-                ItemTestScript ITS = myItem.AddComponent<ItemTestScript>();
-                SpriteRenderer spriteRenderer = myItem.AddComponent<SpriteRenderer>();
-                ITS.GetData(inventory.Choice.Data, PosCheck());
-            }
-            else
-            {
-                Debug.Log("Null");
-            }
-        }
+        GameObject myItem = PhotonNetwork.Instantiate("ItemUse", transform.position, Quaternion.identity);
+        //myItem.transform.parent = transform;
+        //myItem.transform.position = transform.position;
+        ItemTestScript ITS = myItem.AddComponent<ItemTestScript>();
+        //SpriteRenderer spriteRenderer = myItem.AddComponent<SpriteRenderer>();
+        ITS.GetData(Idata, PosCheck());
         
         
     }

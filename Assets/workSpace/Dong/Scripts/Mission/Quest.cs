@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Services.Analytics;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 public abstract class Quest : MonoBehaviour
