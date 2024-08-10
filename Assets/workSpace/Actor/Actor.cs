@@ -139,8 +139,9 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
                     if (inventory.Choice != null)
                     {
                         ItemData data = inventory.Choice.Data;
+                        
                         //PhotonNetwork.Instantiate("ItemUse", transform.position, Quaternion.identity);
-                        PV.RPC(nameof(UseItem), RpcTarget.All, data);
+                        PV.RPC(nameof(UseItem), RpcTarget.All, inventory.Choice.Data.Name, PosCheck());
 
                     }
                     else
@@ -271,16 +272,18 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     //}
 
     [PunRPC]
-    public void UseItem(ItemData Idata)
+    public void UseItem(string ItemName, int poschecknum)
     {
-        GameObject myItem = PhotonNetwork.Instantiate("ItemUse", transform.position, Quaternion.identity);
+        GameObject myItem = PhotonNetwork.Instantiate(ItemName, transform.position, Quaternion.identity);
+        ItemTestScript ITS = myItem.GetComponent<ItemTestScript>();
+        ITS.GetData(poschecknum);
         //myItem.transform.parent = transform;
         //myItem.transform.position = transform.position;
-        ItemTestScript ITS = myItem.AddComponent<ItemTestScript>();
+        //ItemTestScript ITS = myItem.AddComponent<ItemTestScript>();
         //SpriteRenderer spriteRenderer = myItem.AddComponent<SpriteRenderer>();
-        ITS.GetData(Idata, PosCheck());
-        
-        
+        //
+
+
     }
 
 

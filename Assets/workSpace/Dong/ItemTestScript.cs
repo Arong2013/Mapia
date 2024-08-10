@@ -74,13 +74,13 @@ public class ItemTestScript : MonoBehaviourPunCallbacks
 
     }
 
-    public void GetData(ItemData data, int way)
+    public void GetData(int way)
     {
-        itemData = data;
-        if(data.TYPE != ItemType.Consume)
+        //itemData = data;
+        if(itemData.TYPE != ItemType.Consume)
         {
-            damage = data.DAMAGE;
-            distance = data.WEAPONDISTANCE;
+            damage = itemData.DAMAGE;
+            distance = itemData.WEAPONDISTANCE;
 
             direction = way;
         }
@@ -89,7 +89,7 @@ public class ItemTestScript : MonoBehaviourPunCallbacks
             //포션효과 발동
         }
         SpriteRenderer SR = GetComponent<SpriteRenderer>();
-        SR.sprite = data.IconSprite;
+        SR.sprite = itemData.IconSprite;
         Activate = true;
     }
 
