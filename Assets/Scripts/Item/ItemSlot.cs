@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    public event Action<Item> SlotClicked;
     public Item item;
 
     [SerializeField] Sprite OrizinImage;
@@ -20,8 +21,9 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void SetItem(Item _item)
     {
-        item = _item;
+        Debug.Log(_item.Data.name);
 
+        item = _item;
         iconImage.sprite = item?.Data.IconSprite ?? OrizinImage;
         iconImage.color = iconImage.sprite != null ? Color.white : new Color(0, 0, 0, 0);
         _amountText.text = item?.Amount.ToString() ?? "";
@@ -54,6 +56,10 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             touchDic[handler].Invoke();
         }
+        Image img = GetComponent<Image>();
+        img.color = Color.red;
+
+        SlotClicked.Invoke(item);
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -63,5 +69,7 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             touchDic[handler].Invoke();
         }
+        Image img = GetComponent<Image>();
+        img.color = Color.white;
     }
 }
