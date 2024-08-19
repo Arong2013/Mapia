@@ -8,8 +8,6 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public event Action<Item> SlotClicked;
-
-
     public Item item;
 
     [SerializeField] Sprite OrizinImage;
@@ -33,14 +31,6 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             _amountText.text = item?.Amount.ToString() ?? "";
         }
         
-    }
-    private void Update()
-    {
-        if (item != null)
-        {
-            SetItem(null);
-        }
-
     }
     public void AddPointer<T>(Action action) where T : IEventSystemHandler
     {

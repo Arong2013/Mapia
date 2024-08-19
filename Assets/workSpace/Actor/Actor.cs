@@ -240,12 +240,19 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         skill?.method?.Invoke();
     }
 
+    private void OnMouseDown()
+    {
+       if (GetStatComponent<BaseStats>().curHp.Value <= 0)
+        {
+            VoteManager.Instance.InitiateVote();
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(PV.IsMine)
+        if (PV.IsMine)
         {
-            if(other.gameObject.TryGetComponent<IPickupable>(out IPickupable component))
+            if (other.gameObject.TryGetComponent<IPickupable>(out IPickupable component))
             {
                 component.Pickup(this);
             }
