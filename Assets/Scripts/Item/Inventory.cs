@@ -24,6 +24,10 @@ public class Inventory
     }
     public bool AddItem(Item _item)
     {
+
+        Debug.Log(_item.Data.name);
+
+
         if (!isCanAdd)
             return false;
         if (Items.Count > 0)

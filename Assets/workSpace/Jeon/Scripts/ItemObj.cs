@@ -25,6 +25,7 @@ public class ItemObj : MonoBehaviourPunCallbacks, IPickupable
     }
     public bool Pickup(Actor actor)
     {
+        Debug.Log("pickup 기능 작동");
         var isCanAdd = actor.inventory.AddItem(itemData.CreateItem());
         if (isCanAdd)
         {

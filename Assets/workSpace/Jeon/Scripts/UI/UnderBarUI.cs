@@ -51,12 +51,14 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
 
     void UpdateInventoryUI()
     {
-        Debug.Log("±¸µ¶µÊ");
+        Debug.Log("±¸µ¶µÊ" + inventory.Items.Count);
         int targetCount = 3;
 
-        if (inventorySlots.Count != targetCount)
-        {
-            foreach (Transform child in InventoryParent)
+        
+
+        if (inventory.Items.Count <= targetCount)
+         {
+        foreach (Transform child in InventoryParent)
             {
                 Destroy(child.gameObject);
             }
@@ -68,12 +70,12 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
                 GameObject slot = Instantiate(inventorySlot, InventoryParent);
                 if (i < inventory.Items.Count && inventory.Items[i] != null)
                 {
-                    print("ì•„ì´ëŽ€ ë¨¹ìŒ");
+                    print("¾ÆÀÌÅÛ ¸ÔÀ½");
                     slot.GetComponent<ItemSlot>().SetItem(inventory.Items[i]);
                 }
                 else
                 {
-                    print("ë“œë¡­");
+                    print("µå·Ó");
                     slot.GetComponent<ItemSlot>().SetItem(null);
                 }
                 inventorySlots.Add(slot.GetComponent<ItemSlot>());
