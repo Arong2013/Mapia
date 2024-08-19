@@ -23,12 +23,16 @@ public class ItemSlot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void SetItem(Item _item)
     {
-        Debug.Log(_item.Data.name);
+        if(_item != null)
+        {
+            Debug.Log(_item.Data.name);
 
-        item = _item;
-        iconImage.sprite = item?.Data.IconSprite ?? OrizinImage;
-        iconImage.color = iconImage.sprite != null ? Color.white : new Color(0, 0, 0, 0);
-        _amountText.text = item?.Amount.ToString() ?? "";
+            item = _item;
+            iconImage.sprite = item?.Data.IconSprite ?? OrizinImage;
+            iconImage.color = iconImage.sprite != null ? Color.white : new Color(0, 0, 0, 0);
+            _amountText.text = item?.Amount.ToString() ?? "";
+        }
+        
     }
     private void Update()
     {

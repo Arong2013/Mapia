@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.ParticleSystem;
 
 
 //Quest 2
@@ -12,8 +11,13 @@ class WakeUP_Mummy : Quest
     public List<Sprite> MummyImg = new List<Sprite>(); //미라 이미지에 대한 정보를 저장해줌
 
     public Image Mummy;
+    Sprite startImg;
 
-    public GameObject Particles; //클릭을 했을 때 보여줄 파티클 이미지(애니메이션)
+
+    public Animator mummyAnimation;
+
+
+    //public GameObject Particles; //클릭을 했을 때 보여줄 파티클 이미지(애니메이션)
 
     public ClickPlace Range_Click; //클릭을 해야 하는 범위에 대한 이미지를 나타내는 오브젝트
    
@@ -41,8 +45,12 @@ class WakeUP_Mummy : Quest
     protected override void Start()
     {
         base.Start();
+        //mummyAnimation = transform.GetComponentInChildren<Animator>();
         //ClearUI = UiUtils.GetUI<QuestClear>().gameObject;
         Mummy.sprite = MummyImg[0];
+
+        //startImg = Mummy.sprite;
+
         Click_Range_Place(); //처음 시작 범위 지정
     }
 
@@ -63,7 +71,8 @@ class WakeUP_Mummy : Quest
             {
                 Click_Range_Place();
                 num++;
-                Mummy.sprite = MummyImg[num - 1];
+                //Mummy.sprite = MummyImg[num - 1];
+                mummyAnimation.SetTrigger("Click");
             }
 
         }
@@ -111,7 +120,7 @@ class WakeUP_Mummy : Quest
     void MiniGameClear()
     {
         //클리어 했다는 UI 띄워줌
-
+       
         QuestManager.Instance.OpenClearPanel();
 
 
@@ -122,14 +131,20 @@ class WakeUP_Mummy : Quest
     public override void InitalizeQuest() //미라깨우기 퀘스트 초기화
     {
         Debug.Log("미라깨우기 초기화");
+        mummyAnimation.SetBool("WakeUp", false);
+
+
         click_num = 0; //클릭 몇번 했는지 체크해줄 변수
 
         num = 1;
 
         Clear = false;
- 
+
         Mummy.sprite = MummyImg[0];
+
         
+
+
         Click_Range_Place(); //처음 시작 범위 지정
 
         Range_Click.IntializeClick_Num();
@@ -142,10 +157,23 @@ class WakeUP_Mummy : Quest
 
     protected override void ClearQuest()
     {
-        base.ClearQuest();
-        AlreadySet = true;
-        Clear = true;
-        QuestManager.Instance.OpenClearPanel();
+        mummyAnimation.SetBool("WakeUp", true);
+
+        if (mummyAnimation.GetCurrentAnimatorStateInfo(0).IsName("mummy_wakeUp"))
+        {
+           // Debug.Log(mummyAnimation.GetCurrentAnimatorStateInfo(0).normalizedTime);
+
+            if (mummyAnimation.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                base.ClearQuest();
+                AlreadySet = true;
+                Clear = true;
+                QuestManager.Instance.OpenClearPanel();
+            }
+        }
+
+
+        
 
     }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1885568794390224686}
   - component: {fileID: 6002757050695719167}
   - component: {fileID: 162692122225645910}
+  - component: {fileID: 425825024369817397}
   m_Layer: 5
   m_Name: MummyImg
   m_TagString: Untagged
@@ -35,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 364, y: 496}
+  m_SizeDelta: {x: 300, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6002757050695719167
 CanvasRenderer:
@@ -65,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 908081fa3071c3543b486775a6339742, type: 3}
+  m_Sprite: {fileID: -896363900, guid: b6a7c4284bac3244ca124bc65cd2ef41, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -75,6 +76,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &425825024369817397
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741578119348519774}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bce5f4db695501f4ca312735d19d2a3c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6385336196974951524
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,11 +276,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MummyImg:
-  - {fileID: 21300000, guid: 908081fa3071c3543b486775a6339742, type: 3}
-  - {fileID: 21300000, guid: e79d90e9d34b3ef40980ca6509838093, type: 3}
-  - {fileID: 21300000, guid: da97216394a43e3458209221d3a0758b, type: 3}
-  Mummy: {fileID: 0}
-  Particles: {fileID: 0}
+  - {fileID: -896363900, guid: b6a7c4284bac3244ca124bc65cd2ef41, type: 3}
+  Mummy: {fileID: 162692122225645910}
+  mummyAnimation: {fileID: 425825024369817397}
   Range_Click: {fileID: 2749642925554872119}
   ClearUI: {fileID: 0}
   Clear: 0

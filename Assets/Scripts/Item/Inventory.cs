@@ -46,8 +46,19 @@ public class Inventory
 
     public void UseItem(int num)
     {
-        Items[num] = null;
-        Items.RemoveAt(num);
+        
+
+
+      
+            Items[num] = null;
+            Items.RemoveAt(num);
+
+            items[num] = null;
+            items.RemoveAt(num);
+        
+        
+        
+
         ItemChangeActions?.Invoke();
     }
 

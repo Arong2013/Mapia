@@ -51,6 +51,7 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
 
     void UpdateInventoryUI()
     {
+        Debug.Log("±¸µ¶µÊ");
         int targetCount = 3;
 
         if (inventorySlots.Count != targetCount)
@@ -93,7 +94,7 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
         foreach (var inventoryslot in inventorySlots)
         {
             inventoryslot.SlotClicked += actor.inventory.ItemChoiceActions;
-            Debug.Log(inventoryslot.item.Data.name + "1111111");
+            //Debug.Log(inventoryslot.item.Data.name + "1111111");
 
         }
         
