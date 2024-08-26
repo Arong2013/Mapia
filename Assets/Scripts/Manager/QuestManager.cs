@@ -35,7 +35,7 @@ public class QuestManager : Singleton<QuestManager>
 
             if (quest.GetType() == Mission.GetType())
             {
-                Debug.Log(Mission.gameObject.name);
+             //   Debug.Log(Mission.gameObject.name);
                 MissionPanel.gameObject.SetActive(true);
                 MissionPanel.QuitObject();
                 
