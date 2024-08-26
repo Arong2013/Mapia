@@ -6,6 +6,7 @@ using System.Linq;
 using Cinemachine;
 using UnityEngine.UI;
 using System;
+using Unity.Services.Analytics;
 
 [System.Serializable]
 public class Skill
@@ -109,10 +110,20 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     {
         if (PV.IsMine)
         {
-            moveHorizontal = Input.GetAxisRaw("Horizontal");
-            moveVertical = Input.GetAxisRaw("Vertical");
-            movement = new Vector3(moveHorizontal, moveVertical, 0).normalized;
-            Move();
+
+            if(DoQuest == false)
+            {
+                moveHorizontal = Input.GetAxisRaw("Horizontal");
+                moveVertical = Input.GetAxisRaw("Vertical");
+                movement = new Vector3(moveHorizontal, moveVertical, 0).normalized;
+                Move();
+            }
+            else
+            {
+                RB.velocity = Vector3.zero;
+            }
+
+          
 
             // 스킬 사용 입력 처리
             if (Input.GetKeyDown(KeyCode.R) && skill.cunCoolTime <= 0)
@@ -139,7 +150,11 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
                     if (inventory.Choice != null)
                     {
                         ItemData data = inventory.Choice.Data;
-                        
+                        //아이템 사용했을 때 아이템 인벤토리에 해당 아이템을 제거해야 하고 인벤토리 슬롯도 초기화 시켜줘야 함
+
+
+                        inventory.UseItem();
+
                         //PhotonNetwork.Instantiate("ItemUse", transform.position, Quaternion.identity);
                         PV.RPC(nameof(UseItem), RpcTarget.All, inventory.Choice.Data.Name, PosCheck());
 
@@ -165,7 +180,10 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         }
         else
         {
-            SyncPosition();
+            if (DoQuest == false)
+            {
+                SyncPosition();
+            }
         }
     }
 
@@ -235,7 +253,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
         this.skill = skill;
     }
 
-    private void UseSkill()
+    public void UseSkill()
     {
         skill?.method?.Invoke();
     }
@@ -261,6 +279,7 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
 
     public void DoingMission()
     {
+        Debug.Log("DoingMission Activate");
         DoQuest = true;
     }
 
@@ -281,9 +300,18 @@ public abstract class Actor : MonoBehaviourPunCallbacks, IPunObservable, IAnimat
     [PunRPC]
     public void UseItem(string ItemName, int poschecknum)
     {
-        GameObject myItem = PhotonNetwork.Instantiate(ItemName, transform.position, Quaternion.identity);
-        ItemTestScript ITS = myItem.GetComponent<ItemTestScript>();
-        ITS.GetData(poschecknum);
+
+        if(inventory.Choice.Data.TYPE != ItemType.Consume)
+        {
+            GameObject myItem = PhotonNetwork.Instantiate(ItemName, transform.position, Quaternion.identity);
+            ItemTestScript ITS = myItem.GetComponent<ItemTestScript>();
+            ITS.GetData(poschecknum);
+        }
+        else
+        {
+            //소비 아이템 발동
+        }
+        
         //myItem.transform.parent = transform;
         //myItem.transform.position = transform.position;
         //ItemTestScript ITS = myItem.AddComponent<ItemTestScript>();

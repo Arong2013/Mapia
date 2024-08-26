@@ -34,6 +34,8 @@ public class Detective : Actor, IPointerClickHandler
         // 스킬 메서드 정의
         System.Action skillMethod = () =>
         {
+            Debug.Log("스킬발동");
+
             OnSkillUse();
         };
 

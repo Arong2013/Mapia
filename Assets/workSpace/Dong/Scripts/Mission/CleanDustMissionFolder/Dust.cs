@@ -15,7 +15,7 @@ public class Dust : MonoBehaviour
     {
         if (collision.CompareTag("Wipe"))
         {
-            Debug.Log("¥Í¿Ω");
+           // Debug.Log("¥Í¿Ω");
             Image dust_img = GetComponent<Image>();
             if (albedo > 0)
             {

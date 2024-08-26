@@ -35,6 +35,8 @@ public class Chaser : Actor
     {
         System.Action skillMethod = () =>
         {
+            Debug.Log("스킬발동");
+
             TryAssassinate();
         };
         // 스킬 등록

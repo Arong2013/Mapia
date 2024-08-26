@@ -45,6 +45,7 @@ public class DeathNote : Actor
         // 스킬 메서드 정의
         System.Action skillMethod = () =>
         {
+            Debug.Log("스킬 발동");
             ToggleDeathNote();
         };
 

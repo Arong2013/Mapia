@@ -16,6 +16,7 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
 
     private List<Image> hearts = new List<Image>();
     private List<ItemSlot> inventorySlots = new List<ItemSlot>();
+    [SerializeField] SkillSlot skillSlot;
 
 
     void UpdataUI()
@@ -85,10 +86,23 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
         SetNowItem(actor);
 
     }
+
+
+    void SkillUI()
+    {
+
+    }
+
+
     public void SetPlayer(Actor player)
     {
         actor = player;
         actor.inventory.ItemChangeActions += UpdateInventoryUI;
+
+        SetSkill();
+
+        //Debug.Log("스킬설정완료");
+        //skillSlot.SkillSlotClicked += actor.UseSkill;
     }
 
     public void SetNowItem(Actor player)
@@ -102,6 +116,13 @@ public class UnderBarUI : MonoBehaviour, IPlayerable
         }
         
     }
+
+    public void SetSkill()
+    {
+        //actor = player;
+        skillSlot.SkillSlotClicked += actor.UseSkill;
+    }
+
 
     public void SlotClicked()
     {

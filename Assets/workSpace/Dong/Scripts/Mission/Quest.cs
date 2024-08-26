@@ -6,7 +6,7 @@ public abstract class Quest : MonoBehaviour
 
     protected bool AlreadySet;
 
-    Actor actor;
+    public static Actor actor;
 
 
 
@@ -18,7 +18,7 @@ public abstract class Quest : MonoBehaviour
 
     protected virtual void Start()
     {
-        Questinprogress();
+        
     }
 
 
@@ -35,15 +35,33 @@ public abstract class Quest : MonoBehaviour
 
     protected virtual void ClearQuest()
     {
-        actor.FinishMission();
+        if(actor != null)
+        {
+            actor.FinishMission();
+        }
+        else
+        {
+            Debug.Log("null");
+        }
+        
     }
 
     public abstract int GetQuestID();
 
-    public void GetActor(Actor actor)
+    public void GetActor(Actor _actor)
     {
-        Debug.Log("gameObject.name");
-        this.actor = actor; 
+        if(actor == null)
+        {
+            //Debug.Log(_actor.NickNameText.text);
+            actor = _actor;
+            Questinprogress();
+        }
+        else
+        {
+            Questinprogress();
+        }
+
+        
     }
 
 

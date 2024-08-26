@@ -137,18 +137,16 @@ class WakeUP_Mummy : Quest
         click_num = 0; //클릭 몇번 했는지 체크해줄 변수
 
         num = 1;
-
+        AlreadySet = false;
         Clear = false;
-
-        Mummy.sprite = MummyImg[0];
-
-        
-
 
         Click_Range_Place(); //처음 시작 범위 지정
 
         Range_Click.IntializeClick_Num();
 
+        Debug.Log(MummyImg[0].name);
+
+        Mummy.sprite = MummyImg[0];
     }
     public override int GetQuestID()
     {

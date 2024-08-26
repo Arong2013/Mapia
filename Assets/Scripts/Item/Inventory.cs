@@ -48,22 +48,38 @@ public class Inventory
         return true;
     }
 
-    public void UseItem(int num)
+    public void UseItem()
     {
         
 
 
-      
-            Items[num] = null;
-            Items.RemoveAt(num);
+          for(int i=0; i<items.Count; i++)
+        {
+            if (Items[i] == Choice)
+            {
+                if (Items[i].Amount == 1)
+                {
+                    Items[i] = null;
+                    Items.RemoveAt(i);
+                    ItemChangeActions?.Invoke();
+                    break;
+                }
+                else
+                {
+                    Items[i].SetAmount(Items[i].Amount-1);
+                    ItemChangeActions?.Invoke();
+                    break;
+                }
 
-            items[num] = null;
-            items.RemoveAt(num);
+               
+            }
+        }
+            
         
         
         
 
-        ItemChangeActions?.Invoke();
+        
     }
 
     public void ItemChoiceActions(Item item)

@@ -36,6 +36,8 @@ public class Sasori : Actor
         // 스킬 메서드 정의
         System.Action puppetSkillMethod = () =>
         {
+            Debug.Log("스킬발동");
+
             PuppetCreation();
         };
    RegisterSkill(new Skill(skill.icon, skill.cooldown, puppetSkillMethod));

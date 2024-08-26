@@ -32,6 +32,8 @@ public class TrapMaker : Actor
     {
         System.Action trapSkillMethod = () =>
         {
+            Debug.Log("스킬발동");
+
             TryPlaceTrap();
         };
         RegisterSkill(new Skill(skill.icon, skill.cooldown, trapSkillMethod));

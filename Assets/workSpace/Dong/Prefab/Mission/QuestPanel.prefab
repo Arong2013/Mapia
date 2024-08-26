@@ -107,7 +107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &721223291456486365
 RectTransform:
   m_ObjectHideFlags: 0
@@ -184,6 +184,8 @@ MonoBehaviour:
   QuestList:
   - {fileID: 6817666238500870911}
   - {fileID: 8908215459245013444}
+  - {fileID: 1930263107453062046}
+  ClearPanel: {fileID: 0}
 --- !u!1 &8449808516905078482
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,8 +341,20 @@ PrefabInstance:
     - target: {fileID: 6126015005606039827, guid: ca106b7d1019c00438961ca02a7f2808,
         type: 3}
       propertyPath: MummyImg.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6126015005606039827, guid: ca106b7d1019c00438961ca02a7f2808,
+        type: 3}
+      propertyPath: MummyImg.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 94c564e7ada48bc439352bcdc6250cf1,
+        type: 3}
+    - target: {fileID: 6126015005606039827, guid: ca106b7d1019c00438961ca02a7f2808,
+        type: 3}
+      propertyPath: MummyImg.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 94c564e7ada48bc439352bcdc6250cf1,
+        type: 3}
     - target: {fileID: 6126015005606039827, guid: ca106b7d1019c00438961ca02a7f2808,
         type: 3}
       propertyPath: MummyImg.Array.data[3]
@@ -505,11 +519,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CleanDustQuest
       objectReference: {fileID: 0}
-    - target: {fileID: 4068868838937880643, guid: c170a7e7ccc097c4b9e09d99eb5ebfea,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4725986759764267178, guid: c170a7e7ccc097c4b9e09d99eb5ebfea,
         type: 3}
       propertyPath: m_Pivot.x
@@ -644,27 +653,32 @@ PrefabInstance:
     - target: {fileID: 706313061741083854, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 706313061741083854, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 706313061741083854, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 449.99997
       objectReference: {fileID: 0}
     - target: {fileID: 706313061741083854, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 1976397885993849847, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_Name
       value: WearingClothesQuest
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976397885993849847, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3275459251956957391, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
@@ -769,48 +783,60 @@ PrefabInstance:
     - target: {fileID: 5548495642408142798, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5548495642408142798, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5548495642408142798, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 283.3333
       objectReference: {fileID: 0}
     - target: {fileID: 5548495642408142798, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 9088521820446650816, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9088521820446650816, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9088521820446650816, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 116.66666
       objectReference: {fileID: 0}
     - target: {fileID: 9088521820446650816, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45a526eb3f4e0214db7eaf7f7810cadc, type: 3}
+--- !u!114 &1930263107453062046 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4899011859562150744, guid: 45a526eb3f4e0214db7eaf7f7810cadc,
+    type: 3}
+  m_PrefabInstance: {fileID: 6428155391198671046}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32dd71e88bf9e2d4f83147c396953689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8377154425361395721 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3275459251956957391, guid: 45a526eb3f4e0214db7eaf7f7810cadc,

@@ -647,7 +647,7 @@ MonoBehaviour:
   NickNameText: {fileID: 8375901364521192189}
   ID: 
   skill:
-    icon: {fileID: 21300000, guid: 908081fa3071c3543b486775a6339742, type: 3}
+    icon: {fileID: 21300000, guid: a2deb5e017f9c0e47b9c3e4848b781b0, type: 3}
     cooldown: 10
     cunCoolTime: 0
   DoQuest: 0

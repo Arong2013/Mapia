@@ -10,7 +10,7 @@ public class DeathNote_Writing : MonoBehaviour
 
     private void Awake()
     {
-        Write = GetComponent<TMP_InputField>();
+        Write = GetComponentInChildren<TMP_InputField>();
         Write.onEndEdit.AddListener(GetWrite);
     }
 
