@@ -11,6 +11,7 @@ TagManager:
   - Wipe
   - Wall
   - Trap
+  - Dice
   layers:
   - Default
   - TransparentFX
