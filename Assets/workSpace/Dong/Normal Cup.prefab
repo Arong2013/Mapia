@@ -35,7 +35,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 184, y: 204.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7843565653911908439
@@ -88,6 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7ed61a74beb6704081ba30bae819a0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Normal_State_Cup: {fileID: 21300000, guid: 60dddf2998fb02e43b108de157ea91a1, type: 3}
+  Open_State_Cup: {fileID: 21300000, guid: 7e6a10b04ada4de4aa9987e4f5d650b8, type: 3}
   Dice: 0
   ChooseDice: 0
   NowPos: 0

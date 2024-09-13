@@ -189,6 +189,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Normal Cup (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7037357068608035437, guid: ea1d3ca7699edc44c86806c6ddd283c0,
+        type: 3}
+      propertyPath: Dice
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7843565653911908439, guid: ea1d3ca7699edc44c86806c6ddd283c0,
         type: 3}
       propertyPath: m_CullTransparentMesh

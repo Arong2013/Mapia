@@ -282,9 +282,15 @@ MonoBehaviour:
   Cup: {fileID: 5028255101031947056, guid: ea1d3ca7699edc44c86806c6ddd283c0, type: 3}
   CupInDice: {fileID: 6348057384443973707, guid: bcc2dc9ad8766aa43ab3a409e8e9dc73,
     type: 3}
+  StartTime: 0
+  CupRectLIst: []
   CupPos: []
-  StartNum: 000000000000000000000000
-  EndNum: 000000000000000000000000
+  startpos: {x: 0, y: 0}
+  endpos: {x: 0, y: 0}
+  StartNum: 0
+  StartNumList: 
+  EndNum: 0
+  EndNumList: 
 --- !u!1 &1059549753
 GameObject:
   m_ObjectHideFlags: 0
